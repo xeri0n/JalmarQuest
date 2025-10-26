@@ -41,6 +41,25 @@ fun main() {
         }
     }
     println()
+    
+    // Demonstrate quests
+    println("=== Quest System ===")
+    val quest = createSampleQuest()
+    println("Quest: ${quest.title}")
+    println("Description: ${quest.description}")
+    println("Status: ${quest.status}")
+    println("Progress: ${quest.getProgress()}%")
+    println("Objectives:")
+    quest.objectives.forEach { obj ->
+        val status = if (obj.isComplete()) "[COMPLETE]" else "[${obj.currentCount}/${obj.targetCount}]"
+        println("  $status ${obj.description}")
+    }
+    println("Rewards: ${quest.rewards.experience} XP, ${quest.rewards.gold} Gold")
+    if (quest.rewards.items.isNotEmpty()) {
+        println("  Items: ${quest.rewards.items.joinToString()}")
+    }
+    println()
+    
     println("Game development in progress...")
 }
 
@@ -105,3 +124,32 @@ fun createSampleWorld(): World {
         startingLocationId = "town_square"
     )
 }
+
+fun createSampleQuest(): Quest {
+    return Quest(
+        id = "quest_001",
+        title = "Clear the Dark Forest",
+        description = "The Dark Forest has become dangerous. Help the town by defeating the threats within.",
+        objectives = listOf(
+            Objective(
+                id = "obj_001",
+                description = "Defeat 5 goblins",
+                targetCount = 5,
+                currentCount = 3
+            ),
+            Objective(
+                id = "obj_002",
+                description = "Find the lost amulet",
+                targetCount = 1,
+                currentCount = 0
+            )
+        ),
+        rewards = Rewards(
+            experience = 150,
+            gold = 75,
+            items = listOf("health_potion_001", "bronze_key_001")
+        ),
+        status = QuestStatus.IN_PROGRESS
+    )
+}
+

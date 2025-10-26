@@ -9,7 +9,7 @@
 - [x] Item model with types (WEAPON, ARMOR, CONSUMABLE, MATERIAL, LORE)
 - [x] Journal model for tracking quests and lore
 - [ ] Player/Character model with inventory and stats
-- [ ] Quest model with objectives and rewards
+- [x] Quest model with objectives and rewards
 - [x] Location/World model for game map
 
 ## Game Systems
