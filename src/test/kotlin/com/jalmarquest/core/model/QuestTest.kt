@@ -198,6 +198,28 @@ class QuestTest {
         // Average: (60 + 0) / 2 = 30%
         assertEquals(30, quest.getProgress())
     }
+    
+    @Test
+    fun testQuestProgressPrecision() {
+        // Test that progress calculation maintains precision with integer arithmetic
+        val quest = Quest(
+            id = "quest_009",
+            title = "Precision Test",
+            description = "Testing progress precision",
+            objectives = listOf(
+                Objective(
+                    id = "obj_001",
+                    description = "Collect 3 items",
+                    targetCount = 3,
+                    currentCount = 1
+                )
+            ),
+            rewards = Rewards(experience = 50)
+        )
+        
+        // 1/3 = 33.33%, should round to 33%
+        assertEquals(33, quest.getProgress())
+    }
 }
 
 class ObjectiveTest {
