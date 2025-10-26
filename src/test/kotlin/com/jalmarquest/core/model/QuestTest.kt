@@ -168,6 +168,36 @@ class QuestTest {
         assertEquals(QuestStatus.IN_PROGRESS, inProgress.status)
         assertEquals(QuestStatus.COMPLETED, completed.status)
     }
+    
+    @Test
+    fun testQuestWithZeroTargetObjective() {
+        // Edge case: objective with zero target should not cause division by zero
+        val quest = Quest(
+            id = "quest_008",
+            title = "Edge Case Quest",
+            description = "Testing zero target count",
+            objectives = listOf(
+                Objective(
+                    id = "obj_001",
+                    description = "Normal objective",
+                    targetCount = 5,
+                    currentCount = 3
+                ),
+                Objective(
+                    id = "obj_002",
+                    description = "Zero target objective",
+                    targetCount = 0,
+                    currentCount = 0
+                )
+            ),
+            rewards = Rewards(experience = 50)
+        )
+        
+        // Should not throw exception and should calculate progress correctly
+        // First objective: 60%, second objective: 0% (due to zero target guard)
+        // Average: (60 + 0) / 2 = 30%
+        assertEquals(30, quest.getProgress())
+    }
 }
 
 class ObjectiveTest {

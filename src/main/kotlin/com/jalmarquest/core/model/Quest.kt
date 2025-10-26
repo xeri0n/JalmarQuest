@@ -13,7 +13,7 @@ data class Quest(
     fun getProgress(): Int {
         if (objectives.isEmpty()) return 0
         val totalProgress = objectives.sumOf { obj ->
-            (obj.currentCount.toDouble() / obj.targetCount.toDouble() * 100).toInt()
+            if (obj.targetCount == 0) 0 else (obj.currentCount * 100) / obj.targetCount
         }
         return totalProgress / objectives.size
     }
