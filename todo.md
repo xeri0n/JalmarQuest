@@ -10,7 +10,7 @@
 - [x] Journal model for tracking quests and lore
 - [ ] Player/Character model with inventory and stats
 - [ ] Quest model with objectives and rewards
-- [ ] Location/World model for game map
+- [x] Location/World model for game map
 
 ## Game Systems
 - [ ] Inventory management system
