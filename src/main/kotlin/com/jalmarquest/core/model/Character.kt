@@ -30,11 +30,7 @@ data class Character(
     fun equipItem(item: Item, slot: Slot): Boolean {
         if (!hasItem(item.id)) return false
         
-        // Unequip current item in slot if exists
-        equippedItems[slot]?.let { _ ->
-            // Item remains in inventory
-        }
-        
+        // Replace any currently equipped item in this slot
         equippedItems[slot] = item
         return true
     }
@@ -54,6 +50,22 @@ data class Character(
     fun getMaxHealth(): Int = stats.maxHealth
     
     fun isAlive(): Boolean = stats.health > 0
+    
+    /**
+     * Apply damage to this character.
+     * @return New Character instance with reduced health
+     */
+    fun takeDamage(damage: Int): Character {
+        return copy(stats = stats.takeDamage(damage))
+    }
+    
+    /**
+     * Heal this character.
+     * @return New Character instance with increased health
+     */
+    fun heal(amount: Int): Character {
+        return copy(stats = stats.heal(amount))
+    }
 }
 
 data class Stats(
@@ -74,6 +86,11 @@ data class Stats(
         require(intelligence >= 0) { "Intelligence cannot be negative" }
     }
     
+    /**
+     * Apply damage to the character, reducing health.
+     * Damage is mitigated by defense (defense / 2 reduces incoming damage).
+     * @return New Stats instance with reduced health
+     */
     fun takeDamage(damage: Int): Stats {
         val actualDamage = maxOf(0, damage - defense / 2)
         val newHealth = maxOf(0, health - actualDamage)

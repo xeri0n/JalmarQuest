@@ -85,13 +85,11 @@ fun main() {
     println("Before combat: HP ${hero.stats.health}/${hero.stats.maxHealth}")
     
     // Take damage
-    val damagedStats = hero.stats.takeDamage(25)
-    val heroAfterDamage = hero.copy(stats = damagedStats)
+    val heroAfterDamage = hero.takeDamage(25)
     println("After taking damage: HP ${heroAfterDamage.stats.health}/${heroAfterDamage.stats.maxHealth}")
     
     // Use health potion (healing)
-    val healedStats = heroAfterDamage.stats.heal(50)
-    val heroAfterHealing = heroAfterDamage.copy(stats = healedStats)
+    val heroAfterHealing = heroAfterDamage.heal(50)
     println("After using health potion: HP ${heroAfterHealing.stats.health}/${heroAfterHealing.stats.maxHealth}")
     println()
     

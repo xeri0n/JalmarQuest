@@ -180,4 +180,31 @@ class CharacterTest {
         assertTrue(character.hasItem("armor_01"))
         assertTrue(character.hasItem("potion_01"))
     }
+    
+    @Test
+    fun testCharacterTakeDamage() {
+        val character = createTestCharacter()
+        
+        val damagedCharacter = character.takeDamage(30)
+        
+        // With defense 10, damage reduction is 10/2 = 5
+        // Actual damage = 30 - 5 = 25
+        assertEquals(75, damagedCharacter.stats.health)
+        assertEquals("Test Hero", damagedCharacter.name)
+    }
+    
+    @Test
+    fun testCharacterHeal() {
+        val character = createTestCharacter()
+        val damagedCharacter = character.takeDamage(50)
+        
+        val healedCharacter = damagedCharacter.heal(30)
+        
+        // With defense 10, damage reduction is 10/2 = 5
+        // Actual damage = 50 - 5 = 45
+        // Health after damage = 100 - 45 = 55
+        // Health after healing 30 = 55 + 30 = 85
+        assertEquals(85, healedCharacter.stats.health)
+        assertTrue(healedCharacter.isAlive())
+    }
 }
