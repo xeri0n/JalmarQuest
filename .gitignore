@@ -9,4 +9,5 @@ out/
 *.iml
 
 # OS
-.DS_Store.jdk
+.DS_Store
+.jdk
