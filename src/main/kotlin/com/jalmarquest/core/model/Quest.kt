@@ -1,5 +1,7 @@
 package com.jalmarquest.core.model
 
+import kotlin.math.roundToInt
+
 data class Quest(
     val id: String,
     val title: String,
@@ -13,9 +15,9 @@ data class Quest(
     fun getProgress(): Int {
         if (objectives.isEmpty()) return 0
         val totalProgress = objectives.sumOf { obj ->
-            if (obj.targetCount == 0) 0.0 else (obj.currentCount * 100.0) / obj.targetCount
+            if (obj.targetCount == 0) 0.0 else (obj.currentCount.toDouble() / obj.targetCount) * 100
         }
-        return (totalProgress / objectives.size).toInt()
+        return (totalProgress / objectives.size).roundToInt()
     }
 }
 
