@@ -69,7 +69,7 @@ class QuestTest {
         )
         
         assertFalse(quest.isComplete())
-        assertEquals(0, quest.getProgress())
+        assertEquals(70, quest.getProgress())
     }
     
     @Test
@@ -96,7 +96,8 @@ class QuestTest {
         )
         
         assertFalse(quest.isComplete())
-        assertEquals(50, quest.getProgress())
+        // Progress: (100% + 60%) / 2 = 80%
+        assertEquals(80, quest.getProgress())
     }
     
     @Test
