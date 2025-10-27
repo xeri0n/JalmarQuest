@@ -1,20 +1,19 @@
 plugins {
-    kotlin("jvm") version "1.9.24"
-    application
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.compose) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.moko.resources) apply false
 }
 
-repositories {
-    mavenCentral()
+allprojects {
+    group = "com.jalmarquest"
+    version = "0.1.0"
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-}
-
-kotlin {
-    jvmToolchain(17)
-}
-
-application {
-    mainClass.set("com.jalmarquest.core.MainKt")
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }

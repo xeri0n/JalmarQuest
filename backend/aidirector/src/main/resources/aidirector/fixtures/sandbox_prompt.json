@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "default_mode": "sandbox",
+    "notes": "Used for local manual testing of the AI Director service."
+  },
+  "fixtures": [
+    {
+      "id": "buttonburgh_market_intro",
+      "notes": "A cozy baseline response that keeps the focus on tone and consequence scaffolding.",
+      "prompt_overrides": {
+        "system_prompt": "Sandbox override: narrate in a softer bedtime cadence while respecting Jalmar's canon.",
+        "user_prompt": "Sandbox override context for Jalmar to keep QA runs deterministic."
+      },
+      "response": {
+        "world_event_title": "Lampglow Over Buttonburgh",
+        "world_event_summary": "The lamps along Sproutway flicker as Jalmar's footsteps echo between jar-cap stalls.",
+        "snippets": [
+          {
+            "id": "sandbox_market_encounter",
+            "event_text": "Jalmar spots a wobbling stack of seed satchels balanced atop a thimble-cart. One wrong breeze and Buttonburgh's supper becomes sidewalk birdfeed.",
+            "choice_options": [
+              "Steady the stack before it topples",
+              "Barter for the satchels with a shiny",
+              "Whistle for nearby nestmates to help"
+            ],
+            "consequences": {
+              "steady": {
+                "add_choice_tags": ["sandbox_steadied_satchel"],
+                "grant_status": ["seed_scented_plumes"]
+              },
+              "barter": {
+                "add_choice_tags": ["sandbox_shiny_barter"]
+              },
+              "whistle": {
+                "add_choice_tags": ["sandbox_whistled_for_help"],
+                "unlock_followup": "market_followup_breeze"
+              }
+            },
+            "conditions": {
+              "requires": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
