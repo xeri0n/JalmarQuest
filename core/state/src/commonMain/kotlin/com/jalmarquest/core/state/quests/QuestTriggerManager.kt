@@ -94,6 +94,13 @@ class QuestTriggerManager {
     }
     
     /**
+     * Get all registered triggers.
+     */
+    fun getAllTriggers(): List<QuestTrigger> {
+        return triggers.toList()
+    }
+    
+    /**
      * Check if a trigger's requirements are met.
      */
     fun isTriggerAvailable(

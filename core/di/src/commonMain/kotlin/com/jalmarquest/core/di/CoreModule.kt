@@ -22,6 +22,8 @@ import com.jalmarquest.core.state.archetype.TalentTreeCatalog
 import com.jalmarquest.core.state.account.AccountManager
 import com.jalmarquest.core.state.quests.QuestManager
 import com.jalmarquest.core.state.quests.QuestCatalog
+import com.jalmarquest.core.state.quests.QuestTriggerManager
+import com.jalmarquest.core.state.quests.QuestFlowIntegrator
 import com.jalmarquest.core.state.catalogs.NpcCatalog
 import com.jalmarquest.core.state.catalogs.EnemyCatalog
 import com.jalmarquest.core.state.catalogs.LocationCatalog
@@ -110,6 +112,10 @@ fun coreModule(
     single { WeatherSystem(timestampProvider = ::currentTimeProvider) }
     single { SeasonalCycleManager(timestampProvider = ::currentTimeProvider) }
     single { WorldUpdateCoordinator(npcCatalog = get(), npcAiGoalManager = get(), predatorPatrolManager = get(), resourceRespawnManager = get(), weatherSystem = get(), seasonalCycleManager = get(), timestampProvider = ::currentTimeProvider) }
+    
+    // Phase 5 Quest Flow Integration
+    single { QuestTriggerManager() }
+    single { QuestFlowIntegrator(scope = get(), locationTracker = get(), questTriggerManager = get(), questManager = get(), npcReactionManager = get(), gameStateManager = get(), timeManager = get()) }
     
     // State Machines & Controllers
     single { NestStateMachine(config = get(), gameStateManager = get()) }
@@ -228,3 +234,7 @@ fun resolveWeatherSystem(): WeatherSystem = requireKoin().get()
 fun resolveSeasonalCycleManager(): SeasonalCycleManager = requireKoin().get()
 
 fun resolveWorldUpdateCoordinator(): WorldUpdateCoordinator = requireKoin().get()
+
+fun resolveQuestTriggerManager(): QuestTriggerManager = requireKoin().get()
+
+fun resolveQuestFlowIntegrator(): QuestFlowIntegrator = requireKoin().get()
