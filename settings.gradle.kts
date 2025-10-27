@@ -32,6 +32,7 @@ include(
 	":feature:hub",
 	":feature:activities",
 	":feature:skills",
+	":feature:worldinfo",
 	":ui:app",
 	":app:android",
 	":app:desktop",
