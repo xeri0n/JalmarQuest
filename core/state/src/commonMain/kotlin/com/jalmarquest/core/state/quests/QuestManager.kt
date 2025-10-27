@@ -1,6 +1,8 @@
 package com.jalmarquest.core.state.quests
 
 import com.jalmarquest.core.model.*
+import com.jalmarquest.core.state.GameStateManager
+import com.jalmarquest.core.state.managers.NestCustomizationManager
 import com.jalmarquest.core.state.perf.PerformanceLogger
 import com.jalmarquest.core.state.perf.currentTimeMillis
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +17,8 @@ import kotlinx.coroutines.sync.withLock
  */
 class QuestManager(
     private val questCatalog: QuestCatalog,
+    private val gameStateManager: GameStateManager? = null,
+    private val nestCustomizationManager: NestCustomizationManager? = null,
     private val timestampProvider: () -> Long = { currentTimeMillis() }
 ) {
     private val mutex = Mutex()
@@ -61,8 +65,8 @@ class QuestManager(
                     if (skill == null || skill.level < requirement.level) return false
                 }
                 is QuestRequirement.MinimumFactionReputation -> {
-                    // TODO: Check faction reputation when faction system is implemented
-                    // For now, assume requirement is met
+                    val currentRep = player.factionReputations[requirement.factionId] ?: 0
+                    if (currentRep < requirement.reputation) return false
                 }
                 is QuestRequirement.ArchetypeRequirement -> {
                     if (player.archetypeProgress.selectedArchetype != requirement.archetypeType) return false
@@ -168,13 +172,51 @@ class QuestManager(
             
             _questLog.value = _questLog.value.completeQuest(questId)
             
+            // Apply rewards if GameStateManager is available
+            if (gameStateManager != null) {
+                applyQuestRewards(quest.rewards)
+            }
+            
+            // Grant trophy to nest if NestCustomizationManager is available
+            nestCustomizationManager?.addTrophy(
+                questId = questId.value,
+                displayName = quest.title,
+                description = "Completed: ${quest.description}"
+            )
+            
             PerformanceLogger.logStateMutation("QuestManager", "completeQuest", mapOf(
                 "questId" to questId.value,
                 "rewardCount" to quest.rewards.size,
-                "isRepeatable" to quest.isRepeatable
+                "isRepeatable" to quest.isRepeatable,
+                "trophyGranted" to (nestCustomizationManager != null)
             ))
             
             return quest.rewards
+        }
+    }
+    
+    /**
+     * Apply quest rewards to the player via GameStateManager.
+     */
+    private fun applyQuestRewards(rewards: List<QuestReward>) {
+        val gsm = gameStateManager ?: return
+        
+        for (reward in rewards) {
+            when (reward.type) {
+                QuestRewardType.FACTION_REPUTATION -> {
+                    val factionId = reward.targetId ?: continue
+                    gsm.updateFactionReputation(factionId, reward.quantity)
+                    PerformanceLogger.logStateMutation("QuestManager", "applyReward_faction", mapOf(
+                        "factionId" to factionId,
+                        "amount" to reward.quantity
+                    ))
+                }
+                // Other reward types would be handled here (SEEDS, ITEMS, etc.)
+                // For now, just handle faction reputation as that's the task requirement
+                else -> {
+                    // Other reward types are handled elsewhere (e.g., in UI controllers)
+                }
+            }
         }
     }
     

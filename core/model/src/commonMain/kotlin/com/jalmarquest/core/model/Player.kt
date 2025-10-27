@@ -20,7 +20,15 @@ data class Player(
     @SerialName("thought_cabinet") val thoughtCabinet: ThoughtCabinet = ThoughtCabinet(),
     @SerialName("skill_tree") val skillTree: SkillTree = SkillTree(),
     @SerialName("crafting_knowledge") val craftingKnowledge: CraftingKnowledge = CraftingKnowledge(),
-    @SerialName("archetype_progress") val archetypeProgress: ArchetypeProgress = ArchetypeProgress()
+    @SerialName("archetype_progress") val archetypeProgress: ArchetypeProgress = ArchetypeProgress(),
+    @SerialName("companion_state") val companionState: CompanionState = CompanionState(),
+    @SerialName("glimmer_wallet") val glimmerWallet: GlimmerWallet = GlimmerWallet(),
+    @SerialName("seasonal_chronicle") val seasonalChronicle: SeasonalChronicleState = SeasonalChronicleState(),
+    @SerialName("shop_state") val shopState: ShopState = ShopState(),
+    @SerialName("entitlements") val entitlements: EntitlementState = EntitlementState(),
+    @SerialName("nest_customization") val nestCustomization: NestCustomizationState = NestCustomizationState(),
+    @SerialName("faction_reputations") val factionReputations: Map<String, Int> = emptyMap(),
+    @SerialName("world_exploration") val worldExploration: WorldExplorationState = WorldExplorationState()
 )
 
 @Serializable

@@ -237,6 +237,7 @@ private fun iconForAction(type: HubActionType): ImageVector = when (type) {
     HubActionType.THOUGHTS -> Icons.Outlined.Psychology
     HubActionType.SKILLS -> Icons.Outlined.AutoAwesome
     HubActionType.QUESTS -> Icons.Outlined.Flag
+    HubActionType.BATTLE_PASS -> Icons.Outlined.Star
 }
 
 @Composable
@@ -253,6 +254,7 @@ private fun actionLabel(type: HubActionType): String = when (type) {
     HubActionType.THOUGHTS -> "Thought Cabinet" // TODO: Add localization
     HubActionType.SKILLS -> "Skills" // TODO: Add localization
     HubActionType.QUESTS -> "Quests" // TODO: Add localization
+    HubActionType.BATTLE_PASS -> "Seasonal Chronicle" // TODO: Add localization
 }
 
 @Composable
@@ -269,4 +271,5 @@ private fun actionDescription(type: HubActionType): String = when (type) {
     HubActionType.THOUGHTS -> "Internalize philosophical concepts" // TODO: Add localization
     HubActionType.SKILLS -> "Level up your abilities and unlock talents" // TODO: Add localization
     HubActionType.QUESTS -> "Track and complete quests" // TODO: Add localization
+    HubActionType.BATTLE_PASS -> "Progress through the seasonal battle pass" // TODO: Add localization
 }

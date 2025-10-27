@@ -46,7 +46,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestSuccess() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         val accepted = manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
@@ -59,7 +59,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestFailsWhenAlreadyActive() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
@@ -72,7 +72,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestFailsWhenPrerequisiteNotMet() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         // Try to accept quest with prerequisite
@@ -85,7 +85,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestSucceedsAfterPrerequisiteCompleted() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         // Accept and complete prerequisite (complete its objectives first!)
@@ -103,7 +103,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestFailsWhenLevelTooLow() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer(archetypeLevel = 1)
         
         // Complete prerequisites first (with objectives!)
@@ -128,7 +128,7 @@ class QuestManagerTest {
     @Test
     fun testAcceptQuestSucceedsWhenLevelMet() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer(archetypeLevel = 2)
         
         // Complete prerequisites (with objectives!)
@@ -153,7 +153,7 @@ class QuestManagerTest {
     @Test
     fun testUpdateObjective() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         // First complete the prerequisite
@@ -176,7 +176,7 @@ class QuestManagerTest {
     @Test
     fun testCompleteQuestSuccess() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
@@ -194,7 +194,7 @@ class QuestManagerTest {
     @Test
     fun testCompleteQuestFailsWhenObjectivesIncomplete() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         // Complete prerequisite first
@@ -215,7 +215,7 @@ class QuestManagerTest {
     @Test
     fun testAbandonQuest() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
@@ -230,7 +230,7 @@ class QuestManagerTest {
     @Test
     fun testFailQuest() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer()
         
         manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
@@ -245,7 +245,7 @@ class QuestManagerTest {
     @Test
     fun testLoadQuestLog() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         
         val existingLog = QuestLog(
             completedQuests = listOf(QuestId("tutorial_first_exploration"))
@@ -259,7 +259,7 @@ class QuestManagerTest {
     @Test
     fun testRepeatableQuest() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer(archetypeLevel = 2)
         
         // Accept and complete repeatable quest
@@ -276,7 +276,7 @@ class QuestManagerTest {
     @Test
     fun testGetAvailableQuests() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         val player = createTestPlayer(archetypeLevel = 3)
         
         val available = manager.getAvailableQuests(player)
@@ -288,7 +288,7 @@ class QuestManagerTest {
     @Test
     fun testArchetypeRequirement() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         
         // Create quest with archetype requirement
         val quest = Quest(
@@ -315,7 +315,7 @@ class QuestManagerTest {
     @Test
     fun testChoiceTagRequirement() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         
         // Create quest with choice tag requirement
         val quest = Quest(
@@ -342,7 +342,7 @@ class QuestManagerTest {
     @Test
     fun testNotChoiceTagRequirement() = runTest {
         val catalog = QuestCatalog()
-        val manager = QuestManager(catalog)
+        val manager = QuestManager(catalog, null)
         
         // Create quest that requires NOT having a tag
         val quest = Quest(

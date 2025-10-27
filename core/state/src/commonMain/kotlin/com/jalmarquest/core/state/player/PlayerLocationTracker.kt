@@ -1,5 +1,6 @@
 package com.jalmarquest.core.state.player
 
+import com.jalmarquest.core.state.coordinator.OptimizedWorldUpdateCoordinator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +29,11 @@ data class LocationVisit(
 
 /**
  * Manages player location tracking and integration with world systems
+ * 
+ * Integration Points:
+ * - OptimizedWorldUpdateCoordinator: Notifies spatial partitioning system of player movement
+ * - QuestFlowIntegrator: Location-based quest triggers
+ * - Analytics: Visit history tracking
  */
 class PlayerLocationTracker(
     private val timestampProvider: () -> Long
@@ -41,8 +47,24 @@ class PlayerLocationTracker(
     private val _recentLocations = MutableStateFlow<List<String>>(emptyList())
     val recentLocations: StateFlow<List<String>> = _recentLocations.asStateFlow()
     
+    // Optional coordinator for spatial optimization
+    private var optimizedCoordinator: OptimizedWorldUpdateCoordinator? = null
+    
+    /**
+     * Set the optimized coordinator for spatial partitioning integration
+     * Called by DI initialization
+     */
+    fun setOptimizedCoordinator(coordinator: OptimizedWorldUpdateCoordinator) {
+        this.optimizedCoordinator = coordinator
+    }
+    
     /**
      * Move player to a new location
+     * 
+     * Triggers:
+     * - Location history update
+     * - Spatial partitioning update (if OptimizedWorldUpdateCoordinator is set)
+     * - Location change event for observers (via StateFlow)
      */
     fun moveToLocation(locationId: String) {
         val now = timestampProvider()
@@ -68,6 +90,9 @@ class PlayerLocationTracker(
             recent.removeLast()
         }
         _recentLocations.value = recent.distinct()
+        
+        // Notify optimized coordinator for spatial partitioning
+        optimizedCoordinator?.updatePlayerLocation(locationId)
     }
     
     /**

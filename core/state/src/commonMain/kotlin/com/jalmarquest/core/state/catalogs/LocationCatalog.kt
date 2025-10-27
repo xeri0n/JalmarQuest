@@ -54,6 +54,12 @@ class LocationCatalog {
         ))
         
         registerLocation(Location(
+            id = "the_nest",
+            name = "Your Nest",
+            description = "Your personal sanctuary - a cozy burrow where you can rest, customize your space, and display your treasures. This is your home in the big world."
+        ))
+        
+        registerLocation(Location(
             id = "buttonburgh_quills_study",
             name = "Quill's Study",
             description = "A cozy library filled with ancient tomes and scholarly wisdom."

@@ -24,6 +24,16 @@ import com.jalmarquest.core.state.quests.QuestManager
 import com.jalmarquest.core.state.quests.QuestCatalog
 import com.jalmarquest.core.state.quests.QuestTriggerManager
 import com.jalmarquest.core.state.quests.QuestFlowIntegrator
+import com.jalmarquest.core.state.monetization.GlimmerWalletManager
+import com.jalmarquest.core.state.monetization.EntitlementManager
+import com.jalmarquest.core.state.battlepass.SeasonalChronicleManager
+import com.jalmarquest.core.state.battlepass.SeasonCatalog
+import com.jalmarquest.core.state.battlepass.registerSeason1
+import com.jalmarquest.core.state.shop.ShopManager
+import com.jalmarquest.core.state.shop.ShopCatalog
+import com.jalmarquest.core.state.shop.registerDefaultItems
+// import com.jalmarquest.core.state.companions.CompanionManager
+// import com.jalmarquest.core.state.companions.CompanionCatalog
 import com.jalmarquest.core.state.catalogs.NpcCatalog
 import com.jalmarquest.core.state.catalogs.EnemyCatalog
 import com.jalmarquest.core.state.catalogs.LocationCatalog
@@ -43,6 +53,7 @@ import com.jalmarquest.core.state.player.PlayerLocationTracker
 import com.jalmarquest.core.state.weather.WeatherSystem
 import com.jalmarquest.core.state.weather.SeasonalCycleManager
 import com.jalmarquest.core.state.coordinator.WorldUpdateCoordinator
+import com.jalmarquest.core.state.coordinator.OptimizedWorldUpdateCoordinator
 import com.jalmarquest.feature.eventengine.ChapterEventProvider
 import com.jalmarquest.feature.eventengine.DefaultChapterEventProvider
 import com.jalmarquest.feature.eventengine.EventEngine
@@ -60,9 +71,12 @@ import com.jalmarquest.feature.hub.HubStateMachine
 import com.jalmarquest.feature.nest.NestConfig
 import com.jalmarquest.feature.nest.NestController
 import com.jalmarquest.feature.nest.NestStateMachine
+import com.jalmarquest.feature.nest.NestCosmeticCatalog
+import com.jalmarquest.core.state.managers.NestCustomizationManager
 import com.jalmarquest.feature.systemic.SystemicInteractionController
 import com.jalmarquest.feature.systemic.SystemicInteractionEngine
 import com.jalmarquest.feature.systemic.defaultInteractionCatalog
+import com.jalmarquest.feature.worldmap.WorldMapController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Clock
 import org.koin.core.Koin
@@ -90,6 +104,7 @@ fun coreModule(
     single { NpcCatalog() }
     single { EnemyCatalog() }
     single { LocationCatalog() }
+    single { com.jalmarquest.core.state.catalogs.WorldRegionCatalog() }
     
     // Phase 2 NPC & World Systems
     single { InGameTimeManager(timestampProvider = ::currentTimeProvider) }
@@ -112,6 +127,9 @@ fun coreModule(
     single { WeatherSystem(timestampProvider = ::currentTimeProvider) }
     single { SeasonalCycleManager(timestampProvider = ::currentTimeProvider) }
     single { WorldUpdateCoordinator(npcCatalog = get(), npcAiGoalManager = get(), predatorPatrolManager = get(), resourceRespawnManager = get(), weatherSystem = get(), seasonalCycleManager = get(), timestampProvider = ::currentTimeProvider) }
+    
+    // Phase 6 Performance Optimization
+    single { OptimizedWorldUpdateCoordinator(npcCatalog = get(), enemyCatalog = get(), locationCatalog = get(), npcAiGoalManager = get(), predatorPatrolManager = get(), resourceRespawnManager = get(), weatherSystem = get(), seasonalCycleManager = get(), timestampProvider = ::currentTimeProvider) }
     
     // Phase 5 Quest Flow Integration
     single { QuestTriggerManager() }
@@ -138,7 +156,55 @@ fun coreModule(
     single { ArchetypeManager(gameStateManager = get(), talentTreeCatalog = get()) }
     single { AccountManager(initialAccount = get(), timestampProvider = ::currentTimeProvider) }
     single { QuestCatalog() }
-    single { QuestManager(questCatalog = get(), timestampProvider = ::currentTimeProvider) }
+    
+    // Nest Customization (Housing System) - Must be before QuestManager
+    single { NestCosmeticCatalog.apply { registerAllCosmetics() } }
+    single { 
+        NestCustomizationManager(
+            gameStateManager = get(),
+            glimmerWalletManager = get(),
+            timestampProvider = ::currentTimeProvider,
+            cosmeticCatalog = get<NestCosmeticCatalog>().allCosmetics
+        )
+    }
+    
+    single { QuestManager(
+        questCatalog = get(), 
+        gameStateManager = get(), 
+        nestCustomizationManager = get(),
+        timestampProvider = ::currentTimeProvider
+    ) }
+    
+    // Monetization & Battle Pass
+    single { EntitlementManager(gameStateManager = get()) }
+    single { GlimmerWalletManager(gameStateManager = get(), timestampProvider = ::currentTimeProvider, entitlementManager = get()) }
+    single { SeasonCatalog().apply { registerSeason1(currentTimeProvider()) } }
+    single { resolveSeasonalChronicleManager() }
+    
+    // Shop & Cosmetics
+    single { ShopCatalog().apply { registerDefaultItems() } }
+    single { resolveShopManager() }
+    
+    // World Exploration System
+    single {
+        com.jalmarquest.core.state.managers.DiscoveryRewardManager(
+            regionCatalog = get(),
+            gameStateManager = get(),
+            timestampProvider = ::currentTimeProvider
+        )
+    }
+    single {
+        com.jalmarquest.core.state.managers.WorldMapManager(
+            gameStateManager = get(),
+            locationCatalog = get(),
+            regionCatalog = get(),
+            discoveryRewardManager = get(),
+            timestampProvider = ::currentTimeProvider
+        )
+    }
+    
+    // single { CompanionCatalog() }
+    // single { CompanionManager(gameStateManager = get(), companionCatalog = get(), timestampProvider = ::currentTimeProvider) }
     single<EventEngine> {
         InMemoryEventEngine(
             snippetSelector = get(),
@@ -167,7 +233,23 @@ fun coreModule(
     factory { (scope: CoroutineScope) -> HubController(scope = scope, stateMachine = get()) }
     factory { (scope: CoroutineScope) -> ActivitiesController(scope = scope, stateMachine = get()) }
     factory { (scope: CoroutineScope) -> SystemicInteractionController(scope = scope, engine = get(), gameStateManager = get()) }
+    factory { (scope: CoroutineScope) -> 
+        WorldMapController(
+            worldMapManager = get(),
+            coroutineScope = scope
+        )
+    }
     single<ChapterEventProvider> { chapterEventProvider }
+}
+
+/**
+ * Initialize optimization systems integration
+ * Call this after Koin initialization to wire PlayerLocationTracker with OptimizedWorldUpdateCoordinator
+ */
+fun initializeOptimizationIntegration() {
+    val tracker = resolvePlayerLocationTracker()
+    val coordinator = resolveOptimizedWorldUpdateCoordinator()
+    tracker.setOptimizedCoordinator(coordinator)
 }
 
 private fun currentTimeProvider(): Long = Clock.System.now().toEpochMilliseconds()
@@ -195,6 +277,14 @@ fun resolveArchetypeManager(): ArchetypeManager = requireKoin().get()
 fun resolveAccountManager(): AccountManager = requireKoin().get()
 
 fun resolveQuestManager(): QuestManager = requireKoin().get()
+
+fun resolveQuestCatalog(): QuestCatalog = requireKoin().get()
+
+fun resolveGameStateManager(): GameStateManager = requireKoin().get()
+
+// fun resolveCompanionCatalog(): CompanionCatalog = requireKoin().get()
+
+// fun resolveCompanionManager(): CompanionManager = requireKoin().get()
 
 // Phase 1-3 Manager Resolvers
 fun resolveNpcCatalog(): NpcCatalog = requireKoin().get()
@@ -235,6 +325,44 @@ fun resolveSeasonalCycleManager(): SeasonalCycleManager = requireKoin().get()
 
 fun resolveWorldUpdateCoordinator(): WorldUpdateCoordinator = requireKoin().get()
 
+fun resolveOptimizedWorldUpdateCoordinator(): OptimizedWorldUpdateCoordinator = requireKoin().get()
+
 fun resolveQuestTriggerManager(): QuestTriggerManager = requireKoin().get()
 
 fun resolveQuestFlowIntegrator(): QuestFlowIntegrator = requireKoin().get()
+
+fun resolveGlimmerWalletManager(): GlimmerWalletManager = requireKoin().get()
+
+fun resolveEntitlementManager(): EntitlementManager = requireKoin().get()
+
+fun resolveNestCustomizationManager(): NestCustomizationManager = requireKoin().get()
+
+fun resolveNestCosmeticCatalog(): NestCosmeticCatalog = requireKoin().get()
+
+fun resolveWorldRegionCatalog(): com.jalmarquest.core.state.catalogs.WorldRegionCatalog = requireKoin().get()
+
+fun resolveWorldMapManager(): com.jalmarquest.core.state.managers.WorldMapManager = requireKoin().get()
+
+fun resolveDiscoveryRewardManager(): com.jalmarquest.core.state.managers.DiscoveryRewardManager = requireKoin().get()
+
+fun resolveSeasonCatalog(): SeasonCatalog = requireKoin().get()
+
+fun resolveSeasonalChronicleManager(): SeasonalChronicleManager {
+    val koin = requireKoin()
+    return SeasonalChronicleManager(
+        gameStateManager = koin.get(),
+        glimmerWalletManager = koin.get(),
+        seasonCatalog = koin.get(),
+        timestampProvider = ::currentTimeProvider
+    )
+}
+
+fun resolveShopManager(): ShopManager {
+    val koin = requireKoin()
+    return ShopManager(
+        gameStateManager = koin.get(),
+        catalog = koin.get(),
+        glimmerWalletManager = koin.get(),
+        currentTimeProvider = ::currentTimeProvider
+    )
+}

@@ -31,6 +31,11 @@ class ExploreStateMachine(
             _state.value = _state.value.copy(phase = ExplorePhase.Loading)
         }
         val player = currentPlayer()
+        
+        // Log current location for AI Director context
+        val currentLocation = player.worldExploration.currentLocationId
+        gameStateManager.appendChoice("explore_at_$currentLocation")
+        
         val resolution = eventEngine.evaluateNextEncounter(player)
         mutex.withLock {
             when (resolution) {

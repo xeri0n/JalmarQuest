@@ -40,6 +40,7 @@ kotlin {
                 implementation(projects.feature.systemic)
                 implementation(projects.feature.hub)
                 implementation(projects.feature.activities)
+                implementation(projects.feature.worldmap)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)

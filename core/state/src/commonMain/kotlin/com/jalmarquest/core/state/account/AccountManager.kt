@@ -6,6 +6,7 @@ import com.jalmarquest.core.model.CharacterAccount
 import com.jalmarquest.core.model.CharacterDisplayStats
 import com.jalmarquest.core.model.CharacterSlot
 import com.jalmarquest.core.model.CharacterSlotId
+import com.jalmarquest.core.model.EntitlementState
 import com.jalmarquest.core.model.HoardRank
 import com.jalmarquest.core.model.HoardRankTier
 import com.jalmarquest.core.model.Player
@@ -31,18 +32,20 @@ class AccountManager(
 
     /**
      * Creates a new character in the next available slot.
+     * @param entitlements Player's entitlement state for slot limits
      * @return CharacterSlotId of the newly created character, or null if max slots reached
      */
     suspend fun createCharacter(
         characterName: String,
-        archetype: ArchetypeType
+        archetype: ArchetypeType,
+        entitlements: EntitlementState? = null
     ): CharacterSlotId? = mutex.withLock {
         val account = _accountState.value
-        if (!account.canCreateSlot()) {
+        if (!account.canCreateSlot(entitlements)) {
             PerformanceLogger.logStateMutation(
                 "AccountManager",
                 "createCharacter",
-                mapOf("result" to "max_slots_reached", "active" to account.getActiveSlots().size, "max" to account.maxSlots())
+                mapOf("result" to "max_slots_reached", "active" to account.getActiveSlots().size, "max" to account.maxSlots(entitlements))
             )
             return null
         }

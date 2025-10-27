@@ -2991,5 +2991,326 @@ class QuestCatalog {
                 recommendedLevel = 20
             )
         )
+        
+        // ========== IGNATIUS LORE CHAIN QUEST ARC ==========
+        // A 5-quest storyline revealing Ignatius's mysterious past and faction ties
+        
+        // Quest 51: Introduction - The Scholar's Request
+        registerQuest(
+            Quest(
+                questId = QuestId("quest_ignatius_introduction"),
+                title = "The Scholar's Request",
+                description = "Master Ignatius seeks assistance with his research into ancient insect civilizations. He seems unusually interested in your findings.",
+                objectives = listOf(
+                    QuestObjective(
+                        objectiveId = "collect_ancient_texts",
+                        description = "Collect 3 ancient texts from ruins",
+                        type = QuestObjectiveType.COLLECT_ITEMS,
+                        targetId = "ancient_text",
+                        targetQuantity = 3
+                    ),
+                    QuestObjective(
+                        objectiveId = "deliver_texts",
+                        description = "Deliver the texts to Ignatius",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("collect_ancient_texts")
+                    )
+                ),
+                rewards = listOf(
+                    QuestReward(
+                        type = QuestRewardType.SEEDS,
+                        quantity = 200,
+                        description = "200 Seeds"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.RECIPE,
+                        targetId = "research_catalyst",
+                        quantity = 1,
+                        description = "Recipe: Research Catalyst"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.FACTION_REPUTATION,
+                        targetId = "faction_buttonburgh",
+                        quantity = 5,
+                        description = "+5 Buttonburgh reputation"
+                    )
+                ),
+                requirements = listOf(
+                    QuestRequirement.PrerequisiteQuest(QuestId("tutorial_first_craft")),
+                    QuestRequirement.MinimumLevel(5)
+                ),
+                questGiverNpc = "Ignatius",
+                turnInNpc = "Ignatius",
+                factionId = "faction_buttonburgh",
+                recommendedLevel = 5,
+                loreText = "Ignatius's eyes gleam with recognition as you present the texts. 'These are... older than I expected,' he mutters."
+            )
+        )
+        
+        // Quest 52: Trust Building - The Midnight Delivery
+        registerQuest(
+            Quest(
+                questId = QuestId("quest_ignatius_trust"),
+                title = "The Midnight Delivery",
+                description = "Ignatius trusts you with a delicate task: deliver a sealed package to the Ant Colony without inspection. He insists timing is critical.",
+                objectives = listOf(
+                    QuestObjective(
+                        objectiveId = "obtain_package",
+                        description = "Receive the sealed package from Ignatius",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1
+                    ),
+                    QuestObjective(
+                        objectiveId = "deliver_at_night",
+                        description = "Deliver package to Ant Colony contact at midnight",
+                        type = QuestObjectiveType.CUSTOM,
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("obtain_package")
+                    ),
+                    QuestObjective(
+                        objectiveId = "return_confirmation",
+                        description = "Return to Ignatius with confirmation",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("deliver_at_night")
+                    )
+                ),
+                rewards = listOf(
+                    QuestReward(
+                        type = QuestRewardType.SEEDS,
+                        quantity = 300,
+                        description = "300 Seeds"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.FACTION_REPUTATION,
+                        targetId = "faction_ant_colony",
+                        quantity = 10,
+                        description = "+10 Ant Colony reputation"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.THOUGHT,
+                        targetId = "thought_trust_in_shadows",
+                        quantity = 1,
+                        description = "Thought: Trust in Shadows"
+                    )
+                ),
+                requirements = listOf(
+                    QuestRequirement.PrerequisiteQuest(QuestId("quest_ignatius_introduction")),
+                    QuestRequirement.MinimumLevel(7)
+                ),
+                questGiverNpc = "Ignatius",
+                turnInNpc = "Ignatius",
+                factionId = "faction_ant_colony",
+                recommendedLevel = 7,
+                loreText = "The Ant Colony guard nods knowingly when you mention Ignatius. 'The alliance holds,' they whisper."
+            )
+        )
+        
+        // Quest 53: Secret Revealed - The Defector's Truth
+        registerQuest(
+            Quest(
+                questId = QuestId("quest_ignatius_secret"),
+                title = "The Defector's Truth",
+                description = "Ignatius reveals he was once a high-ranking member of the Insect Kingdom, but defected to help Buttonburgh. He needs your help to prevent war.",
+                objectives = listOf(
+                    QuestObjective(
+                        objectiveId = "hear_confession",
+                        description = "Listen to Ignatius's full story",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1
+                    ),
+                    QuestObjective(
+                        objectiveId = "gather_intelligence",
+                        description = "Gather intelligence on Insect Kingdom patrols",
+                        type = QuestObjectiveType.CUSTOM,
+                        targetQuantity = 5,
+                        prerequisiteObjectives = listOf("hear_confession")
+                    ),
+                    QuestObjective(
+                        objectiveId = "infiltrate_border",
+                        description = "Infiltrate the Insect Kingdom border outpost",
+                        type = QuestObjectiveType.REACH_LOCATION,
+                        targetId = "location_insect_border",
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("gather_intelligence")
+                    ),
+                    QuestObjective(
+                        objectiveId = "retrieve_documents",
+                        description = "Retrieve classified war plans",
+                        type = QuestObjectiveType.COLLECT_ITEMS,
+                        targetId = "war_plans",
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("infiltrate_border")
+                    )
+                ),
+                rewards = listOf(
+                    QuestReward(
+                        type = QuestRewardType.SEEDS,
+                        quantity = 500,
+                        description = "500 Seeds"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.FACTION_REPUTATION,
+                        targetId = "faction_buttonburgh",
+                        quantity = 15,
+                        description = "+15 Buttonburgh reputation"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.FACTION_REPUTATION,
+                        targetId = "faction_insects",
+                        quantity = -20,
+                        description = "-20 Insect Kingdom reputation"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.LORE_UNLOCK,
+                        targetId = "lore_ignatius_defection",
+                        quantity = 1,
+                        description = "Unlock: The Defector's Archive"
+                    )
+                ),
+                requirements = listOf(
+                    QuestRequirement.PrerequisiteQuest(QuestId("quest_ignatius_trust")),
+                    QuestRequirement.MinimumLevel(10)
+                ),
+                questGiverNpc = "Ignatius",
+                turnInNpc = "Ignatius",
+                factionId = "faction_buttonburgh",
+                recommendedLevel = 10,
+                loreText = "'I was the Third Councilor,' Ignatius confesses. 'But I saw the Kingdom's true intentions and chose a different path.'"
+            )
+        )
+        
+        // Quest 54: Alliance Choice - The Three Paths
+        registerQuest(
+            Quest(
+                questId = QuestId("quest_ignatius_alliance_choice"),
+                title = "The Three Paths",
+                description = "With war looming, Ignatius presents three options: ally fully with Buttonburgh, broker peace with all factions, or expose Ignatius and side with the Insect Kingdom.",
+                objectives = listOf(
+                    QuestObjective(
+                        objectiveId = "review_evidence",
+                        description = "Review all gathered evidence with Ignatius",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1
+                    ),
+                    QuestObjective(
+                        objectiveId = "make_alliance_choice",
+                        description = "Choose your faction allegiance",
+                        type = QuestObjectiveType.MAKE_CHOICE,
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("review_evidence"),
+                        isHidden = false
+                    ),
+                    QuestObjective(
+                        objectiveId = "execute_plan",
+                        description = "Execute your chosen plan",
+                        type = QuestObjectiveType.CUSTOM,
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("make_alliance_choice")
+                    )
+                ),
+                rewards = listOf(
+                    QuestReward(
+                        type = QuestRewardType.SEEDS,
+                        quantity = 750,
+                        description = "750 Seeds"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.ARCHETYPE_TALENT_POINT,
+                        quantity = 2,
+                        description = "2 Talent Points"
+                    )
+                    // Faction reputation rewards handled dynamically based on choice in consequence system
+                ),
+                requirements = listOf(
+                    QuestRequirement.PrerequisiteQuest(QuestId("quest_ignatius_secret")),
+                    QuestRequirement.MinimumLevel(12)
+                ),
+                questGiverNpc = "Ignatius",
+                turnInNpc = "Ignatius",
+                recommendedLevel = 12,
+                loreText = "Your choice will reshape the balance of power in the region. Ignatius watches you with a mixture of hope and dread."
+            )
+        )
+        
+        // Quest 55: Finale - Consequences of Alliance
+        registerQuest(
+            Quest(
+                questId = QuestId("quest_ignatius_finale"),
+                title = "Consequences of Alliance",
+                description = "The aftermath of your choice unfolds. Face the consequences and see how the factions respond to the new reality you've created.",
+                objectives = listOf(
+                    QuestObjective(
+                        objectiveId = "witness_aftermath",
+                        description = "Witness the immediate aftermath",
+                        type = QuestObjectiveType.CUSTOM,
+                        targetQuantity = 1
+                    ),
+                    QuestObjective(
+                        objectiveId = "faction_meetings",
+                        description = "Attend faction leader meetings",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "faction_leaders",
+                        targetQuantity = 3,
+                        prerequisiteObjectives = listOf("witness_aftermath")
+                    ),
+                    QuestObjective(
+                        objectiveId = "stabilize_region",
+                        description = "Complete stabilization tasks",
+                        type = QuestObjectiveType.CUSTOM,
+                        targetQuantity = 5,
+                        prerequisiteObjectives = listOf("faction_meetings")
+                    ),
+                    QuestObjective(
+                        objectiveId = "final_report",
+                        description = "Deliver final report to Ignatius (or his successor)",
+                        type = QuestObjectiveType.TALK_TO_NPC,
+                        targetId = "Ignatius",
+                        targetQuantity = 1,
+                        prerequisiteObjectives = listOf("stabilize_region")
+                    )
+                ),
+                rewards = listOf(
+                    QuestReward(
+                        type = QuestRewardType.SEEDS,
+                        quantity = 1000,
+                        description = "1000 Seeds"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.LORE_UNLOCK,
+                        targetId = "lore_new_world_order",
+                        quantity = 1,
+                        description = "Unlock: A New World Order"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.COSMETIC,
+                        targetId = "cosmetic_diplomat_badge",
+                        quantity = 1,
+                        description = "Diplomat's Badge (or Warmonger's Crest, based on choice)"
+                    ),
+                    QuestReward(
+                        type = QuestRewardType.ABILITY,
+                        targetId = "ability_faction_diplomat",
+                        quantity = 1,
+                        description = "Ability: Faction Diplomat"
+                    )
+                ),
+                requirements = listOf(
+                    QuestRequirement.PrerequisiteQuest(QuestId("quest_ignatius_alliance_choice")),
+                    QuestRequirement.MinimumLevel(15)
+                ),
+                questGiverNpc = "Ignatius",
+                turnInNpc = "Ignatius",
+                recommendedLevel = 15,
+                loreText = "History will remember this moment. Whether as salvation or catastrophe depends on choices yet to come."
+            )
+        )
     }
 }
+

@@ -95,6 +95,54 @@ class GameStateManager(
             player.copy(inventory = transform(player.inventory))
         }
     }
+    
+    fun updateGlimmerWallet(transform: (com.jalmarquest.core.model.GlimmerWallet) -> com.jalmarquest.core.model.GlimmerWallet) {
+        _playerState.update { player ->
+            player.copy(glimmerWallet = transform(player.glimmerWallet))
+        }
+    }
+
+    fun updateShopState(transform: (com.jalmarquest.core.model.ShopState) -> com.jalmarquest.core.model.ShopState) {
+        _playerState.update { player ->
+            player.copy(shopState = transform(player.shopState))
+        }
+    }
+
+    fun updateEntitlements(transform: (com.jalmarquest.core.model.EntitlementState) -> com.jalmarquest.core.model.EntitlementState) {
+        _playerState.update { player ->
+            player.copy(entitlements = transform(player.entitlements))
+        }
+    }
+
+    fun updateNestCustomization(transform: (com.jalmarquest.core.model.NestCustomizationState) -> com.jalmarquest.core.model.NestCustomizationState) {
+        _playerState.update { player ->
+            player.copy(nestCustomization = transform(player.nestCustomization))
+        }
+    }
+
+    fun updateWorldExploration(transform: (com.jalmarquest.core.model.WorldExplorationState) -> com.jalmarquest.core.model.WorldExplorationState) {
+        _playerState.update { player ->
+            player.copy(worldExploration = transform(player.worldExploration))
+        }
+    }
+
+    fun updateFactionReputation(factionId: String, amount: Int) {
+        require(factionId.isNotBlank()) { "Faction id cannot be blank" }
+        PerformanceLogger.logStateMutation("Player", "updateFactionReputation", mapOf("faction" to factionId, "amount" to amount))
+        _playerState.update { player ->
+            val currentRep = player.factionReputations[factionId] ?: 0
+            val newRep = (currentRep + amount).coerceIn(-100, 100)
+            player.copy(factionReputations = player.factionReputations + (factionId to newRep))
+        }
+    }
+
+    fun setFactionReputation(factionId: String, reputation: Int) {
+        require(factionId.isNotBlank()) { "Faction id cannot be blank" }
+        val clampedRep = reputation.coerceIn(-100, 100)
+        _playerState.update { player ->
+            player.copy(factionReputations = player.factionReputations + (factionId to clampedRep))
+        }
+    }
 
     fun updatePlayer(transform: (Player) -> Player) {
         _playerState.update(transform)

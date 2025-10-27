@@ -116,6 +116,7 @@ class HoardRankManager(
      */
     private fun recalculateHoardRank(collection: ShinyCollection): HoardRank {
         val baseValue = valuationService.calculateTotalValue(collection)
+        val player = gameStateManager.playerState.value
         
         // Apply Hoarding skill bonus (10% per bonus point)
         val hoardingBonus = skillManager?.getTotalBonus(AbilityType.HOARD_VALUE_BONUS) ?: 0
@@ -123,13 +124,15 @@ class HoardRankManager(
         // Apply archetype HOARD_VALUE_BONUS talent
         val archetypeBonus = archetypeManager?.getTotalBonus(TalentType.HOARD_VALUE_BONUS) ?: 0
         
-        // Combine bonuses (both are percentage-based)
-        val totalBonusPercent = hoardingBonus + archetypeBonus
+        // Apply nest Shiny Display upgrade bonus (+10% hoard XP)
+        val nestBonus = if (player.nestCustomization.getHoardXpBonus() > 0) 10 else 0
+        
+        // Combine bonuses (all are percentage-based)
+        val totalBonusPercent = hoardingBonus + archetypeBonus + nestBonus
         val bonusMultiplier = 1.0 + (totalBonusPercent * 0.01)
         val totalValue = (baseValue * bonusMultiplier).toLong()
         
         val tier = HoardRank.calculateTier(totalValue)
-        val player = gameStateManager.playerState.value
         
         // Update leaderboard entry
         leaderboardService.updatePlayerEntry(

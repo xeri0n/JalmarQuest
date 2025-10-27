@@ -44,7 +44,10 @@ enum class HubActionType {
     SKILLS,
 
     @SerialName("quests")
-    QUESTS
+    QUESTS,
+
+    @SerialName("battle_pass")
+    BATTLE_PASS
 }
 
 @Serializable
@@ -93,6 +96,7 @@ fun defaultHubLocations(): List<HubLocation> = listOf(
         actionOrder = listOf(
             HubAction(id = HubActionId("chronicle"), type = HubActionType.CHRONICLE),
             HubAction(id = HubActionId("quests"), type = HubActionType.QUESTS),
+            HubAction(id = HubActionId("battle_pass"), type = HubActionType.BATTLE_PASS),
             HubAction(id = HubActionId("thoughts"), type = HubActionType.THOUGHTS),
             HubAction(id = HubActionId("secondary"), type = HubActionType.ACTIVITIES),
             HubAction(id = HubActionId("expedition"), type = HubActionType.EXPLORE)

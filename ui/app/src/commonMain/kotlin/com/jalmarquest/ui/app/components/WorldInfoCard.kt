@@ -111,7 +111,7 @@ fun WorldInfoCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = state.weatherCondition,
+                            text = state.weatherDisplay,
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
@@ -121,7 +121,7 @@ fun WorldInfoCard(
                         )
                     }
                     Text(
-                        text = state.weatherDescription,
+                        text = state.weatherDesc,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -144,7 +144,7 @@ fun WorldInfoCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = state.season,
+                            text = state.seasonDisplay,
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
@@ -154,7 +154,7 @@ fun WorldInfoCard(
                         )
                     }
                     Text(
-                        text = state.seasonDescription,
+                        text = state.seasonDesc,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -165,7 +165,7 @@ fun WorldInfoCard(
 
             // Resource Availability
             Text(
-                text = "Resources: $resourceAvailability",
+                text = "Resources: ${state.resourceAvailability}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -228,7 +228,7 @@ fun WorldInfoCompact(
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = state.weatherCondition,
+                    text = state.weatherDisplay,
                     style = MaterialTheme.typography.bodySmall
                 )
                 Text(
@@ -241,7 +241,7 @@ fun WorldInfoCompact(
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = state.season,
+                    text = state.seasonDisplay,
                     style = MaterialTheme.typography.bodySmall
                 )
             }

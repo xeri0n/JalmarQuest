@@ -45,9 +45,13 @@ class WorldInfoController(
         val weatherState = weatherSystem.currentWeather.value
         val seasonState = seasonalManager.seasonalState.value
 
-        val weatherConditionStr: String = getWeatherDisplayName(weatherState.condition)
+        // Convert String enum names back to enums
+        val weatherCondition = WeatherCondition.valueOf(weatherState.condition)
+        val currentSeason = Season.valueOf(seasonState.currentSeason)
+
+        val weatherConditionStr: String = getWeatherDisplayName(weatherCondition)
         val weatherDescStr: String = weatherSystem.getWeatherDescription()
-        val seasonStr: String = getSeasonDisplayName(seasonState.currentSeason)
+        val seasonStr: String = getSeasonDisplayName(currentSeason)
         val seasonDescStr: String = seasonalManager.getSeasonDescription()
         
         _state.value = WorldInfoState(
@@ -62,7 +66,7 @@ class WorldInfoController(
             seasonDisplay = seasonStr,
             seasonDay = seasonState.dayOfSeason + 1,
             seasonDesc = seasonDescStr,
-            resourceAvailability = getResourceAvailability(difficultyTier, seasonState.currentSeason)
+            resourceAvailability = getResourceAvailability(difficultyTier, currentSeason)
         )
     }
 

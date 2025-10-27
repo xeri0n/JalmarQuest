@@ -48,6 +48,7 @@ kotlin {
                 implementation(projects.feature.nest)
                 implementation(projects.feature.explore)
                 implementation(projects.feature.worldinfo)
+                implementation(projects.feature.worldmap)
                 implementation(libs.koin.core)
                 implementation(libs.moko.resources)
                 implementation(libs.moko.resources.compose)

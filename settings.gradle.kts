@@ -33,6 +33,7 @@ include(
 	":feature:activities",
 	":feature:skills",
 	":feature:worldinfo",
+	":feature:worldmap",
 	":ui:app",
 	":app:android",
 	":app:desktop",

@@ -27,12 +27,16 @@ import com.jalmarquest.core.di.resolveAuthController
 import com.jalmarquest.core.di.resolveAuthStateManager
 import com.jalmarquest.core.di.resolveActivitiesController
 import com.jalmarquest.core.di.resolveNestController
+import com.jalmarquest.core.di.resolveNestCustomizationManager
 import com.jalmarquest.core.di.resolveExploreController
 import com.jalmarquest.core.di.resolveSystemicInteractionController
 import com.jalmarquest.core.di.resolveHubController
 import com.jalmarquest.core.di.resolveHoardRankManager
 import com.jalmarquest.core.di.resolveConcoctionCrafter
 import com.jalmarquest.core.di.resolveThoughtCabinetManager
+import com.jalmarquest.core.di.resolveQuestManager
+import com.jalmarquest.core.di.resolveQuestCatalog
+import com.jalmarquest.core.di.resolveGameStateManager
 import com.jalmarquest.feature.hub.HubActionType
 import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.foundation.layout.Spacer
@@ -46,6 +50,7 @@ fun JalmarQuestApp() {
     val scope = rememberCoroutineScope()
     val authController = remember(scope) { resolveAuthController(scope) }
     val nestController = remember(scope) { resolveNestController(scope) }
+    val nestCustomizationManager = remember { resolveNestCustomizationManager() }
     val exploreController = remember(scope) { resolveExploreController(scope) }
     val systemicController = remember(scope) { resolveSystemicInteractionController(scope) }
     val hubController = remember(scope) { resolveHubController(scope) }
@@ -53,6 +58,12 @@ fun JalmarQuestApp() {
     val hoardManager = remember { resolveHoardRankManager() }
     val concoctionCrafter = remember { resolveConcoctionCrafter() }
     val thoughtCabinetManager = remember { resolveThoughtCabinetManager() }
+    
+    // Quest system
+    val questManager = remember { resolveQuestManager() }
+    val questCatalog = remember { resolveQuestCatalog() }
+    val gameStateManager = remember { resolveGameStateManager() }
+    val questController = remember { QuestController(questManager, questCatalog, gameStateManager) }
     val authState by authController.authState.collectAsState()
     val guestCta = stringResource(MR.strings.auth_continue_guest)
     val guestHint = stringResource(MR.strings.auth_signed_out_hint)
@@ -86,7 +97,12 @@ fun JalmarQuestApp() {
                     SimpleGameContent(
                         authState = authState,
                         authController = authController,
-                        hubController = hubController
+                        hubController = hubController,
+                        hoardManager = hoardManager,
+                        concoctionCrafter = concoctionCrafter,
+                        questController = questController,
+                        nestCustomizationManager = nestCustomizationManager,
+                        gameStateManager = gameStateManager
                     )
                 }
             }
@@ -98,7 +114,12 @@ fun JalmarQuestApp() {
 private fun SimpleGameContent(
     authState: AuthState,
     authController: com.jalmarquest.core.state.auth.AuthController,
-    hubController: com.jalmarquest.feature.hub.HubController
+    hubController: com.jalmarquest.feature.hub.HubController,
+    hoardManager: com.jalmarquest.core.state.hoard.HoardRankManager,
+    concoctionCrafter: com.jalmarquest.core.state.concoctions.ConcoctionCrafter,
+    questController: QuestController,
+    nestCustomizationManager: com.jalmarquest.core.state.managers.NestCustomizationManager,
+    gameStateManager: com.jalmarquest.core.state.GameStateManager
 ) {
     val title = stringResource(MR.strings.app_title)
     val subtitle = stringResource(MR.strings.app_subtitle)
@@ -134,7 +155,27 @@ private fun SimpleGameContent(
                         Text(text = signOut)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    HubSection(controller = hubController)
+                    HubSection(
+                        controller = hubController,
+                        actionContent = { actionType ->
+                            when (actionType) {
+                                HubActionType.HOARD -> HoardSection(manager = hoardManager)
+                                HubActionType.CONCOCTIONS -> ConcoctionsSection(manager = concoctionCrafter)
+                                HubActionType.QUESTS -> QuestSection(controller = questController)
+                                HubActionType.NEST -> NestScreen(
+                                    customizationManager = nestCustomizationManager,
+                                    gameStateManager = gameStateManager
+                                )
+                                else -> {
+                                    Text(
+                                        text = "This feature is not yet implemented.",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                                    )
+                                }
+                            }
+                        }
+                    )
                 }
             }
         }

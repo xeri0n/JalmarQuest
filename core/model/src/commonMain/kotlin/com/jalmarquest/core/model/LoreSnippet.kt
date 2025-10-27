@@ -10,5 +10,7 @@ data class LoreSnippet(
     @SerialName("event_text") val eventText: String,
     @SerialName("choice_options") val choiceOptions: List<String>,
     val consequences: JsonObject,
-    val conditions: JsonObject
+    val conditions: JsonObject,
+    @SerialName("allowed_locations") val allowedLocations: List<String> = emptyList(), // Empty = available everywhere
+    @SerialName("allowed_biomes") val allowedBiomes: List<String> = emptyList() // Empty = available in all biomes
 )

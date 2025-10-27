@@ -150,6 +150,7 @@ data class CharacterAccount(
     val characterSlots: List<CharacterSlot> = emptyList(),
     
     @SerialName("purchased_extra_slots")
+    @Deprecated("Use Player.entitlements.totalSlots() instead")
     val purchasedExtraSlots: Int = 0,
     
     @SerialName("current_slot_id")
@@ -157,8 +158,11 @@ data class CharacterAccount(
 ) {
     /**
      * Maximum slots available (base + purchased).
+     * Pass entitlementState from Player to get accurate count.
      */
-    fun maxSlots(): Int = CharacterSlot.MAX_BASE_SLOTS + purchasedExtraSlots
+    fun maxSlots(entitlementState: EntitlementState? = null): Int {
+        return entitlementState?.totalSlots() ?: (CharacterSlot.MAX_BASE_SLOTS + purchasedExtraSlots)
+    }
     
     /**
      * Get active (non-deleted) character slots.
@@ -169,9 +173,10 @@ data class CharacterAccount(
     
     /**
      * Check if can create a new character slot.
+     * Pass entitlementState from Player to respect purchased slots.
      */
-    fun canCreateSlot(): Boolean {
-        return getActiveSlots().size < maxSlots()
+    fun canCreateSlot(entitlementState: EntitlementState? = null): Boolean {
+        return getActiveSlots().size < maxSlots(entitlementState)
     }
     
     /**

@@ -24,6 +24,47 @@ class LoreSnippetRepository(
                 (record.completionTag == null || record.completionTag !in acquired)
         }?.snippet?.id
     }
+    
+    /**
+     * Find next available snippet filtered by location and biome.
+     * Returns location-specific snippets first, then biome-specific, then generic.
+     */
+    fun nextAvailableSnippetForLocation(
+        choiceLog: ChoiceLog,
+        locationId: String?,
+        biomeType: String?
+    ): String? {
+        val acquired = choiceLog.entries.map { it.tag.value }.toSet()
+        
+        // Filter records by prerequisites and completion
+        val availableRecords = recordsInOrder.filter { record ->
+            record.prerequisites.all(acquired::contains) &&
+                (record.completionTag == null || record.completionTag !in acquired)
+        }
+        
+        // Priority 1: Location-specific snippets
+        if (locationId != null) {
+            val locationMatch = availableRecords.firstOrNull { record ->
+                val snippet = record.snippet
+                snippet.allowedLocations.isNotEmpty() && locationId in snippet.allowedLocations
+            }
+            if (locationMatch != null) return locationMatch.snippet.id
+        }
+        
+        // Priority 2: Biome-specific snippets
+        if (biomeType != null) {
+            val biomeMatch = availableRecords.firstOrNull { record ->
+                val snippet = record.snippet
+                snippet.allowedBiomes.isNotEmpty() && biomeType in snippet.allowedBiomes
+            }
+            if (biomeMatch != null) return biomeMatch.snippet.id
+        }
+        
+        // Priority 3: Generic snippets (no location/biome restrictions)
+        return availableRecords.firstOrNull { record ->
+            record.snippet.allowedLocations.isEmpty() && record.snippet.allowedBiomes.isEmpty()
+        }?.snippet?.id
+    }
 
     companion object {
         fun defaultCatalog(): LoreSnippetRepository {
@@ -121,7 +162,7 @@ class LoreSnippetRepository(
                         title = "Clover Copse Watch",
                         historySummary = "Mapped the clover clearing and its towering guardian."
                     )
-                )
+                ) + AdditionalLoreSnippets.getAllSnippets() + BiomeSpecificSnippets.getAllSnippets()
             )
         }
 
