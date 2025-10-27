@@ -22,6 +22,24 @@ import com.jalmarquest.core.state.archetype.TalentTreeCatalog
 import com.jalmarquest.core.state.account.AccountManager
 import com.jalmarquest.core.state.quests.QuestManager
 import com.jalmarquest.core.state.quests.QuestCatalog
+import com.jalmarquest.core.state.catalogs.NpcCatalog
+import com.jalmarquest.core.state.catalogs.EnemyCatalog
+import com.jalmarquest.core.state.catalogs.LocationCatalog
+import com.jalmarquest.core.state.npc.NpcScheduleManager
+import com.jalmarquest.core.state.npc.NpcRelationshipManager
+import com.jalmarquest.core.state.time.InGameTimeManager
+import com.jalmarquest.core.state.factions.FactionManager
+import com.jalmarquest.core.state.dialogue.DialogueManager
+import com.jalmarquest.core.state.ai.NpcAiGoalManager
+import com.jalmarquest.core.state.ai.NpcReactionManager
+import com.jalmarquest.core.state.dialogue.DynamicDialogueManager
+import com.jalmarquest.core.state.ecosystem.PredatorPatrolManager
+import com.jalmarquest.core.state.ecosystem.ResourceRespawnManager
+import com.jalmarquest.core.state.ecosystem.FactionTerritoryManager
+import com.jalmarquest.core.state.difficulty.RegionDifficultyManager
+import com.jalmarquest.core.state.player.PlayerLocationTracker
+import com.jalmarquest.core.state.weather.WeatherSystem
+import com.jalmarquest.core.state.weather.SeasonalCycleManager
 import com.jalmarquest.feature.eventengine.ChapterEventProvider
 import com.jalmarquest.feature.eventengine.DefaultChapterEventProvider
 import com.jalmarquest.feature.eventengine.EventEngine
@@ -64,6 +82,34 @@ fun coreModule(
     single { CrashReporter() }
     single { AuthTokenStorage() }
     single { NestConfig.default() }
+    
+    // Phase 1 Catalogs
+    single { NpcCatalog() }
+    single { EnemyCatalog() }
+    single { LocationCatalog() }
+    
+    // Phase 2 NPC & World Systems
+    single { InGameTimeManager(timestampProvider = ::currentTimeProvider) }
+    single { NpcScheduleManager(npcCatalog = get(), timeManager = get()) }
+    single { NpcRelationshipManager(timestampProvider = ::currentTimeProvider) }
+    single { FactionManager() }
+    single { DialogueManager() }
+    
+    // Phase 3 Advanced AI & Ecosystem
+    single { NpcAiGoalManager(npcCatalog = get(), scheduleManager = get(), relationshipManager = get(), timeManager = get(), gameStateManager = get(), timestampProvider = ::currentTimeProvider) }
+    single { NpcReactionManager(npcCatalog = get(), relationshipManager = get(), factionManager = get(), questManager = get(), gameStateManager = get(), timestampProvider = ::currentTimeProvider) }
+    single { DynamicDialogueManager(baseDialogueManager = get(), npcCatalog = get(), relationshipManager = get(), reactionManager = get(), questManager = get(), factionManager = get(), timeManager = get(), gameStateManager = get(), timestampProvider = ::currentTimeProvider) }
+    single { PredatorPatrolManager(enemyCatalog = get(), timeManager = get(), timestampProvider = ::currentTimeProvider) }
+    single { ResourceRespawnManager(locationCatalog = get(), timeManager = get(), timestampProvider = ::currentTimeProvider) }
+    single { FactionTerritoryManager(locationCatalog = get(), factionManager = get(), timeManager = get(), timestampProvider = ::currentTimeProvider) }
+    
+    // Phase 4 Polish & Balance
+    single { RegionDifficultyManager() }
+    single { PlayerLocationTracker(timestampProvider = ::currentTimeProvider) }
+    single { WeatherSystem(timestampProvider = ::currentTimeProvider) }
+    single { SeasonalCycleManager(timestampProvider = ::currentTimeProvider) }
+    
+    // State Machines & Controllers
     single { NestStateMachine(config = get(), gameStateManager = get()) }
     single { LoreSnippetRepository.defaultCatalog() }
     single { ConsequencesParser() }
@@ -141,3 +187,40 @@ fun resolveArchetypeManager(): ArchetypeManager = requireKoin().get()
 fun resolveAccountManager(): AccountManager = requireKoin().get()
 
 fun resolveQuestManager(): QuestManager = requireKoin().get()
+
+// Phase 1-3 Manager Resolvers
+fun resolveNpcCatalog(): NpcCatalog = requireKoin().get()
+
+fun resolveEnemyCatalog(): EnemyCatalog = requireKoin().get()
+
+fun resolveLocationCatalog(): LocationCatalog = requireKoin().get()
+
+fun resolveInGameTimeManager(): InGameTimeManager = requireKoin().get()
+
+fun resolveNpcScheduleManager(): NpcScheduleManager = requireKoin().get()
+
+fun resolveNpcRelationshipManager(): NpcRelationshipManager = requireKoin().get()
+
+fun resolveFactionManager(): FactionManager = requireKoin().get()
+
+fun resolveDialogueManager(): DialogueManager = requireKoin().get()
+
+fun resolveNpcAiGoalManager(): NpcAiGoalManager = requireKoin().get()
+
+fun resolveNpcReactionManager(): NpcReactionManager = requireKoin().get()
+
+fun resolveDynamicDialogueManager(): DynamicDialogueManager = requireKoin().get()
+
+fun resolvePredatorPatrolManager(): PredatorPatrolManager = requireKoin().get()
+
+fun resolveResourceRespawnManager(): ResourceRespawnManager = requireKoin().get()
+
+fun resolveFactionTerritoryManager(): FactionTerritoryManager = requireKoin().get()
+
+fun resolveRegionDifficultyManager(): RegionDifficultyManager = requireKoin().get()
+
+fun resolvePlayerLocationTracker(): PlayerLocationTracker = requireKoin().get()
+
+fun resolveWeatherSystem(): WeatherSystem = requireKoin().get()
+
+fun resolveSeasonalCycleManager(): SeasonalCycleManager = requireKoin().get()
