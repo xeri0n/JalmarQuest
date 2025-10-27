@@ -40,6 +40,7 @@ import com.jalmarquest.core.state.difficulty.RegionDifficultyManager
 import com.jalmarquest.core.state.player.PlayerLocationTracker
 import com.jalmarquest.core.state.weather.WeatherSystem
 import com.jalmarquest.core.state.weather.SeasonalCycleManager
+import com.jalmarquest.core.state.coordinator.WorldUpdateCoordinator
 import com.jalmarquest.feature.eventengine.ChapterEventProvider
 import com.jalmarquest.feature.eventengine.DefaultChapterEventProvider
 import com.jalmarquest.feature.eventengine.EventEngine
@@ -108,6 +109,7 @@ fun coreModule(
     single { PlayerLocationTracker(timestampProvider = ::currentTimeProvider) }
     single { WeatherSystem(timestampProvider = ::currentTimeProvider) }
     single { SeasonalCycleManager(timestampProvider = ::currentTimeProvider) }
+    single { WorldUpdateCoordinator(npcCatalog = get(), npcAiGoalManager = get(), predatorPatrolManager = get(), resourceRespawnManager = get(), weatherSystem = get(), seasonalCycleManager = get(), timestampProvider = ::currentTimeProvider) }
     
     // State Machines & Controllers
     single { NestStateMachine(config = get(), gameStateManager = get()) }
@@ -224,3 +226,5 @@ fun resolvePlayerLocationTracker(): PlayerLocationTracker = requireKoin().get()
 fun resolveWeatherSystem(): WeatherSystem = requireKoin().get()
 
 fun resolveSeasonalCycleManager(): SeasonalCycleManager = requireKoin().get()
+
+fun resolveWorldUpdateCoordinator(): WorldUpdateCoordinator = requireKoin().get()

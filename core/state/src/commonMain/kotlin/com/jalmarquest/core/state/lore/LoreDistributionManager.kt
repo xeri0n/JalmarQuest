@@ -114,7 +114,7 @@ class LoreDistributionManager {
                 is LoreRequirement.CompletedQuest -> 
                     completedQuests.contains(requirement.questId)
                 is LoreRequirement.MinimumAffinity -> 
-                    npcAffinities.getOrDefault(requirement.npcId, 0) >= requirement.affinity
+                    (npcAffinities[requirement.npcId] ?: 0) >= requirement.affinity
                 is LoreRequirement.DiscoveredLore -> 
                     discoveredLore.contains(requirement.loreId)
                 is LoreRequirement.ChoiceTag -> 

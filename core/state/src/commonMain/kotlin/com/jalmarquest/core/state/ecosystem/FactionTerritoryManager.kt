@@ -222,7 +222,10 @@ class FactionTerritoryManager(
         val total = newInfluences.values.sum()
         if (total > 100) {
             val scale = 100.0f / total
-            newInfluences.replaceAll { _, value -> (value * scale).toInt() }
+            newInfluences.clear()
+            current.influences.forEach { (factionId, value) ->
+                newInfluences[factionId] = (value * scale).toInt()
+            }
         }
         
         _locationInfluences.value = _locationInfluences.value + (locationId to current.copy(

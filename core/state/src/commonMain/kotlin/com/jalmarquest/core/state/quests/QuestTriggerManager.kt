@@ -112,9 +112,9 @@ class QuestTriggerManager {
                 is QuestTriggerRequirement.CompletedQuest -> 
                     completedQuests.contains(requirement.questId)
                 is QuestTriggerRequirement.HasItem -> 
-                    playerItems.getOrDefault(requirement.itemId, 0) >= requirement.quantity
+                    (playerItems[requirement.itemId] ?: 0) >= requirement.quantity
                 is QuestTriggerRequirement.MinimumAffinity -> 
-                    npcAffinities.getOrDefault(requirement.npcId, 0) >= requirement.affinity
+                    (npcAffinities[requirement.npcId] ?: 0) >= requirement.affinity
                 is QuestTriggerRequirement.ChoiceTag -> 
                     choiceTags.contains(requirement.tag)
                 is QuestTriggerRequirement.TimeOfDay -> 

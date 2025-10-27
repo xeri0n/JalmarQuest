@@ -48,7 +48,7 @@ sealed class DialogueRequirement {
     @Serializable
     data class HasItem(val itemId: String, val quantity: Int = 1) : DialogueRequirement() {
         override fun isMet(state: DialogueState): Boolean {
-            return state.playerItems.getOrDefault(itemId, 0) >= quantity
+            return (state.playerItems[itemId] ?: 0) >= quantity
         }
     }
     

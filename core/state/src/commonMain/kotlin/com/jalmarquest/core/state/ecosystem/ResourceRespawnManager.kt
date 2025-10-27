@@ -216,7 +216,7 @@ class ResourceRespawnManager(
             if (!state.isAvailable && state.nextRespawnTime != null) {
                 if (currentTime >= state.nextRespawnTime) {
                     val spawn = _resourceSpawns.value[spawnId]
-                    val didSpawn = (Math.random().toFloat() <= (spawn?.spawnChance ?: 1.0f))
+                    val didSpawn = (kotlin.random.Random.nextFloat() <= (spawn?.spawnChance ?: 1.0f))
                     
                     if (didSpawn) {
                         state.copy(

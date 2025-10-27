@@ -91,7 +91,7 @@ data class NpcRelationships(
 
 class NpcRelationshipManager(
     initialRelationships: NpcRelationships = NpcRelationships(),
-    private val timestampProvider: () -> Long = { System.currentTimeMillis() }
+    private val timestampProvider: () -> Long
 ) {
     private val mutex = Mutex()
     
