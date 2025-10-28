@@ -11,3 +11,7 @@ local.properties
 
 # OS
 .DS_Store.jdk
+# Keystore files (sensitive)
+*.keystore
+keystore.properties
+release.keystore
