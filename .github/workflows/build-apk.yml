@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-apk:
@@ -68,6 +68,27 @@ jobs:
         if: failure()
         run: ./gradlew :app:android:assembleDebug -x test --stacktrace --no-daemon
 
+      - name: Find APK files
+        id: find-apk
+        run: |
+          APK_PATH=$(find app/android/build/outputs/apk -name "*.apk" -type f | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: No APK found"
+            exit 1
+          fi
+          echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+          echo "apk_name=$(basename $APK_PATH)" >> $GITHUB_OUTPUT
+          echo "apk_size=$(du -h $APK_PATH | cut -f1)" >> $GITHUB_OUTPUT
+
+      - name: Generate release info
+        id: release-info
+        run: |
+          VERSION="1.0.0-alpha-$(date +%Y%m%d-%H%M)"
+          TAG="alpha-$(date +%Y%m%d-%H%M)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "date=$(date +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_OUTPUT
+
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -75,3 +96,44 @@ jobs:
           path: |
             app/android/build/outputs/apk/**/*.apk
           if-no-files-found: error
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.release-info.outputs.tag }}
+          name: JalmarQuest Alpha ${{ steps.release-info.outputs.version }}
+          body: |
+            # JalmarQuest Alpha Release
+            
+            **Version:** ${{ steps.release-info.outputs.version }}
+            **Build Date:** ${{ steps.release-info.outputs.date }}
+            **Commit:** ${{ github.sha }}
+            **APK Size:** ${{ steps.find-apk.outputs.apk_size }}
+            
+            ## 🦉 Features
+            - Core gameplay with Jalmar the button quail
+            - Butterfly Effect Engine with choice tracking
+            - 46+ quests with branching narratives
+            - Nest management system
+            - Exploration encounters
+            - Skills & crafting system
+            - Multi-language support (EN/NO)
+            
+            ## 📱 Installation
+            1. Download the APK below
+            2. Enable "Install from Unknown Sources" in Android settings
+            3. Install the APK
+            4. Launch JalmarQuest
+            
+            ## ⚙️ Configuration
+            - AI Director requires `GEMINI_API_KEY` environment variable for AI-generated content
+            - Sandbox mode available without API key
+            
+            ## 🧪 Testing Notes
+            - This is an alpha build for testing purposes
+            - Signed with temporary debug keystore
+            - Report issues at: https://github.com/xeri0n/JalmarQuest/issues
+          files: ${{ steps.find-apk.outputs.apk_path }}
+          draft: false
+          prerelease: true
+          generate_release_notes: true
