@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.core.model.*
 import kotlinx.coroutines.launch
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Main Quest section with tabbed interface.
@@ -35,11 +37,11 @@ fun QuestSection(
     viewState.errorMessage?.let { error ->
         AlertDialog(
             onDismissRequest = { controller.clearError() },
-            title = { Text("Quest Error") },
+            title = { Text(stringResource(MR.strings.quest_error_title)) },
             text = { Text(error) },
             confirmButton = {
                 TextButton(onClick = { controller.clearError() }) {
-                    Text("OK")
+                    Text(stringResource(MR.strings.common_ok))
                 }
             }
         )
@@ -48,7 +50,7 @@ fun QuestSection(
     Column(modifier = modifier.fillMaxSize()) {
         // Header
         Text(
-            text = "Quest Log",
+            text = stringResource(MR.strings.quest_log_title),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(16.dp)
         )
@@ -147,7 +149,7 @@ private fun ActiveQuestsTab(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No active quests.\nCheck the Available tab to start a new adventure!",
+                text = stringResource(MR.strings.quest_no_active),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
@@ -210,7 +212,7 @@ private fun ActiveQuestCard(
                     
                     quest.recommendedLevel?.let { level ->
                         Text(
-                            text = "Recommended Level: $level",
+                            text = stringResource(MR.strings.quest_recommended_level, level),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -220,7 +222,7 @@ private fun ActiveQuestCard(
                 if (canTurnIn) {
                     Icon(
                         imageVector = Icons.Default.Check,
-                        contentDescription = "Ready to complete",
+                        contentDescription = stringResource(MR.strings.content_desc_ready_to_complete),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -297,7 +299,7 @@ private fun ActiveQuestCard(
             
             if ((progress?.objectives?.size ?: 0) > 2) {
                 Text(
-                    text = "+${(progress?.objectives?.size ?: 0) - 2} more objectives",
+                    text = stringResource(MR.strings.quest_more_objectives, (progress?.objectives?.size ?: 0) - 2),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 24.dp)
@@ -322,7 +324,7 @@ private fun AvailableQuestsTab(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No quests available right now.\nComplete prerequisites or explore more to unlock new quests!",
+                text = stringResource(MR.strings.quest_no_available),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
@@ -371,7 +373,7 @@ private fun AvailableQuestCard(
                     
                     quest.recommendedLevel?.let { level ->
                         Text(
-                            text = "Level $level",
+                            text = stringResource(MR.strings.quest_level_short, level),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -380,7 +382,7 @@ private fun AvailableQuestCard(
                 
                 Icon(
                     imageVector = Icons.Default.Star,
-                    contentDescription = "New quest",
+                    contentDescription = stringResource(MR.strings.content_desc_new_quest),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
@@ -408,7 +410,7 @@ private fun AvailableQuestCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.CardGiftcard,
-                        contentDescription = "Rewards",
+                        contentDescription = stringResource(MR.strings.content_desc_rewards),
                         modifier = Modifier.size(16.dp),
                         tint = MaterialTheme.colorScheme.secondary
                     )
@@ -439,7 +441,7 @@ private fun CompletedQuestsTab(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No completed quests yet.\nStart your adventure in the Active or Available tabs!",
+                text = stringResource(MR.strings.quest_no_completed),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
@@ -485,7 +487,7 @@ private fun CompletedQuestCard(
         ) {
             Icon(
                 imageVector = Icons.Default.CheckCircle,
-                contentDescription = "Completed",
+                contentDescription = stringResource(MR.strings.content_desc_completed),
                 tint = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.size(32.dp)
             )
@@ -499,7 +501,7 @@ private fun CompletedQuestCard(
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "Completed",
+                    text = stringResource(MR.strings.quest_completed),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.tertiary
                 )
@@ -566,7 +568,7 @@ private fun QuestDetailDialog(
                 // Objectives
                 item {
                     Text(
-                        text = "Objectives:",
+                        text = stringResource(MR.strings.quest_objectives_label),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -598,14 +600,14 @@ private fun QuestDetailDialog(
                             )
                             if (isActive) {
                                 Text(
-                                    text = "Progress: ${objective.currentProgress}/${objective.targetQuantity}",
+                                    text = stringResource(MR.strings.quest_progress_label, objective.currentProgress, objective.targetQuantity),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                             if (objective.isOptional) {
                                 Text(
-                                    text = "(Optional)",
+                                    text = stringResource(MR.strings.quest_optional_label),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.secondary
                                 )
@@ -618,7 +620,7 @@ private fun QuestDetailDialog(
                 if (quest.rewards.isNotEmpty()) {
                     item {
                         Text(
-                            text = "Rewards:",
+                            text = stringResource(MR.strings.quest_rewards_label),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -645,7 +647,7 @@ private fun QuestDetailDialog(
                 quest.questGiverNpc?.let { npc ->
                     item {
                         Text(
-                            text = "Quest Giver: $npc",
+                            text = stringResource(MR.strings.quest_giver_label, npc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -657,24 +659,24 @@ private fun QuestDetailDialog(
             when {
                 isAvailable -> {
                     Button(onClick = { onAccept(quest.questId) }) {
-                        Text("Accept Quest")
+                        Text(stringResource(MR.strings.quest_accept_button))
                     }
                 }
                 canTurnIn -> {
                     Button(onClick = { onComplete(quest.questId) }) {
-                        Text("Complete Quest")
+                        Text(stringResource(MR.strings.quest_complete_button))
                     }
                 }
                 isActive -> {
                     TextButton(onClick = { onAbandon(quest.questId) }) {
-                        Text("Abandon", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(MR.strings.quest_abandon_button), color = MaterialTheme.colorScheme.error)
                     }
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Close")
+                Text(stringResource(MR.strings.common_close))
             }
         }
     )

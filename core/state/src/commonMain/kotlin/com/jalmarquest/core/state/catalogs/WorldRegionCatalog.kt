@@ -118,6 +118,12 @@ class WorldRegionCatalog {
                     "forest_spider_webs",
                     "forest_fern_tunnel",
                     "forest_woodpeckers_tree"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_forest_mushroom_patch"),
+                    ResourceNodeId("node_forest_moondew_herb"),
+                    ResourceNodeId("node_forest_iron_deposit"),
+                    ResourceNodeId("node_forest_nature_essence")
                 )
             )
         )
@@ -142,6 +148,11 @@ class WorldRegionCatalog {
                     "beach_tide_pools",
                     "beach_driftwood_maze",
                     "beach_seashell_grotto"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_beach_sea_herb"),
+                    ResourceNodeId("node_beach_shell_deposit"),
+                    ResourceNodeId("node_beach_water_essence")
                 )
             )
         )
@@ -162,6 +173,11 @@ class WorldRegionCatalog {
                     "meadow_old_stone_wall",
                     "meadow_rabbit_warren",
                     "meadow_hawk_shadow"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_meadow_wildflower"),
+                    ResourceNodeId("node_meadow_healing_grass"),
+                    ResourceNodeId("node_meadow_stone_outcrop")
                 )
             )
         )
@@ -187,6 +203,10 @@ class WorldRegionCatalog {
                     "garden_herb_spiral",
                     "garden_compost_heap",
                     "garden_greenhouse"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_garden_exotic_herb"),
+                    ResourceNodeId("node_garden_compost_essence")
                 )
             )
         )
@@ -213,6 +233,11 @@ class WorldRegionCatalog {
                     "mountain_cliff_face",
                     "mountain_eagles_nest",
                     "mountain_cave_entrance"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_mountain_frost_herb"),
+                    ResourceNodeId("node_mountain_ore_vein"),
+                    ResourceNodeId("node_mountain_ice_essence")
                 )
             )
         )
@@ -238,6 +263,11 @@ class WorldRegionCatalog {
                     "wetland_frog_pond",
                     "wetland_reed_maze",
                     "wetland_heron_territory"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_wetland_bog_herb"),
+                    ResourceNodeId("node_wetland_murk_mineral"),
+                    ResourceNodeId("node_wetland_decay_essence")
                 )
             )
         )
@@ -263,6 +293,11 @@ class WorldRegionCatalog {
                     "ruins_overgrown_courtyard",
                     "ruins_underground_chamber",
                     "ruins_inscription_wall"
+                ),
+                availableResourceNodes = listOf(
+                    ResourceNodeId("node_ruins_cursed_herb"),
+                    ResourceNodeId("node_ruins_ancient_mineral"),
+                    ResourceNodeId("node_ruins_arcane_essence")
                 )
             )
         )

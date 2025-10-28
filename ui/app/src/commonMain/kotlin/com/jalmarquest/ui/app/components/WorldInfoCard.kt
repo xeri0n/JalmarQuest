@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.feature.worldinfo.WorldInfoState
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * World Info Card - Displays current location, weather, season, and difficulty information
@@ -45,7 +47,7 @@ fun WorldInfoCard(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.LocationOn,
-                    contentDescription = "Location",
+                    contentDescription = stringResource(MR.strings.components_worldinfo_location),
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Column {
@@ -69,12 +71,12 @@ fun WorldInfoCard(
                 if (state.difficultyWarning != null) {
                     Icon(
                         imageVector = Icons.Outlined.Warning,
-                        contentDescription = "Difficulty Warning",
+                        contentDescription = stringResource(MR.strings.components_worldinfo_difficulty_warning),
                         tint = difficultyColor
                     )
                 }
                 Text(
-                    text = "Difficulty: ${state.difficultyTier}",
+                    text = stringResource(MR.strings.worldinfo_difficulty_label, state.difficultyTier),
                     style = MaterialTheme.typography.bodyMedium,
                     color = difficultyColor
                 )
@@ -102,7 +104,7 @@ fun WorldInfoCard(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Cloud,
-                    contentDescription = "Weather",
+                    contentDescription = stringResource(MR.strings.components_worldinfo_weather),
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Column {
@@ -115,7 +117,7 @@ fun WorldInfoCard(
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
-                            text = "(Severity: ${state.weatherSeverity}/10)",
+                            text = stringResource(MR.strings.worldinfo_weather_severity, state.weatherSeverity),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -135,7 +137,7 @@ fun WorldInfoCard(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.WbSunny,
-                    contentDescription = "Season",
+                    contentDescription = stringResource(MR.strings.components_worldinfo_season),
                     tint = MaterialTheme.colorScheme.tertiary
                 )
                 Column {
@@ -148,7 +150,7 @@ fun WorldInfoCard(
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
-                            text = "(Day ${state.seasonDay}/90)",
+                            text = stringResource(MR.strings.worldinfo_season_day, state.seasonDay),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -165,7 +167,7 @@ fun WorldInfoCard(
 
             // Resource Availability
             Text(
-                text = "Resources: ${state.resourceAvailability}",
+                text = stringResource(MR.strings.worldinfo_resources_label, state.resourceAvailability),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

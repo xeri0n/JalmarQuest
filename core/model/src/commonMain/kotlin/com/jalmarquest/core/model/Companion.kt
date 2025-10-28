@@ -107,6 +107,159 @@ enum class CompanionEffectType {
 }
 
 /**
+ * Alpha 2.3 Part 3.1: Companion trait types.
+ * Traits improve as companions complete tasks, providing scaling bonuses.
+ */
+@Serializable
+enum class CompanionTrait {
+    @SerialName("foraging")
+    FORAGING,           // Improved resource gathering
+    
+    @SerialName("scouting")
+    SCOUTING,           // Better exploration rewards
+    
+    @SerialName("brewing")
+    BREWING,            // Enhanced concoction crafting
+    
+    @SerialName("smithing")
+    SMITHING,           // Better equipment crafting
+    
+    @SerialName("combat")
+    COMBAT,             // Stronger in battles
+    
+    @SerialName("trading")
+    TRADING,            // Better shop prices
+    
+    @SerialName("scholarship")
+    SCHOLARSHIP,        // Faster thought internalization
+    
+    @SerialName("luck")
+    LUCK                // Better RNG outcomes
+}
+
+/**
+ * Alpha 2.3 Part 3.2: Task types that companions can be assigned to.
+ * Each task type trains a specific companion trait.
+ */
+@Serializable
+enum class CompanionTaskType {
+    @SerialName("foraging")
+    FORAGING,       // Gathering resources
+    
+    @SerialName("scouting")
+    SCOUTING,       // Exploring locations
+    
+    @SerialName("brewing")
+    BREWING,        // Crafting concoctions
+    
+    @SerialName("smithing")
+    SMITHING,       // Crafting equipment
+    
+    @SerialName("combat")
+    COMBAT,         // Fighting enemies
+    
+    @SerialName("trading")
+    TRADING,        // Buying/selling at shops
+    
+    @SerialName("scholarship")
+    SCHOLARSHIP,    // Internalizing thoughts
+    
+    @SerialName("exploration")
+    EXPLORATION;    // General exploration
+    
+    /**
+     * Get the trait associated with this task type.
+     */
+    fun associatedTrait(): CompanionTrait = when (this) {
+        FORAGING -> CompanionTrait.FORAGING
+        SCOUTING -> CompanionTrait.SCOUTING
+        BREWING -> CompanionTrait.BREWING
+        SMITHING -> CompanionTrait.SMITHING
+        COMBAT -> CompanionTrait.COMBAT
+        TRADING -> CompanionTrait.TRADING
+        SCHOLARSHIP -> CompanionTrait.SCHOLARSHIP
+        EXPLORATION -> CompanionTrait.LUCK
+    }
+}
+
+/**
+ * Alpha 2.3 Part 3.1: Trait level (1-10 progression).
+ */
+@Serializable
+@JvmInline
+value class TraitLevel(val level: Int) {
+    init {
+        require(level in 1..10) { "Trait level must be between 1 and 10, got $level" }
+    }
+    
+    /**
+     * Get bonus multiplier for this trait level.
+     * Level 1 = 1.0x, Level 10 = 2.5x (linear scaling).
+     */
+    fun getBonusMultiplier(): Float = 1.0f + (level - 1) * 0.1667f
+    
+    /**
+     * Get XP required to reach next level.
+     * Progressive curve: 100 → 250 → 450 → 700 → 1000 → 1350 → 1750 → 2200 → 2700 → MAX
+     */
+    fun getXpToNextLevel(): Int {
+        return when (level) {
+            1 -> 100
+            2 -> 250
+            3 -> 450
+            4 -> 700
+            5 -> 1000
+            6 -> 1350
+            7 -> 1750
+            8 -> 2200
+            9 -> 2700
+            10 -> Int.MAX_VALUE // Already at max
+            else -> Int.MAX_VALUE
+        }
+    }
+    
+    /**
+     * Check if can level up.
+     */
+    fun canLevelUp(): Boolean = level < 10
+}
+
+/**
+ * Alpha 2.3 Part 3.1: Progress tracking for a single trait.
+ */
+@Serializable
+data class TraitProgress(
+    val trait: CompanionTrait,
+    val level: TraitLevel = TraitLevel(1),
+    val currentXp: Int = 0
+) {
+    /**
+     * Check if ready to level up.
+     */
+    fun canLevelUp(): Boolean = level.canLevelUp() && currentXp >= level.getXpToNextLevel()
+    
+    /**
+     * Level up the trait (consumes XP).
+     */
+    fun levelUp(): TraitProgress {
+        require(canLevelUp()) { "Cannot level up trait $trait (level ${level.level}, XP $currentXp)" }
+        val xpRequired = level.getXpToNextLevel()
+        return copy(
+            level = TraitLevel(level.level + 1),
+            currentXp = currentXp - xpRequired
+        )
+    }
+    
+    /**
+     * Add XP to this trait.
+     */
+    fun addXp(xp: Int): TraitProgress {
+        require(xp >= 0) { "XP cannot be negative" }
+        return copy(currentXp = currentXp + xp)
+    }
+}
+
+/**
  * Milestone rewards for reaching affinity levels
  */
 @Serializable
@@ -175,8 +328,35 @@ data class CompanionProgress(
     val lastGiftTimestamp: Long = 0,
     
     @SerialName("reached_milestones")
-    val reachedMilestones: List<Int> = emptyList() // Affinity thresholds reached
-)
+    val reachedMilestones: List<Int> = emptyList(), // Affinity thresholds reached
+    
+    /**
+     * Alpha 2.3 Part 3.1: Companion trait levels.
+     * Maps trait type to current progress (level + XP).
+     */
+    val traits: Map<String, TraitProgress> = emptyMap() // trait.name -> progress
+) {
+    /**
+     * Alpha 2.3 Part 3.1: Get trait progress for a specific trait.
+     */
+    fun getTraitProgress(trait: CompanionTrait): TraitProgress? {
+        return traits[trait.name]
+    }
+    
+    /**
+     * Alpha 2.3 Part 3.1: Get trait level (defaults to 1 if not started).
+     */
+    fun getTraitLevel(trait: CompanionTrait): TraitLevel {
+        return traits[trait.name]?.level ?: TraitLevel(1)
+    }
+    
+    /**
+     * Alpha 2.3 Part 3.1: Get trait bonus multiplier.
+     */
+    fun getTraitBonus(trait: CompanionTrait): Float {
+        return getTraitLevel(trait).getBonusMultiplier()
+    }
+}
 
 /**
  * Collection of player's companion relationships
@@ -221,3 +401,49 @@ data class CompanionState(
         return recruitedCompanions[companionId.value]?.affinity ?: 0
     }
 }
+
+/**
+ * Alpha 2.3 Part 3.2: Active task assignment for a companion.
+ */
+@Serializable
+data class CompanionTaskAssignment(
+    @SerialName("companion_id")
+    val companionId: CompanionId,
+    
+    @SerialName("task_type")
+    val taskType: CompanionTaskType,
+    
+    @SerialName("start_time")
+    val startTime: Long,
+    
+    @SerialName("duration")
+    val duration: Long // in milliseconds
+) {
+    fun isComplete(currentTime: Long): Boolean = currentTime >= (startTime + duration)
+    
+    fun getRemainingTime(currentTime: Long): Long {
+        val endTime = startTime + duration
+        return (endTime - currentTime).coerceAtLeast(0)
+    }
+    
+    fun getProgress(currentTime: Long): Float {
+        if (duration == 0L) return 1.0f
+        val elapsed = currentTime - startTime
+        return (elapsed.toFloat() / duration.toFloat()).coerceIn(0f, 1f)
+    }
+}
+
+/**
+ * Alpha 2.3 Part 3.2: Player's companion assignment state.
+ */
+@Serializable
+data class CompanionAssignmentState(
+    @SerialName("active_assignments")
+    val activeAssignments: List<CompanionTaskAssignment> = emptyList(),
+    
+    @SerialName("completed_task_count")
+    val completedTaskCount: Int = 0,
+    
+    @SerialName("perfection_meter")
+    val perfectionMeter: Int = 0 // 0-100, hidden optimization score for Alpha 2.3 Part 3.4
+)

@@ -18,6 +18,8 @@ import com.jalmarquest.core.state.catalogs.WorldRegionCatalog
 import com.jalmarquest.feature.explore.ExploreController
 import com.jalmarquest.feature.explore.ExplorePhase
 import com.jalmarquest.ui.app.layout.AppSpacing
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Full-screen exploration UI with location context.
@@ -51,12 +53,12 @@ fun ExploreScreen(
             }
         }
     }
-    val biomeName = currentRegion?.biomeType?.name?.lowercase()?.replaceFirstChar { it.uppercase() } ?: "Unknown"
+    val biomeName = currentRegion?.biomeType?.name?.lowercase()?.replaceFirstChar { it.uppercase() } ?: stringResource(MR.strings.common_unknown)
     
     Scaffold(
         topBar = {
             ExploreTopBar(
-                locationName = currentLocation?.name ?: "Unknown Location",
+                locationName = currentLocation?.name ?: stringResource(MR.strings.common_unknown_location),
                 biomeName = biomeName,
                 regionName = currentRegion?.name ?: "",
                 onBack = onBack
@@ -97,13 +99,18 @@ fun ExploreScreen(
                     message = phase.message,
                     onRetry = { controller.beginExploration() }
                 )
+                
+                is ExplorePhase.RestNeeded -> RestNeededView(
+                    eventsSinceRest = phase.eventsSinceRest,
+                    onRest = { controller.rest() }
+                )
             }
             
             // Exploration history
             if (state.history.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(AppSpacing.large))
                 Text(
-                    text = "Recent Encounters",
+                    text = stringResource(MR.strings.explore_history_header),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -142,7 +149,7 @@ private fun ExploreTopBar(
         },
         navigationIcon = {
             IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.Default.ArrowBack, contentDescription = stringResource(MR.strings.content_desc_back))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -174,12 +181,12 @@ private fun IdleView(onBeginExploration: () -> Unit) {
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
-                text = "Ready to Explore",
+                text = stringResource(MR.strings.explore_ready_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Begin your adventure in this location. Encounters will vary based on the local biome and environment.",
+                text = stringResource(MR.strings.explore_ready_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
@@ -189,7 +196,7 @@ private fun IdleView(onBeginExploration: () -> Unit) {
                     .fillMaxWidth()
                     .height(48.dp)
             ) {
-                Text("Begin Exploration")
+                Text(stringResource(MR.strings.explore_begin_button))
             }
         }
     }
@@ -212,7 +219,7 @@ private fun LoadingView() {
         ) {
             CircularProgressIndicator()
             Text(
-                text = "Searching the area...",
+                text = stringResource(MR.strings.explore_searching_area),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -249,7 +256,7 @@ private fun EncounterView(
             
             // Choice options
             Text(
-                text = "What will you do?",
+                text = stringResource(MR.strings.explore_what_will_you_do),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold
             )
@@ -295,7 +302,7 @@ private fun ChapterView(
                 shape = MaterialTheme.shapes.small
             ) {
                 Text(
-                    text = "🤖 AI DIRECTOR",
+                    text = stringResource(MR.strings.explore_ai_director_badge),
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onTertiary,
@@ -320,7 +327,7 @@ private fun ChapterView(
             // Use first snippet for choices
             response.snippets.firstOrNull()?.let { snippet ->
                 Text(
-                    text = "Choose your path:",
+                    text = stringResource(MR.strings.explore_choose_your_path),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -375,7 +382,7 @@ private fun ResolutionView(
             
             summary.choiceText?.let {
                 Text(
-                    text = "You chose: $it",
+                    text = stringResource(MR.strings.explore_you_chose, it),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -384,7 +391,7 @@ private fun ResolutionView(
             if (summary.rewardSummaries.isNotEmpty()) {
                 Divider()
                 Text(
-                    text = "Rewards:",
+                    text = stringResource(MR.strings.explore_rewards_label),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -413,7 +420,7 @@ private fun ResolutionView(
                     .fillMaxWidth()
                     .height(48.dp)
             ) {
-                Text("Continue Exploring")
+                Text(stringResource(MR.strings.explore_continue_button))
             }
         }
     }
@@ -444,7 +451,7 @@ private fun ErrorView(
                 tint = MaterialTheme.colorScheme.error
             )
             Text(
-                text = "Error",
+                text = stringResource(MR.strings.common_error),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onErrorContainer
@@ -460,7 +467,42 @@ private fun ErrorView(
                     containerColor = MaterialTheme.colorScheme.error
                 )
             ) {
-                Text("Retry")
+                Text(stringResource(MR.strings.common_retry))
+            }
+        }
+    }
+}
+
+@Composable
+private fun RestNeededView(
+    eventsSinceRest: Int,
+    onRest: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppSpacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.medium)
+        ) {
+            Text(
+                text = "Time to Rest",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "You've experienced $eventsSinceRest events without rest. Take a moment to recover your energy.",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
+            Button(onClick = onRest) {
+                Text("Rest and Recover")
             }
         }
     }

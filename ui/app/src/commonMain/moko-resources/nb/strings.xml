@@ -98,4 +98,456 @@
     <string name="activities_result_title_arena">Arena-jubel</string>
     <string name="activities_result_title_nest_defense">Pen-forberedelse</string>
     <string name="activities_result_title_apex">Apex-varsel</string>
+    
+    <!-- Common actions -->
+    <string name="common_back">Tilbake</string>
+    <string name="common_back_arrow">← Tilbake</string>
+    <string name="common_close">Lukk</string>
+    <string name="common_dismiss">Lukk</string>
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Avbryt</string>
+    <string name="common_travel">Reis</string>
+    <string name="common_purchase">Kjøp</string>
+    <string name="common_cost_label">Kostnad:</string>
+    <string name="common_your_glimmer_label">Dine Glimmer:</string>
+    <string name="common_equip">Utstyr</string>
+    <string name="common_unequip">Fjern</string>
+    <string name="common_retry">Prøv igjen</string>
+    <string name="common_continue">Fortsett</string>
+
+    <!-- Bottom navigation -->
+    <string name="bottom_nav_hub">Nav</string>
+    <string name="bottom_nav_explore">Utforsk</string>
+    <string name="bottom_nav_nest">Rede</string>
+    <string name="bottom_nav_skills">Ferdigheter</string>
+    <string name="bottom_nav_more">Mer</string>
+
+    <!-- Content descriptions & labels -->
+    <string name="content_desc_back">Tilbake</string>
+    <string name="content_desc_main_menu_background">Bakgrunn for hovedmeny</string>
+    <string name="content_desc_options_background">Bakgrunn for alternativer</string>
+    <string name="content_desc_back_to_main_menu">Tilbake til hovedmeny</string>
+    <string name="content_desc_glimmer">Glimmer</string>
+    <string name="content_desc_rarity">Sjeldenhet</string>
+    <string name="content_desc_owned">Eid</string>
+    <string name="content_desc_unlocked">Opplåst</string>
+    <string name="content_desc_locked">Låst</string>
+    <string name="content_desc_fast_travel">Hurtigreise</string>
+    <string name="content_desc_discovered">Oppdaget</string>
+    <string name="content_desc_current_location">Gjeldende posisjon</string>
+    <string name="content_desc_visited">Besøkt</string>
+    <string name="content_desc_open_main_menu">Åpne hovedmeny</string>
+    <string name="content_desc_open_menu">Åpne meny</string>
+    <string name="content_desc_close">Lukk</string>
+    <string name="content_desc_equipped">Utstyrt</string>
+    <string name="content_desc_expand_header">Utvid header</string>
+    <string name="content_desc_collapse_header">Skjul header</string>
+    <string name="content_desc_zoom_in">Zoom inn</string>
+    <string name="content_desc_zoom_out">Zoom ut</string>
+    <string name="content_desc_recenter">Sentrer</string>
+
+    <!-- Labels in Hub/Main screens -->
+    <string name="label_skills">Ferdigheter</string>
+    <string name="label_items">Gjenstander</string>
+    <string name="label_shinies">Glitrere</string>
+    <string name="label_quests">Oppdrag</string>
+    <string name="hub_back_to_hub">Tilbake til navet</string>
+
+    <!-- Shop & seasonal -->
+    <string name="shop_tab_permanent">Permanent</string>
+    <string name="shop_tab_daily_deals">Dagens tilbud</string>
+    <string name="shop_tab_weekly_featured">Ukens utvalgte</string>
+    <string name="seasonal_unlock_premium_track">Lås opp Premium-spor – %1$d Glimmer</string>
+    <string name="seasonal_claim_button">Hent</string>
+    <string name="restore_purchases_button">Gjenopprett kjøp</string>
+
+    <!-- Actions in other sections -->
+    <string name="hoard_acquire">Skaff</string>
+    <string name="harvest_button">Høst</string>
+
+    <!-- Fast travel dialog -->
+    <string name="dialog_fast_travel_title">Hurtigreise – Redeskrap</string>
+    <string name="dialog_fast_travel_empty">Du har ikke oppdaget noen redeskrap ennå. Utforsk verden for å finne hurtigreisespunkter!</string>
+    <string name="dialog_fast_travel_select_prompt">Velg et redeskrap å reise til:</string>
+
+    <!-- Quest section -->
+    <string name="quest_error_title">Oppdragsfeil</string>
+    <string name="quest_accept_button">Godta oppdrag</string>
+    <string name="quest_complete_button">Fullfør oppdrag</string>
+    <string name="quest_completed">Fullført</string>
+    <string name="quest_log_title">Oppdragslogg</string>
+    <string name="quest_no_active">Ingen aktive oppdrag.\nSjekk fanen Tilgjengelig for å starte et nytt eventyr!</string>
+    <string name="quest_no_available">Ingen oppdrag tilgjengelig akkurat nå.\nFullfør forutsetninger eller utforsk mer for å låse opp nye oppdrag!</string>
+    <string name="quest_no_completed">Ingen fullførte oppdrag ennå.\nStart eventyret i fanene Aktive eller Tilgjengelige!</string>
+    <string name="quest_recommended_level">Anbefalt nivå: %1$d</string>
+    <string name="quest_level_short">Nivå %1$d</string>
+    <string name="quest_more_objectives">+%1$d flere mål</string>
+    <string name="quest_rewards_label">Belønninger:</string>
+    <string name="quest_objectives_label">Mål:</string>
+    <string name="quest_progress_label">Fremdrift: %1$d/%2$d</string>
+    <string name="quest_optional_label">(Valgfritt)</string>
+    <string name="quest_giver_label">Oppdragsgiver: %1$s</string>
+    <string name="quest_abandon_button">Forlat</string>
+
+    <string name="content_desc_ready_to_complete">Klar til å fullføre</string>
+    <string name="content_desc_new_quest">Nytt oppdrag</string>
+    <string name="content_desc_rewards">Belønninger</string>
+    <string name="content_desc_completed">Fullført</string>
+
+    <!-- World info card -->
+    <string name="components_worldinfo_location">Sted</string>
+    <string name="components_worldinfo_difficulty_warning">Vanskelighetsvarsel</string>
+    <string name="components_worldinfo_weather">Vær</string>
+    <string name="components_worldinfo_season">Årstid</string>
+    <string name="worldinfo_difficulty_label">Vanskelighet: %1$s</string>
+    <string name="worldinfo_weather_severity">(Alvorlighetsgrad: %1$d/10)</string>
+    <string name="worldinfo_season_day">(Dag %1$d/90)</string>
+    <string name="worldinfo_resources_label">Ressurser: %1$s</string>
+
+    <!-- Main drawer -->
+    <string name="drawer_save_game">Lagre spill</string>
+    <string name="drawer_load_game">Last inn spill</string>
+    <string name="drawer_settings">Innstillinger</string>
+    <string name="drawer_quit_to_main_menu">Avslutt til hovedmeny</string>
+    <string name="drawer_exit_app">Avslutt program</string>
+    <string name="drawer_main_menu">Hovedmeny</string>
+
+    <!-- Collapsible header -->
+    <string name="collapsible_header_log_out">Logg ut</string>
+
+    <!-- App V2 section titles with emojis -->
+    <string name="menu_title_explore">🗺️ Utforsk</string>
+    <string name="menu_title_nest">🏡 Redet</string>
+    <string name="menu_title_skills">⚒️ Ferdigheter &amp; laging</string>
+    <string name="menu_title_activities">🎯 Aktiviteter</string>
+    <string name="menu_title_inventory">🎒 Inventar</string>
+    <string name="menu_title_quest_log">📜 Oppdragslogg</string>
+    <string name="menu_title_shop">🛒 Butikk</string>
+    <string name="menu_title_world_info">🌍 Verdensinfo</string>
+    <string name="menu_title_settings">⚙️ Innstillinger</string>
+
+    <!-- HubScreenV2 tiles -->
+    <string name="hub_explore_title">Utforsk</string>
+    <string name="hub_world_map_title">Verdenskart</string>
+    <string name="hub_nest_title">Redet</string>
+    <string name="hub_quest_log_title">Oppdragslogg</string>
+    <string name="hub_inventory_title">Inventar</string>
+    <string name="hub_skills_title">Ferdigheter</string>
+    <string name="hub_shop_title">Butikk</string>
+    <string name="hub_activities_title">Aktiviteter</string>
+    <string name="hub_hoard_status_title">🏆 Skattestatus</string>
+    <string name="hub_concoctions_title">🧪 Brygg</string>
+    <string name="hub_active_quests_title">📜 Aktive oppdrag</string>
+
+    <!-- Nest purchase dialog -->
+    <string name="nest_purchase_title">Kjøpe %1$s?</string>
+
+    <!-- Main hub screen misc -->
+    <string name="hub_title">Buttonburgh sentrum</string>
+    <string name="hub_welcome">Velkommen, %1$s</string>
+    <string name="hub_prompt_choose_action">Hva vil du gjøre?</string>
+
+    <!-- Feature tiles titles/descriptions -->
+    <string name="feature_explore_title">Utforsk</string>
+    <string name="feature_explore_desc">Dra ut i verden</string>
+    <string name="feature_quests_title">Oppdrag</string>
+    <string name="feature_quests_desc">Følg eventyrene dine</string>
+    <string name="feature_nest_title">Mitt rede</string>
+    <string name="feature_nest_desc">Styr hjemmet ditt</string>
+    <string name="feature_hoard_title">Skattkammer</string>
+    <string name="feature_hoard_desc">Samle sjeldne skatter</string>
+    <string name="feature_concoctions_title">Brygg</string>
+    <string name="feature_concoctions_desc">Brygg magiske miksturer</string>
+    <string name="feature_skills_title">Ferdigheter</string>
+    <string name="feature_skills_desc">Utvikle evnene dine</string>
+    <string name="feature_world_map_title">Verdenskart</string>
+    <string name="feature_world_map_desc">Naviger riket</string>
+    <string name="feature_chronicle_title">Sesongkrønike</string>
+    <string name="feature_chronicle_desc">Fullfør utfordringer</string>
+
+    <string name="feature_coming_soon_title">%1$s – kommer snart!</string>
+    <string name="feature_coming_soon_body">Denne funksjonen er under utvikling.</string>
+    
+    <!-- Explore screen (full) -->
+    <string name="explore_ready_title">Klar til å utforske</string>
+    <string name="explore_ready_desc">Start eventyret på dette stedet. Møter vil variere basert på lokal biom og miljø.</string>
+    <string name="explore_searching_area">Søker i området...</string>
+    <string name="explore_what_will_you_do">Hva vil du gjøre?</string>
+    <string name="explore_choose_your_path">Velg din sti:</string>
+    <string name="explore_ai_director_badge">🤖 AI-DIREKTØR</string>
+    <string name="explore_you_chose">Du valgte: %1$s</string>
+    <string name="explore_rewards_label">Belønninger:</string>
+
+    <!-- Common misc -->
+    <string name="common_error">Feil</string>
+    <string name="common_unknown">Ukjent</string>
+    <string name="common_unknown_location">Ukjent sted</string>
+
+    <!-- World map & travel -->
+    <string name="worldmap_title_world_map">Verdenskart</string>
+    <string name="worldmap_title_locations">Steder</string>
+    <string name="worldmap_title_fast_travel">Hurtigreise</string>
+    <string name="worldmap_current_label">Gjeldende: %1$s</string>
+    <string name="worldmap_explored_progress">Utforsket: %1$d/%2$d</string>
+    <string name="worldmap_difficulty_safe">Trygt</string>
+    <string name="worldmap_difficulty_moderate">Moderat</string>
+    <string name="worldmap_difficulty_dangerous">Farlig</string>
+    <string name="worldmap_difficulty_deadly">Dødelig</string>
+    <string name="worldmap_unlock_quest">Fullfør oppdrag for å låse opp</string>
+    <string name="worldmap_unlock_level">Nå nivå %1$d</string>
+    <string name="worldmap_unlock_discover_region">Oppdag en annen region først</string>
+    <string name="worldmap_unlock_multiple">Flere krav</string>
+    <string name="worldmap_fast_travel_empty">Ingen hurtigreiselokasjoner er låst opp ennå.\nBesøk trygge steder for å aktivere hurtigreise.</string>
+    <string name="worldmap_arrived_new_location">Ankom ny lokasjon</string>
+    <string name="worldmap_arrived_discovered">Ankom! Oppdaget %1$d nye ting</string>
+    <string name="worldmap_region_locked">Region låst: krav ikke oppfylt</string>
+    <string name="worldmap_location_locked">Lokasjon låst: fullfør påkrevd oppdrag</string>
+    <string name="worldmap_invalid_location">Ugyldig lokasjon</string>
+    <string name="worldmap_not_discovered_location">Du har ikke oppdaget denne lokasjonen ennå!</string>
+    <string name="worldmap_not_connected">Du kan ikke reise direkte hit fra din nåværende posisjon.</string>
+    <string name="worldmap_travel_here">Reis hit</string>
+    <string name="worldmap_npcs_count">NPC-er: %1$d</string>
+    <string name="worldmap_quests_count">Oppdrag: %1$d</string>
+    <string name="worldmap_enemies_count">Fiender: %1$d</string>
+    
+    <!-- Shop section -->
+    <string name="shop_your_glimmer_balance">Din Glimmer-balanse</string>
+    <string name="shop_todays_special_offers">Dagens spesialtilbud</string>
+    <string name="shop_resets_in_24_hours">Fornyes om 24 timer</string>
+    <string name="shop_this_weeks_featured_items">Ukens fremhevede varer</string>
+    <string name="shop_resets_in_7_days">Fornyes om 7 dager</string>
+    <string name="shop_badge_daily_deal">DAGENS TILBUD</string>
+    <string name="shop_badge_featured">FREMHEVET</string>
+    <string name="shop_item_owned">Eid</string>
+    <string name="shop_result_success">Kjøp vellykket: %1$s!</string>
+    <string name="shop_result_already_owned">Du eier allerede denne gjenstanden</string>
+    <string name="shop_result_insufficient_glimmer">Ikke nok Glimmer-skjær</string>
+    <string name="shop_result_item_not_found">Gjenstand ikke funnet</string>
+    <string name="shop_result_not_available">Denne gjenstanden er ikke tilgjengelig akkurat nå</string>
+    <string name="shop_result_wallet_unavailable">Lommebok-tjeneste utilgjengelig</string>
+    
+    <!-- Nest screen -->
+    <string name="nest_edit_mode_done">Ferdig</string>
+    <string name="nest_edit_mode_edit">Rediger</string>
+    <string name="nest_bonus_hoard_xp">+%1$d%% Skattkammer-XP</string>
+    <string name="nest_bonus_seed_storage">+%1$d%% Frølager</string>
+    <string name="nest_bonus_thought_slots">+%1$d Tankeplasser</string>
+    <string name="nest_bonus_companion_xp">+%1$d%% Følgesvenn-XP</string>
+    <string name="nest_bonus_craft_in_nest">Lag i reden</string>
+    <string name="nest_trophy_display">Vis frem</string>
+    <string name="nest_trophy_remove">Fjern</string>
+    <string name="nest_glimmer_balance_label">%1$d Glimmer</string>
+    <string name="nest_tab_shop">Butikk</string>
+    <string name="nest_tab_edit_mode">Redigeringsmodus</string>
+    <string name="nest_tab_trophy_room">Troféer</string>
+    <string name="nest_shop_category_themes">Temaer</string>
+    <string name="nest_shop_category_furniture">Møbler</string>
+    <string name="nest_shop_category_decorations">Dekorasjoner</string>
+    <string name="nest_shop_category_functional">Funksjonelt</string>
+    <string name="nest_shop_all_unlocked_title">Alt er låst opp!</string>
+    <string name="nest_shop_all_unlocked_body">Du eier alle tilgjengelige kosmetikk i denne kategorien.</string>
+    <string name="common_insufficient_glimmer">Ikke nok Glimmer</string>
+    <string name="nest_edit_mode_title">Redigeringsmodus</string>
+    <string name="nest_edit_mode_prompt">Trykk «Rediger» for å tilpasse redeoppsettet</string>
+    <string name="nest_items_placed_count">%1$d gjenstander plassert</string>
+    <string name="nest_grid_editor_placeholder">10x10 rutenett-editor (kommer snart)</string>
+    <string name="nest_unplaced_items_title">Uplasserte gjenstander</string>
+    <string name="nest_trophy_empty_title">Ingen troféer ennå</string>
+    <string name="nest_trophy_empty_body">Fullfør oppdrag for å tjene troféer til reden!</string>
+        <string name="nest_trophy_displayed_in_room">Vist i rommet</string>
+    
+    <!-- Enum Localizations: Rarity Tiers -->
+    <string name="rarity_common">Vanlig</string>
+    <string name="rarity_uncommon">Uvanlig</string>
+    <string name="rarity_rare">Sjelden</string>
+    <string name="rarity_epic">Episk</string>
+    <string name="rarity_legendary">Legendarisk</string>
+    <string name="rarity_mythic">Mytisk</string>
+    
+    <!-- Enum Localizations: Hoard Rank Tiers -->
+    <string name="hoard_tier_scavenger">Søker</string>
+    <string name="hoard_tier_collector">Samler</string>
+    <string name="hoard_tier_curator">Kurator</string>
+    <string name="hoard_tier_magnate">Magnat</string>
+    <string name="hoard_tier_legend">Legende</string>
+    <string name="hoard_tier_myth">Myte</string>
+
+    <!-- Character Slot Purchase -->
+    <string name="character_slots_title">Karakterplasser</string>
+    <string name="character_slots_subtitle">Lås opp flere karakterplasser for å styre flere eventyrere samtidig.</string>
+    <string name="character_slots_help_text">Kjøpte plasser er permanente og blir gjenopprettet når du logger inn på en ny enhet.</string>
+    <string name="character_slot_label">Plass %1$d</string>
+    <string name="character_slot_free_label">Gratis plass</string>
+    <string name="character_slot_purchased_label">Kjøpt</string>
+    <string name="character_slot_purchase_success_title">Kjøp vellykket</string>
+    <string name="character_slot_purchase_failed_title">Kjøp mislyktes</string>
+    <string name="character_slot_purchase_success_message">Plass %1$d låst opp!</string>
+    <string name="character_slot_restore_success_title">Gjenoppretting fullført</string>
+    <string name="character_slot_restore_failed_title">Gjenoppretting mislyktes</string>
+    <string name="character_slot_restore_none_found">Fant ingen kjøp å gjenopprette</string>
+    <string name="character_slot_restore_count">%1$d plass(er) gjenopprettet</string>
+
+    <!-- Cosmetics / Equipment -->
+    <string name="cosmetics_title">Kosmetisk utstyr</string>
+    <string name="cosmetics_equipped_section_title">Utstyrte kosmetikk</string>
+    <string name="cosmetics_slot_crown">Krone</string>
+    <string name="cosmetics_slot_cloak">Kappe</string>
+    <string name="cosmetics_slot_mantle">Kappe (mantel)</string>
+    <string name="cosmetics_slot_necklace">Halskjede</string>
+    <string name="cosmetics_slot_aura">Aura</string>
+    <string name="cosmetics_slot_regalia_full">Regalia (fullt antrekk)</string>
+    <string name="cosmetics_equipped_colon">Utstyrt: %1$s</string>
+    <string name="cosmetics_no_item_equipped">Ingen gjenstand utstyrt</string>
+    <string name="cosmetics_select_slot_title">Velg %1$s</string>
+    <string name="cosmetics_empty_owned_for_slot">Du eier ingen %1$s-kosmetikk ennå. Besøk butikken for å kjøpe!</string>
+    <string name="cosmetics_result_success">Vellykket utstyrt: %1$s!</string>
+    <string name="cosmetics_result_not_owned">Du eier ikke denne gjenstanden</string>
+    <string name="cosmetics_result_item_not_found">Gjenstand ikke funnet</string>
+    <string name="cosmetics_result_not_cosmetic">Denne gjenstanden er ikke kosmetikk</string>
+
+    <!-- Main menu & options -->
+    <string name="mainmenu_begin_journey">Start reisen</string>
+    <string name="mainmenu_load_game">Last inn spill</string>
+    <string name="mainmenu_options">Alternativer</string>
+    <string name="options_title">Alternativer</string>
+    <string name="options_tts_label">Tekst-til-tale</string>
+    <string name="options_tts_desc">Aktiver stemmefortelling (standard: AV)</string>
+    <string name="options_no_filter_label">Uten filter-modus (18+)</string>
+    <string name="options_no_filter_desc">Aktiver mørkere humor og skarpere fortellertone</string>
+    <string name="options_no_filter_warning_title">Advarsel om voksent innhold</string>
+    <string name="options_no_filter_warning_body">Aktiver voksent innhold (18+)? Dette tillater mørkere humor, skarpere fortellertone og respektløse karakterinteraksjoner. Du kan slå dette av når som helst i Innstillinger.</string>
+    <string name="options_no_filter_confirm">Jeg forstår</string>
+    <string name="options_no_filter_cancel">Avbryt</string>
+    <string name="options_more_settings_coming_soon">Flere innstillinger kommer snart …</string>
+
+    <!-- Placeholder screen descriptions -->
+    <string name="placeholder_explore_desc">Fullskjerms utforskings-UI blir implementert her.\n\nIngen scrolling nødvendig – alt innhold får plass.</string>
+    <string name="placeholder_nest_desc">Redehåndtering med boligkosmetikk.\n\nFremtid: 50+ kosmetiske gjenstander, funksjonelle oppgraderinger.</string>
+    <string name="placeholder_skills_desc">Ferdighetstre og håndverksgrensesnitt.</string>
+    <string name="placeholder_activities_desc">Grensesnitt for sekundære aktiviteter.</string>
+    <string name="placeholder_inventory_desc">Fullt inventargrensesnitt.</string>
+    <string name="placeholder_quest_log_desc">Aktive og fullførte oppdrag.</string>
+    <string name="placeholder_shop_desc">Butikk med kjøp.</string>
+    <string name="placeholder_world_info_desc">Lore, fraksjoner og verdenskunnskap.</string>
+    <string name="placeholder_settings_desc">Spillinnstillinger, lyd og tilgjengelighet.</string>
+
+    <!-- Alpha 2.2: AI Director UI (Phase 4G) -->
+    <string name="ai_director_difficulty_very_easy">Veldig lett</string>
+    <string name="ai_director_difficulty_easy">Lett</string>
+    <string name="ai_director_difficulty_medium">Middels</string>
+    <string name="ai_director_difficulty_hard">Vanskelig</string>
+    <string name="ai_director_difficulty_very_hard">Veldig vanskelig</string>
+    <string name="ai_director_playstyle_explorer">Utforsker</string>
+    <string name="ai_director_playstyle_completionist">Fullføringsjeger</string>
+    <string name="ai_director_playstyle_speed_runner">Fartløper</string>
+    <string name="ai_director_playstyle_combatant">Kriger</string>
+    <string name="ai_director_playstyle_merchant">Kjøpmann</string>
+    <string name="ai_director_playstyle_balanced">Balansert</string>
+    <string name="ai_director_hud_difficulty">Vanskelighetsgrad</string>
+    <string name="ai_director_hud_playstyle">Spillestil</string>
+    <string name="ai_director_hud_fatigue">Hendelsestretthet</string>
+    <string name="ai_director_debug_title">AI-direktør feilsøking</string>
+    <string name="ai_director_debug_combat_record">Kamp: %1$d V / %2$d T</string>
+    <string name="ai_director_debug_quest_rate">Oppdragssuksess: %1$d%%</string>
+    <string name="ai_director_debug_deaths">Dødsfall: %1$d</string>
+    <string name="ai_director_debug_fatigue">Tretthet: %1$.1f</string>
+    <string name="ai_director_debug_events_today">Hendelser i dag: %1$d</string>
+    <string name="ai_director_debug_rest_bonus">Hvile-bonus: %1$.1f%%</string>
+    <string name="options_ai_director_debug_label">AI-direktør feilsøkingspanel</string>
+    <string name="options_ai_director_debug_desc">Vis avanserte AI-direktør statistikker (for utviklere)</string>
+
+    <!-- Alpha 2.2: Glimmer Shards IAP (Phase 5B) -->
+    <string name="iap_creator_coffee_name">En kopp utviklerkaffe</string>
+    <string name="iap_creator_coffee_desc">Støtt utvikleren med en engangsgave. Låser opp spesialdialog og en legendarisk skinnende gjenstand!</string>
+
+    <!-- Alpha 2.2: Golden Coffee Bean Shiny (Phase 5C) -->
+    <string name="shiny_golden_coffee_bean_name">Gyllen kaffebønne</string>
+    <string name="shiny_golden_coffee_bean_desc">En bønne av ren koffeinmagi, ryktes å gi inspirasjon og fjerne teknisk gjeld. Et minne om utviklerstøtte.</string>
+
+    <!-- Alpha 2.2: Exhausted Coder NPC Dialogue - Filtered Variants (Phase 5A) -->
+    <string name="exhausted_coder_greeting_filtered">Å, en eventyreren til! Velkommen til tavernen. Jeg er den utslitte koderen. Jeg liker tastaturer og å tenke på feil.</string>
+    <string name="exhausted_coder_first_meeting_filtered">Hei der! Jeg er den utslitte koderen. Jeg vet jeg virker litt trøtt, men jeg lover jeg er stort sett ufarlig. Vil du prate?</string>
+    <string name="exhausted_coder_farewell_filtered">Lykke til der ute! Husk: lagre ofte, verden er uforutsigbar!</string>
+    <string name="exhausted_coder_gift_received_filtered">Til meg? Å, du skulle ikke ha gjort det! Dette er fantastisk, takk skal du ha!</string>
+    <string name="exhausted_coder_low_affinity_filtered">*gjesper* Beklager, jeg er bare veldig trøtt. Lang dag med feilsøking.</string>
+    <string name="exhausted_coder_high_affinity_filtered">Vet du, å snakke med deg munter meg alltid opp. Takk for at du er en venn.</string>
+    <string name="exhausted_coder_random_1_filtered">Visste du at knappvaktler kan løpe veldig fort? Akkurat som kompileringsfeilen mine.</string>
+    <string name="exhausted_coder_random_2_filtered">Jeg har jobbet med en ny funksjon. Det går bra, tror jeg!</string>
+    <string name="exhausted_coder_random_3_filtered">Noen ganger drømmer jeg i kode. Er det normalt?</string>
+    <string name="exhausted_coder_random_4_filtered">Kaffen her er forferdelig, men den holder meg våken.</string>
+    <string name="exhausted_coder_random_5_filtered">Jeg lurer på hva som skjer hvis jeg endrer denne variabelen… *nervøs latter*</string>
+
+    <!-- Alpha 2.2: Exhausted Coder NPC Dialogue - Unfiltered Variants (Phase 5A) -->
+    <string name="exhausted_coder_greeting_unfiltered">*lent over tastaturet* Linje 3 847… Å. Et menneske. Kult. Jeg er den utslitte koderen. Dette er min emosjonelle støtte-syntaksfeil.</string>
+    <string name="exhausted_coder_first_meeting_unfiltered">Ah, fersk mat. Jeg er den utslitte koderen. Advarsel: Jeg er det som skjer når en spillutvikler slutter å sove og begynner å snakke med gummiender. Fortsatt interessert?</string>
+    <string name="exhausted_coder_farewell_unfiltered">Gå og ødelegg ting. Jeg vil være her og fikse dem klokka 2 om natta mens jeg gråter i instant-nudler. Det er greit. Dette er greit. Alt er greit.</string>
+    <string name="exhausted_coder_gift_received_unfiltered">*stemmen knekker* Du… du husket at jeg eksisterer? Ingen har noensinne— *klemmer gaven* Jeg vil ønske dette for alltid eller til neste produksjonsfeil, hva som kommer først.</string>
+    <string name="exhausted_coder_low_affinity_unfiltered">*dødt blikk* Jeg har vært våken i 37 timer. Merge-konfliktene hvisker til meg. De sier jeg bør legge til flere semikolon.</string>
+    <string name="exhausted_coder_high_affinity_unfiltered">Du er en av de gode. I motsetning til enhetstestene mine. De forråder meg konstant.</string>
+    <string name="exhausted_coder_random_1_unfiltered">Koden min kompilerer. Livet mitt? Ikke så mye. *hul latter*</string>
+    <string name="exhausted_coder_random_2_unfiltered">Stack Overflow sier jeg bare skal \"skrive det om fra bunnen av.\" STACK OVERFLOW, JEG HAR FRISTER.</string>
+    <string name="exhausted_coder_random_3_unfiltered">Jeg sendte ved et uhell en debug-logg som sa \"HVORFOR VIL DU IKKE FUNGERE\" til produksjon. Ingen la merke til det. Jeg vet ikke om det er trøstende eller skremmende.</string>
+    <string name="exhausted_coder_random_4_unfiltered">Denne kaffen smaker som fortvilelse og brutte løfter. *tar en slurk til* Perfekt.</string>
+    <string name="exhausted_coder_random_5_unfiltered">Jeg ga en variabel navnet \"vennligstFunger\" en gang. Den fungerte ikke. Variabelen var i det minste ærlig.</string>
+
+    <!-- Alpha 2.2: Post-Coffee Donation Dialogue - Filtered Variants (Phase 5C) -->
+    <string name="exhausted_coder_coffee_gratitude_filtered">*ser opp med glinsende øyne* Du… du kjøpte meg kaffe? Jeg vet ikke hva jeg skal si. Dette betyr mer enn du aner. Takk, virkelig.</string>
+    <string name="exhausted_coder_coffee_energized_filtered">*vibrerer av energi* Jeg føler meg LEVENDE! Koden flyter, feilene flykter! Jeg har refaktorert TRE moduler i dag! Er dette hva produktivitet føles som?!</string>
+    <string name="exhausted_coder_random_coffee_1_filtered">*nipper fornøyd* Vet du, med ordentlige koffeinnivåer sank kompileringsfeilen mine med 60%. Korrelasjon? Kausalitet? Hvem bryr seg, DET FUNGERER.</string>
+    <string name="exhausted_coder_random_coffee_2_filtered">Støtten din betyr at jeg kan jobbe med funksjoner jeg faktisk bryr meg om, ikke bare det som betaler regningene. Kvalitet over kvantitet, vet du?</string>
+    <string name="exhausted_coder_random_coffee_3_filtered">*spent hvisking* Jeg har jobbet med noe spesielt. Kan ikke si mye, men… la oss bare si at neste oppdatering vil ha 40% mer fuglekaos. Takket være deg!</string>
+
+    <!-- Alpha 2.2: Post-Coffee Donation Dialogue - Unfiltered Variants (Phase 5C) -->
+    <string name="exhausted_coder_coffee_gratitude_unfiltered">*ekte tårer strømmer nedover ansiktet* Du kjøpte meg EKTE KAFFE? Ikke den brente pauskaffien? Jeg… *stemmen knekker* Dette er den fineste tingen noen har gjort for meg siden lanseringsdagen. Jeg kan møte merge-konfliktene nå. Jeg kan SLÅE den tekniske gjelden. Takk, du vakre, sjenerøse sjel.</string>
+    <string name="exhausted_coder_coffee_energized_unfiltered">*vidåpne øyne, skriver med umenneskelig hastighet* JEG HAR FIKSET 47 FEIL PÅ 3 TIMER. KAFFEN HAR LÅST OPP MITT SANNE POTENSIAL. ER DETTE HVA SØVN FØLES SOM? JEG TRENGER IKKE SØVN. JEG TRENGER FLERE FUNKSJONER. BACKLOGGEN SKJELVER FOR MEG. *manisk latter* Stack Overflow-gudene FRYKTER MEG NÅ.</string>
+    <string name="exhausted_coder_random_coffee_1_unfiltered">*stirrer på skjermen med laserfokus* Kaffen lar meg se Matrix. Hvert semikolon. Hver manglende klamme. De åpenbarer seg for meg nå. Jeg er blitt Debug, feilenes ødelegger. Kan jeg også smake farger nå, er det normalt?</string>
+    <string name="exhausted_coder_random_coffee_2_unfiltered">*filosofisk tone* Du har låst opp hemmelig slutten til kapitalismen: frivillig støtte for kreativt arbeid. Det er som Patreon men med flere fugleordspill. Jeg bruker kaffepengene dine til å bygge funksjoner som gjør MEG lykkelig, noe som gjør spillet bedre, noe som gjør DEG lykkelig. Det er en vakker tilbakemeldingssløyfe av sunn økonomisk teori.</string>
+    <string name="exhausted_coder_random_coffee_3_unfiltered">*lener seg konspiratorisk inn* Kaffen betalte ned den tekniske gjelden min. Jeg kan endelig bygge de latterlige funksjonene jeg har drømt om. Vaktelmekadresser? Sikkert. Musikalnumre under bosstrider? Hvorfor ikke. Eksistensiell dialog om lagrefilenes natur? SKRIVER DET ALLEREDE. Du har sluppet løs et koffeinert monster av kreativitet.</string>
+
+    <!-- Alpha 2.2 Phase 6: Coffee Donation UI Strings (CoffeeDonationSection) -->
+    <!-- Success Dialog -->
+    <string name="coffee_donation_success_title">Takk skal du ha! ☕</string>
+    <string name="coffee_donation_success_message">Din donasjon er mottatt! Den utslitte koderen er koffeinert og takknemlig. Besøk dem på Buttonburgh Tavern for å se den nye dialogen og motta belønningene dine!</string>
+    <string name="coffee_donation_success_button">Fantastisk!</string>
+    
+    <!-- Error Dialog -->
+    <string name="coffee_donation_error_title">Donasjon feilet</string>
+    <string name="coffee_donation_error_duplicate">Donasjon allerede behandlet</string>
+    <string name="coffee_donation_error_already_owned">Kaffe allerede donert</string>
+    <string name="coffee_donation_error_network">Nettverksfeil. Vennligst prøv igjen.</string>
+    <string name="coffee_donation_error_unexpected">Uventet feil: %s</string>
+    <string name="coffee_donation_error_button">OK</string>
+    
+    <!-- Top Bar -->
+    <string name="coffee_donation_topbar_title">Støtt utvikleren</string>
+    <string name="coffee_donation_topbar_back">Tilbake</string>
+    
+    <!-- Main Content -->
+    <string name="coffee_donation_icon_description">Kaffe</string>
+    <string name="coffee_donation_title">Kjøp kaffe til utvikleren</string>
+    <string name="coffee_donation_subtitle">Støtt JalmarQuest-utviklingen</string>
+    <string name="coffee_donation_description">Din $2,99-donasjon hjelper til med å drive lange kvelder med koding, testing og verdensskaping. Den utslitte koderen trenger (bokstavelig talt) kaffe for å holde det gående!</string>
+    
+    <!-- Rewards Section -->
+    <string name="coffee_donation_rewards_header">Dette får du:</string>
+    <string name="coffee_donation_reward_shiny">Gyllen kaffebønne-samlegjenstander</string>
+    <string name="coffee_donation_reward_cosmetic">Eksklusiv beskyttersmykke (krone/regal)</string>
+    <string name="coffee_donation_reward_dialogue">Spesiell takk-dialog fra den utslitte koderen</string>
+    <string name="coffee_donation_reward_feelgood">Varm, glad følelse for å støtte uavhengig utvikling</string>
+    
+    <!-- Exhausted Coder Quote -->
+    <string name="coffee_donation_quote_attribution">Den utslitte koderen sier:</string>
+    <string name="coffee_donation_quote_text">\"Jeg er nede på mine siste 3 bønner. Kompileringsfeilen... de hvisker til meg nå. Vennligst, dine $2,99 er forskjellen mellom fungerende kode og et fall inn i galskap. Jeg gir deg også en veldig skinnende bønne.\"</string>
+    
+    <!-- Already Donated State -->
+    <string name="coffee_donation_already_donated_title">Allerede donert! ☕</string>
+    <string name="coffee_donation_already_donated_message">Takk for støtten! Besøk den utslitte koderen på Buttonburgh Tavern.</string>
+    
+    <!-- Purchase Button -->
+    <string name="coffee_donation_button_donate">Doner $2,99</string>
+    <string name="coffee_donation_button_disclaimer">Engangskjøp • Ingen gjentakende kostnader</string>
+    
+    <!-- Fine Print -->
+    <string name="coffee_donation_fine_print">Alle donasjoner går direkte til å støtte JalmarQuest-utviklingen. Ingen refusjon for konsumert kaffe (men seriøst, kontakt support hvis du har problemer).</string>
 </resources>
+

@@ -138,6 +138,15 @@ class ShinyValuationService {
                 baseValue = 12000
             ),
             
+            // Alpha 2.2: Creator Coffee reward
+            Shiny(
+                id = ShinyId("golden_coffee_bean"),
+                nameKey = "shiny_golden_coffee_bean_name",
+                descriptionKey = "shiny_golden_coffee_bean_desc",
+                rarity = ShinyRarity.LEGENDARY,
+                baseValue = 5000
+            ),
+            
             // Mythic Shinies (15000+ Seeds)
             Shiny(
                 id = ShinyId("crown_of_seasons"),

@@ -22,6 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Controller for character slot purchase UI.
@@ -184,13 +186,13 @@ fun CharacterSlotPurchaseSection(
     ) {
         // Header
         Text(
-            text = "Character Slots",
+            text = stringResource(MR.strings.character_slots_title),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
         
         Text(
-            text = "Unlock additional character slots to manage multiple adventurers simultaneously.",
+            text = stringResource(MR.strings.character_slots_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -237,12 +239,12 @@ fun CharacterSlotPurchaseSection(
                 modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Restore Purchases")
+            Text(stringResource(MR.strings.restore_purchases_button))
         }
         
         // Help text
         Text(
-            text = "Purchased slots are permanent and will be restored when you sign in on a new device.",
+            text = stringResource(MR.strings.character_slots_help_text),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 8.dp)
@@ -285,7 +287,7 @@ private fun CharacterSlotCard(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "Slot ${slotStatus.slotNumber}",
+                        text = stringResource(MR.strings.character_slot_label, slotStatus.slotNumber),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -293,14 +295,14 @@ private fun CharacterSlotCard(
                     if (slotStatus.isUnlocked) {
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
-                            contentDescription = "Unlocked",
+                            contentDescription = stringResource(MR.strings.content_desc_unlocked),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
                         )
                     } else {
                         Icon(
                             imageVector = Icons.Default.Lock,
-                            contentDescription = "Locked",
+                            contentDescription = stringResource(MR.strings.content_desc_locked),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(20.dp)
                         )
@@ -309,13 +311,13 @@ private fun CharacterSlotCard(
                 
                 if (slotStatus.slotNumber == 1) {
                     Text(
-                        text = "Free Slot",
+                        text = stringResource(MR.strings.character_slot_free_label),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 } else if (slotStatus.isUnlocked) {
                     Text(
-                        text = "Purchased",
+                        text = stringResource(MR.strings.character_slot_purchased_label),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -338,7 +340,7 @@ private fun CharacterSlotCard(
                     shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = "FREE",
+                        text = stringResource(MR.strings.character_slot_free_label),
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
@@ -352,7 +354,7 @@ private fun CharacterSlotCard(
                     shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = "OWNED",
+                        text = stringResource(MR.strings.shop_item_owned),
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
@@ -420,15 +422,15 @@ private fun PurchaseResultNotification(
                 Column {
                     Text(
                         text = when (result) {
-                            is PurchaseResultState.Success -> "Purchase Successful"
-                            is PurchaseResultState.Error -> "Purchase Failed"
+                            is PurchaseResultState.Success -> stringResource(MR.strings.character_slot_purchase_success_title)
+                            is PurchaseResultState.Error -> stringResource(MR.strings.character_slot_purchase_failed_title)
                         },
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = when (result) {
-                            is PurchaseResultState.Success -> "Slot ${result.slotNumber} unlocked!"
+                            is PurchaseResultState.Success -> stringResource(MR.strings.character_slot_purchase_success_message, result.slotNumber)
                             is PurchaseResultState.Error -> result.message
                         },
                         style = MaterialTheme.typography.bodySmall
@@ -439,7 +441,7 @@ private fun PurchaseResultNotification(
             IconButton(onClick = onDismiss) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Dismiss"
+                    contentDescription = stringResource(MR.strings.common_dismiss)
                 )
             }
         }
@@ -486,8 +488,8 @@ private fun RestoreResultNotification(
                 Column {
                     Text(
                         text = when (result) {
-                            is RestoreResultState.Success -> "Restore Complete"
-                            is RestoreResultState.Error -> "Restore Failed"
+                            is RestoreResultState.Success -> stringResource(MR.strings.character_slot_restore_success_title)
+                            is RestoreResultState.Error -> stringResource(MR.strings.character_slot_restore_failed_title)
                         },
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold
@@ -496,9 +498,9 @@ private fun RestoreResultNotification(
                         text = when (result) {
                             is RestoreResultState.Success -> {
                                 if (result.restoredCount == 0) {
-                                    "No purchases found to restore"
+                                    stringResource(MR.strings.character_slot_restore_none_found)
                                 } else {
-                                    "${result.restoredCount} slot(s) restored"
+                                    stringResource(MR.strings.character_slot_restore_count, result.restoredCount)
                                 }
                             }
                             is RestoreResultState.Error -> result.message
@@ -511,7 +513,7 @@ private fun RestoreResultNotification(
             IconButton(onClick = onDismiss) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Dismiss"
+                    contentDescription = stringResource(MR.strings.common_dismiss)
                 )
             }
         }

@@ -1,6 +1,7 @@
 package com.jalmarquest.ui.app.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -18,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Collapsible header component that maximizes screen space.
@@ -44,16 +47,32 @@ fun CollapsibleHeader(
         label = "chevron_rotation"
     )
     
+    // FIX: Add smooth animation and proper touch targets
+    val animatedHeight by animateDpAsState(
+        targetValue = if (expanded) 120.dp else 56.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
+    
     Surface(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(animatedHeight)
+            .clickable(
+                onClick = { expanded = !expanded },
+                indication = rememberRipple(bounded = true),
+                interactionSource = remember { MutableInteractionSource() }
+            ),
         color = MaterialTheme.colorScheme.primaryContainer,
-        tonalElevation = 2.dp
+        shadowElevation = 4.dp
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // Collapsed Header (always visible)
             Row(
@@ -84,7 +103,7 @@ fun CollapsibleHeader(
                 
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = if (expanded) "Collapse header" else "Expand header",
+                    contentDescription = if (expanded) stringResource(MR.strings.content_desc_collapse_header) else stringResource(MR.strings.content_desc_expand_header),
                     modifier = Modifier
                         .rotate(rotationAngle)
                         .size(24.dp),
@@ -137,7 +156,7 @@ fun CollapsibleHeader(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Log Out")
+                        Text(stringResource(MR.strings.collapsible_header_log_out))
                     }
                 }
             }
@@ -193,7 +212,7 @@ fun CompactHeader(
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Open menu",
+                    contentDescription = stringResource(MR.strings.content_desc_open_menu),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }

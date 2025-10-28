@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.ui.app.layout.AppSpacing
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Main menu drawer component accessible from anywhere in the app.
@@ -75,7 +77,7 @@ fun MainMenuDrawer(
                         modifier = Modifier.padding(horizontal = AppSpacing.medium)
                     ) {
                         Text(
-                            text = "JalmarQuest",
+                            text = stringResource(MR.strings.app_title),
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
@@ -84,7 +86,7 @@ fun MainMenuDrawer(
                         Spacer(modifier = Modifier.height(AppSpacing.tiny))
                         
                         Text(
-                            text = "Main Menu",
+                            text = stringResource(MR.strings.drawer_main_menu),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         )
@@ -98,7 +100,7 @@ fun MainMenuDrawer(
                     ) {
                         MainMenuItem(
                             icon = Icons.Default.Save,
-                            label = "Save Game",
+                            label = stringResource(MR.strings.drawer_save_game),
                             onClick = {
                                 onSaveGame()
                                 onDismiss()
@@ -107,7 +109,7 @@ fun MainMenuDrawer(
                         
                         MainMenuItem(
                             icon = Icons.Default.FolderOpen,
-                            label = "Load Game",
+                            label = stringResource(MR.strings.drawer_load_game),
                             onClick = {
                                 onLoadGame()
                                 onDismiss()
@@ -120,7 +122,7 @@ fun MainMenuDrawer(
                         
                         MainMenuItem(
                             icon = Icons.Default.Settings,
-                            label = "Settings",
+                            label = stringResource(MR.strings.drawer_settings),
                             onClick = {
                                 onSettings()
                                 onDismiss()
@@ -133,7 +135,7 @@ fun MainMenuDrawer(
                         
                         MainMenuItem(
                             icon = Icons.Default.Home,
-                            label = "Quit to Main Menu",
+                            label = stringResource(MR.strings.drawer_quit_to_main_menu),
                             onClick = {
                                 onQuitToMenu()
                                 onDismiss()
@@ -142,7 +144,7 @@ fun MainMenuDrawer(
                         
                         MainMenuItem(
                             icon = Icons.Default.ExitToApp,
-                            label = "Exit Application",
+                            label = stringResource(MR.strings.drawer_exit_app),
                             onClick = {
                                 onExitApp()
                                 onDismiss()
@@ -228,7 +230,7 @@ fun MainMenuButton(
     ) {
         Icon(
             imageVector = Icons.Default.Menu,
-            contentDescription = "Open main menu",
+            contentDescription = stringResource(MR.strings.content_desc_open_main_menu),
             modifier = Modifier.size(24.dp)
         )
     }

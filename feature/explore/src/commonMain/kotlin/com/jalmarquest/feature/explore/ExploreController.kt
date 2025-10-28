@@ -20,4 +20,8 @@ class ExploreController(
     fun continueAfterResolution() {
         scope.launch { stateMachine.continueAfterResolution() }
     }
+    
+    fun rest() {
+        scope.launch { stateMachine.rest() }
+    }
 }

@@ -14,6 +14,7 @@ import com.jalmarquest.ui.app.sections.ExploreScreen
 import com.jalmarquest.ui.app.sections.WorldMapScreen
 import com.jalmarquest.ui.app.theme.JalmarQuestTheme
 import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 import kotlinx.coroutines.launch
 
 /**
@@ -60,6 +61,10 @@ fun JalmarQuestAppV2() {
         QuestController(questManager, questCatalog, gameStateManager) 
     }
     
+    // Alpha 2.2: AI Director integration
+    val aiDirectorManager = remember { resolveAIDirectorManager() }
+    val aiDirectorState by aiDirectorManager.state.collectAsState()
+    
     // Auth state
     val authState by authController.authState.collectAsState()
     
@@ -68,6 +73,9 @@ fun JalmarQuestAppV2() {
     
     // Main menu drawer state
     var showMainMenu by remember { mutableStateOf(false) }
+    
+    // Alpha 2.2: AI Director debug panel toggle
+    var showAIDirectorDebug by remember { mutableStateOf(false) }
     
     // Initial setup
     LaunchedEffect(Unit) { 
@@ -106,7 +114,7 @@ fun JalmarQuestAppV2() {
                                         MR.strings.auth_welcome_guest,
                                         (authState as AuthState.Guest).profile.displayName
                                     ),
-                                    currentLocation = "Centre of Buttonburgh",
+                                    currentLocation = stringResource(MR.strings.hub_title),
                                     onLogout = { authController.signOut() },
                                     initiallyExpanded = false
                                 )
@@ -170,7 +178,19 @@ fun JalmarQuestAppV2() {
                                             onNavigateBack = { screenNavigator.navigateBack() }
                                         )
                                         
-                                        is Screen.Settings -> SettingsScreenPlaceholder(
+                                        is Screen.Settings -> com.jalmarquest.ui.app.sections.SettingsScreen(
+                                            showAIDirectorDebug = showAIDirectorDebug,
+                                            onToggleAIDirectorDebug = { enabled ->
+                                                showAIDirectorDebug = enabled
+                                            },
+                                            onNavigateToCoffeeDonation = {
+                                                screenNavigator.navigateTo(Screen.CoffeeDonation)
+                                            },
+                                            onBack = { screenNavigator.navigateBack() }
+                                        )
+                                        
+                                        is Screen.CoffeeDonation -> CoffeeDonationScreenWrapper(
+                                            gameStateManager = gameStateManager,
                                             onBack = { screenNavigator.navigateBack() }
                                         )
                                     }
@@ -220,6 +240,55 @@ fun JalmarQuestAppV2() {
                                 modifier = Modifier.align(androidx.compose.ui.Alignment.TopEnd)
                             )
                         }
+                        
+                        // Alpha 2.2: AI Director HUD overlay (top-left corner)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 16.dp, top = 72.dp)
+                        ) {
+                            AIDirectorHUD(
+                                difficulty = aiDirectorState.currentDifficulty,
+                                playstyle = aiDirectorState.playstyle.getDominantStyle(),
+                                eventsSinceRest = aiDirectorState.eventsSinceRest,
+                                showFatigueMeter = true,
+                                modifier = Modifier.align(androidx.compose.ui.Alignment.TopStart)
+                            )
+                        }
+                        
+                        // Alpha 2.2: AI Director debug panel (toggle via Settings)
+                        if (showAIDirectorDebug) {
+                            // Build playstyle scores map from PlaystyleProfile
+                            val playstyleScores = mapOf(
+                                com.jalmarquest.core.model.Playstyle.CAUTIOUS to aiDirectorState.playstyle.cautiousScore,
+                                com.jalmarquest.core.model.Playstyle.AGGRESSIVE to aiDirectorState.playstyle.aggressiveScore,
+                                com.jalmarquest.core.model.Playstyle.EXPLORER to aiDirectorState.playstyle.explorerScore,
+                                com.jalmarquest.core.model.Playstyle.HOARDER to aiDirectorState.playstyle.hoarderScore,
+                                com.jalmarquest.core.model.Playstyle.SOCIAL to aiDirectorState.playstyle.socialScore,
+                                com.jalmarquest.core.model.Playstyle.BALANCED to 0 // Calculated, not stored
+                            )
+                            
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                            ) {
+                                AIDirectorDebugPanel(
+                                    difficulty = aiDirectorState.currentDifficulty,
+                                    playstyle = aiDirectorState.playstyle.getDominantStyle(),
+                                    combatWins = aiDirectorState.performance.combatWins,
+                                    combatLosses = aiDirectorState.performance.combatLosses,
+                                    questCompletions = aiDirectorState.performance.questCompletions,
+                                    questFailures = aiDirectorState.performance.questFailures,
+                                    deaths = aiDirectorState.performance.deaths,
+                                    eventsSinceRest = aiDirectorState.eventsSinceRest,
+                                    playstyleScores = playstyleScores,
+                                    modifier = Modifier
+                                        .align(androidx.compose.ui.Alignment.BottomStart)
+                                        .widthIn(max = 400.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -234,8 +303,8 @@ fun JalmarQuestAppV2() {
 @Composable
 private fun ExploreScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🗺️ Explore",
-        description = "Full-screen exploration UI will be implemented here.\n\nNo scrolling required - all content fits viewport.",
+        title = stringResource(MR.strings.menu_title_explore),
+        description = stringResource(MR.strings.placeholder_explore_desc),
         onBack = onBack
     )
 }
@@ -243,8 +312,8 @@ private fun ExploreScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun NestScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🏡 The Nest",
-        description = "Nest management screen with housing cosmetics.\n\nFuture: 50+ cosmetic items, functional upgrades.",
+        title = stringResource(MR.strings.menu_title_nest),
+        description = stringResource(MR.strings.placeholder_nest_desc),
         onBack = onBack
     )
 }
@@ -252,8 +321,8 @@ private fun NestScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun SkillsScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "⚒️ Skills & Crafting",
-        description = "Skills tree and crafting interface.",
+        title = stringResource(MR.strings.menu_title_skills),
+        description = stringResource(MR.strings.placeholder_skills_desc),
         onBack = onBack
     )
 }
@@ -261,8 +330,8 @@ private fun SkillsScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun ActivitiesScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🎯 Activities",
-        description = "Secondary activities interface.",
+        title = stringResource(MR.strings.menu_title_activities),
+        description = stringResource(MR.strings.placeholder_activities_desc),
         onBack = onBack
     )
 }
@@ -270,8 +339,8 @@ private fun ActivitiesScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun InventoryScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🎒 Inventory",
-        description = "Full inventory management screen.",
+        title = stringResource(MR.strings.menu_title_inventory),
+        description = stringResource(MR.strings.placeholder_inventory_desc),
         onBack = onBack
     )
 }
@@ -279,8 +348,8 @@ private fun InventoryScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun QuestLogScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "📜 Quest Log",
-        description = "Active and completed quests.",
+        title = stringResource(MR.strings.menu_title_quest_log),
+        description = stringResource(MR.strings.placeholder_quest_log_desc),
         onBack = onBack
     )
 }
@@ -288,8 +357,8 @@ private fun QuestLogScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun ShopScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🛒 Shop",
-        description = "In-game shop with purchases.",
+        title = stringResource(MR.strings.menu_title_shop),
+        description = stringResource(MR.strings.placeholder_shop_desc),
         onBack = onBack
     )
 }
@@ -297,8 +366,8 @@ private fun ShopScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun WorldInfoScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "🌍 World Info",
-        description = "Lore, factions, and world information.",
+        title = stringResource(MR.strings.menu_title_world_info),
+        description = stringResource(MR.strings.placeholder_world_info_desc),
         onBack = onBack
     )
 }
@@ -306,10 +375,69 @@ private fun WorldInfoScreenPlaceholder(onBack: () -> Unit) {
 @Composable
 private fun SettingsScreenPlaceholder(onBack: () -> Unit) {
     PlaceholderScreen(
-        title = "⚙️ Settings",
-        description = "Game settings, audio, accessibility options.",
+        title = stringResource(MR.strings.menu_title_settings),
+        description = stringResource(MR.strings.placeholder_settings_desc),
         onBack = onBack
     )
+}
+
+/**
+ * Wrapper for Coffee Donation screen with mock IAP service.
+ * Alpha 2.2 Phase 5B: Coffee IAP Implementation
+ * 
+ * TODO: Replace MockIapService with platform-specific implementation
+ */
+@Composable
+private fun CoffeeDonationScreenWrapper(
+    gameStateManager: com.jalmarquest.core.state.GameStateManager,
+    onBack: () -> Unit
+) {
+    val scope = rememberCoroutineScope()
+    val glimmerWalletManager = remember { resolveGlimmerWalletManager() }
+    
+    // TODO: Replace with actual platform IAP service
+    val mockIapService = remember { createMockIapService() }
+    
+    val controller = remember(scope) {
+        com.jalmarquest.ui.app.sections.CoffeeDonationController(
+            scope = scope,
+            glimmerWalletManager = glimmerWalletManager,
+            iapService = mockIapService
+        )
+    }
+    
+    com.jalmarquest.ui.app.sections.CoffeeDonationSection(
+        controller = controller,
+        onBack = onBack
+    )
+}
+
+/**
+ * Create a mock IAP service for desktop testing.
+ * Alpha 2.2 Phase 5B: Replace with platform-specific implementation.
+ */
+private fun createMockIapService(): com.jalmarquest.core.state.monetization.IIapService {
+    return object : com.jalmarquest.core.state.monetization.IIapService {
+        override suspend fun initialize(): Boolean = true
+        override suspend fun queryProducts(productIds: List<com.jalmarquest.core.model.ProductId>): Map<com.jalmarquest.core.model.ProductId, com.jalmarquest.core.state.monetization.PlatformProduct> = emptyMap()
+        override suspend fun launchPurchaseFlow(product: com.jalmarquest.core.model.IapProduct): com.jalmarquest.core.state.monetization.PurchaseResponse {
+            // Simulate successful purchase for testing
+            val timestamp = com.jalmarquest.core.state.perf.currentTimeMillis()
+            return com.jalmarquest.core.state.monetization.PurchaseResponse.Success(
+                productId = product.id,
+                receiptData = "mock_receipt_${timestamp}",
+                purchaseToken = "mock_token_${timestamp}",
+                transactionId = "mock_transaction_${timestamp}",
+                purchaseTimeMillis = timestamp
+            )
+        }
+        override suspend fun verifyPurchase(receiptData: String): Boolean = true
+        override suspend fun restorePurchases(): List<com.jalmarquest.core.state.monetization.RestoredPurchase> = emptyList()
+        override suspend fun consumePurchase(purchaseToken: String): Boolean = true
+        override suspend fun acknowledgePurchase(purchaseToken: String): Boolean = true
+        override fun isBillingSupported(): Boolean = true
+        override fun dispose() {}
+    }
 }
 
 @Composable
@@ -339,7 +467,7 @@ private fun PlaceholderScreen(
             onClick = onBack,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("← Back")
+            Text(stringResource(MR.strings.common_back_arrow))
         }
     }
 }

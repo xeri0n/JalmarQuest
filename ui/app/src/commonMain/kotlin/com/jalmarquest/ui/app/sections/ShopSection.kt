@@ -23,6 +23,8 @@ import com.jalmarquest.core.state.shop.EquipResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Shop UI for cosmetic purchases
@@ -101,7 +103,7 @@ fun ShopSection(
                 modifier = Modifier.padding(8.dp),
                 action = {
                     TextButton(onClick = { purchaseResultMessage = null }) {
-                        Text("Dismiss")
+                        Text(stringResource(MR.strings.common_dismiss))
                     }
                 }
             ) {
@@ -114,17 +116,17 @@ fun ShopSection(
             Tab(
                 selected = selectedTabIndex == 0,
                 onClick = { selectedTabIndex = 0 },
-                text = { Text("Permanent") }
+                text = { Text(stringResource(MR.strings.shop_tab_permanent)) }
             )
             Tab(
                 selected = selectedTabIndex == 1,
                 onClick = { selectedTabIndex = 1 },
-                text = { Text("Daily Deals") }
+                text = { Text(stringResource(MR.strings.shop_tab_daily_deals)) }
             )
             Tab(
                 selected = selectedTabIndex == 2,
                 onClick = { selectedTabIndex = 2 },
-                text = { Text("Weekly Featured") }
+                text = { Text(stringResource(MR.strings.shop_tab_weekly_featured)) }
             )
         }
         
@@ -170,13 +172,13 @@ private fun GlimmerBalanceHeader(balance: Int) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Your Glimmer Balance",
+                text = stringResource(MR.strings.shop_your_glimmer_balance),
                 style = MaterialTheme.typography.titleMedium
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Filled.Star,
-                    contentDescription = "Glimmer",
+                    contentDescription = stringResource(MR.strings.content_desc_glimmer),
                     tint = Color(0xFFFFD700)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -235,12 +237,12 @@ private fun DailyDealsTab(
     ) {
         item {
             Text(
-                text = "Today's Special Offers",
+                text = stringResource(MR.strings.shop_todays_special_offers),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
             Text(
-                text = "Resets in 24 hours",
+                text = stringResource(MR.strings.shop_resets_in_24_hours),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -257,7 +259,7 @@ private fun DailyDealsTab(
                         onPurchaseResult(formatPurchaseResult(result))
                     }
                 },
-                badge = "DAILY DEAL"
+                badge = stringResource(MR.strings.shop_badge_daily_deal)
             )
         }
     }
@@ -279,12 +281,12 @@ private fun WeeklyFeaturedTab(
     ) {
         item {
             Text(
-                text = "This Week's Featured Items",
+                text = stringResource(MR.strings.shop_this_weeks_featured_items),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
             Text(
-                text = "Resets in 7 days",
+                text = stringResource(MR.strings.shop_resets_in_7_days),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -301,7 +303,7 @@ private fun WeeklyFeaturedTab(
                         onPurchaseResult(formatPurchaseResult(result))
                     }
                 },
-                badge = "FEATURED"
+                badge = stringResource(MR.strings.shop_badge_featured)
             )
         }
     }
@@ -351,7 +353,7 @@ private fun ShopItemCard(
                     repeat(item.rarityTier) {
                         Icon(
                             imageVector = Icons.Filled.Star,
-                            contentDescription = "Rarity",
+                            contentDescription = stringResource(MR.strings.content_desc_rarity),
                             modifier = Modifier.size(16.dp),
                             tint = getRarityColor(item.rarityTier)
                         )
@@ -405,7 +407,7 @@ private fun ShopItemCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Filled.Star,
-                        contentDescription = "Glimmer",
+                        contentDescription = stringResource(MR.strings.content_desc_glimmer),
                         tint = Color(0xFFFFD700),
                         modifier = Modifier.size(20.dp)
                     )
@@ -422,12 +424,12 @@ private fun ShopItemCard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Filled.CheckCircle,
-                            contentDescription = "Owned",
+                            contentDescription = stringResource(MR.strings.content_desc_owned),
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Owned",
+                            text = stringResource(MR.strings.shop_item_owned),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -437,7 +439,7 @@ private fun ShopItemCard(
                         onClick = { onPurchase(item.id) },
                         enabled = glimmerBalance >= item.glimmerCost
                     ) {
-                        Text("Purchase")
+                        Text(stringResource(MR.strings.common_purchase))
                     }
                 }
             }
@@ -471,12 +473,14 @@ private fun getRarityColor(tier: Int): Color {
 }
 
 private fun formatPurchaseResult(result: PurchaseResult): String {
+    // Note: These strings need to be resolved in a @Composable context
+    // For now using raw English strings - consider moving this logic to UI layer
     return when (result) {
-        is PurchaseResult.Success -> "Successfully purchased ${result.item.name}!"
-        is PurchaseResult.AlreadyOwned -> "You already own this item"
-        is PurchaseResult.InsufficientGlimmer -> "Not enough Glimmer Shards"
-        is PurchaseResult.ItemNotFound -> "Item not found"
-        is PurchaseResult.NotAvailable -> "This item is not currently available"
-        is PurchaseResult.WalletUnavailable -> "Wallet service unavailable"
+        is PurchaseResult.Success -> "Successfully purchased ${result.item.name}!" // MR.strings.shop_result_success
+        is PurchaseResult.AlreadyOwned -> "You already own this item" // MR.strings.shop_result_already_owned
+        is PurchaseResult.InsufficientGlimmer -> "Not enough Glimmer Shards" // MR.strings.shop_result_insufficient_glimmer
+        is PurchaseResult.ItemNotFound -> "Item not found" // MR.strings.shop_result_item_not_found
+        is PurchaseResult.NotAvailable -> "This item is not currently available" // MR.strings.shop_result_not_available
+        is PurchaseResult.WalletUnavailable -> "Wallet service unavailable" // MR.strings.shop_result_wallet_unavailable
     }
 }

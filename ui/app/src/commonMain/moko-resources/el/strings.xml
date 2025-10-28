@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="common_back">Πίσω</string>
+    <string name="common_back_arrow">← Πίσω</string>
+    <string name="common_close">Κλείσιμο</string>
+    <string name="common_dismiss">Κλείσιμο</string>
+    <string name="common_ok">Εντάξει</string>
+    <string name="common_cancel">Άκυρο</string>
+    <string name="common_travel">Ταξίδι</string>
+    <string name="common_purchase">Αγορά</string>
+    <string name="common_cost_label">Κόστος:</string>
+    <string name="common_your_glimmer_label">Τα Glimmer σου:</string>
+    <string name="common_equip">Εξοπλισμός</string>
+    <string name="common_unequip">Αφαίρεση</string>
+    <string name="common_retry">Προσπάθεια ξανά</string>
+    <string name="common_continue">Συνέχεια</string>
+
+    <string name="bottom_nav_hub">Κόμβος</string>
+    <string name="bottom_nav_explore">Εξερεύνηση</string>
+    <string name="bottom_nav_nest">Φωλιά</string>
+    <string name="bottom_nav_skills">Δεξιότητες</string>
+    <string name="bottom_nav_more">Περισσότερα</string>
+
+    <string name="content_desc_back">Πίσω</string>
+    <string name="content_desc_main_menu_background">Φόντο κύριου μενού</string>
+    <string name="content_desc_options_background">Φόντο επιλογών</string>
+    <string name="content_desc_back_to_main_menu">Πίσω στο κύριο μενού</string>
+    <string name="content_desc_glimmer">Glimmer</string>
+    <string name="content_desc_rarity">Σπανιότητα</string>
+    <string name="content_desc_owned">Σε κατοχή</string>
+    <string name="content_desc_unlocked">Ξεκλείδωτο</string>
+    <string name="content_desc_locked">Κλειδωμένο</string>
+    <string name="content_desc_fast_travel">Γρήγορο ταξίδι</string>
+    <string name="content_desc_discovered">Ανακαλύφθηκε</string>
+    <string name="content_desc_current_location">Τρέχουσα τοποθεσία</string>
+    <string name="content_desc_visited">Επισκέφθηκε</string>
+    <string name="content_desc_open_main_menu">Άνοιγμα κύριου μενού</string>
+    <string name="content_desc_open_menu">Άνοιγμα μενού</string>
+    <string name="content_desc_close">Κλείσιμο</string>
+    <string name="content_desc_equipped">Εξοπλισμένο</string>
+    <string name="content_desc_expand_header">Ανάπτυξη κεφαλίδας</string>
+    <string name="content_desc_collapse_header">Σύμπτυξη κεφαλίδας</string>
+    <string name="content_desc_zoom_in">Μεγέθυνση</string>
+    <string name="content_desc_zoom_out">Σμίκρυνση</string>
+    <string name="content_desc_recenter">Επανακεντρισμός</string>
+
+    <string name="label_skills">Δεξιότητες</string>
+    <string name="label_items">Αντικείμενα</string>
+    <string name="label_shinies">Λάμψεις</string>
+    <string name="label_quests">Αποστολές</string>
+
+    <string name="hub_back_to_hub">Πίσω στον Κόμβο</string>
+
+    <string name="shop_tab_permanent">Μόνιμα</string>
+    <string name="shop_tab_daily_deals">Ημερήσιες προσφορές</string>
+    <string name="shop_tab_weekly_featured">Εβδομαδιαίες προτάσεις</string>
+
+    <string name="seasonal_unlock_premium_track">Ξεκλείδωμα Premium Διαδρομής - %1$d Glimmer</string>
+    <string name="seasonal_claim_button">Παραλαβή</string>
+
+    <string name="hoard_acquire">Απόκτηση</string>
+    <string name="harvest_button">Συγκομιδή</string>
+    <string name="restore_purchases_button">Επαναφορά αγορών</string>
+
+    <string name="dialog_fast_travel_title">Γρήγορο ταξίδι - Ξυσίματα Φωλιάς</string>
+    <string name="dialog_fast_travel_empty">Δεν έχεις ανακαλύψει ακόμη Ξυσίματα Φωλιάς. Εξερεύνησε τον κόσμο για να βρεις σημεία γρήγορου ταξιδιού!</string>
+    <string name="dialog_fast_travel_select_prompt">Επίλεξε ένα Ξύσιμο Φωλιάς για ταξίδι:</string>
+
+    <string name="quest_error_title">Σφάλμα Αποστολής</string>
+    <string name="quest_accept_button">Αποδοχή Αποστολής</string>
+    <string name="quest_complete_button">Ολοκλήρωση Αποστολής</string>
+    <string name="quest_completed">Ολοκληρώθηκε</string>
+    <string name="quest_log_title">Ημερολόγιο Αποστολών</string>
+    <string name="quest_no_active">Δεν υπάρχουν ενεργές αποστολές.\nΔες την καρτέλα Διαθέσιμες για να ξεκινήσεις μια νέα περιπέτεια!</string>
+    <string name="quest_no_available">Δεν υπάρχουν διαθέσιμες αποστολές αυτή τη στιγμή.\nΟλοκλήρωσε προαπαιτούμενα ή εξερεύνησε περισσότερο για να ξεκλειδώσεις νέες!</string>
+    <string name="quest_no_completed">Δεν υπάρχουν ολοκληρωμένες αποστολές ακόμη.\nΞεκίνησε την περιπέτεια στις καρτέλες Ενεργές ή Διαθέσιμες!</string>
+    <string name="quest_recommended_level">Προτεινόμενο επίπεδο: %1$d</string>
+    <string name="quest_level_short">Επίπεδο %1$d</string>
+    <string name="quest_more_objectives">+%1$d επιπλέον στόχοι</string>
+    <string name="quest_rewards_label">Ανταμοιβές:</string>
+    <string name="quest_objectives_label">Στόχοι:</string>
+    <string name="quest_progress_label">Πρόοδος: %1$d/%2$d</string>
+    <string name="quest_optional_label">(Προαιρετικό)</string>
+    <string name="quest_giver_label">Αναθέτων: %1$s</string>
+    <string name="quest_abandon_button">Εγκατάλειψη</string>
+
+    <string name="content_desc_ready_to_complete">Έτοιμο για ολοκλήρωση</string>
+    <string name="content_desc_new_quest">Νέα αποστολή</string>
+    <string name="content_desc_rewards">Ανταμοιβές</string>
+    <string name="content_desc_completed">Ολοκληρώθηκε</string>
+
+    <string name="components_worldinfo_location">Τοποθεσία</string>
+    <string name="components_worldinfo_difficulty_warning">Προειδοποίηση δυσκολίας</string>
+    <string name="components_worldinfo_weather">Καιρός</string>
+    <string name="components_worldinfo_season">Εποχή</string>
+    <string name="worldinfo_difficulty_label">Δυσκολία: %1$s</string>
+    <string name="worldinfo_weather_severity">(Ένταση: %1$d/10)</string>
+    <string name="worldinfo_season_day">(Ημέρα %1$d/90)</string>
+    <string name="worldinfo_resources_label">Πόροι: %1$s</string>
+
+    <string name="drawer_save_game">Αποθήκευση παιχνιδιού</string>
+    <string name="drawer_load_game">Φόρτωση παιχνιδιού</string>
+    <string name="drawer_settings">Ρυθμίσεις</string>
+    <string name="drawer_quit_to_main_menu">Έξοδος στο κύριο μενού</string>
+    <string name="drawer_exit_app">Έξοδος από την εφαρμογή</string>
+    <string name="drawer_main_menu">Κύριο μενού</string>
+
+    <string name="collapsible_header_log_out">Αποσύνδεση</string>
+
+    <string name="menu_title_explore">🗺️ Εξερεύνηση</string>
+    <string name="menu_title_nest">🏡 Η Φωλιά</string>
+    <string name="menu_title_skills">⚒️ Δεξιότητες &amp; Κατασκευή</string>
+    <string name="menu_title_activities">🎯 Δραστηριότητες</string>
+    <string name="menu_title_inventory">🎒 Αποθέματα</string>
+    <string name="menu_title_quest_log">📜 Ημερολόγιο Αποστολών</string>
+    <string name="menu_title_shop">🛒 Κατάστημα</string>
+    <string name="menu_title_world_info">🌍 Πληροφορίες Κόσμου</string>
+    <string name="menu_title_settings">⚙️ Ρυθμίσεις</string>
+
+    <string name="hub_explore_title">Εξερεύνηση</string>
+    <string name="hub_world_map_title">Χάρτης Κόσμου</string>
+    <string name="hub_nest_title">Η Φωλιά</string>
+    <string name="hub_quest_log_title">Ημερολόγιο Αποστολών</string>
+    <string name="hub_inventory_title">Αποθέματα</string>
+    <string name="hub_skills_title">Δεξιότητες</string>
+    <string name="hub_shop_title">Κατάστημα</string>
+    <string name="hub_activities_title">Δραστηριότητες</string>
+    <string name="hub_hoard_status_title">🏆 Κατάσταση Θησαυρού</string>
+    <string name="hub_concoctions_title">🧪 Παρασκευές</string>
+    <string name="hub_active_quests_title">📜 Ενεργές αποστολές</string>
+
+    <string name="nest_purchase_title">Αγορά %1$s;</string>
+    
+    <!-- Main hub screen misc -->
+    <string name="hub_title">Κέντρο Buttonburgh</string>
+    <string name="hub_welcome">Καλώς ήρθες, %1$s</string>
+    <string name="hub_prompt_choose_action">Τι θα ήθελες να κάνεις;</string>
+
+    <!-- Feature tiles titles/descriptions -->
+    <string name="feature_explore_title">Εξερεύνηση</string>
+    <string name="feature_explore_desc">Περιπλανήσου στον κόσμο</string>
+    <string name="feature_quests_title">Αποστολές</string>
+    <string name="feature_quests_desc">Παρακολούθησε τις περιπέτειές σου</string>
+    <string name="feature_nest_title">Η Φωλιά μου</string>
+    <string name="feature_nest_desc">Διαχειρίσου το σπίτι σου</string>
+    <string name="feature_hoard_title">Θησαυροφυλάκιο</string>
+    <string name="feature_hoard_desc">Συλλογή σπάνιων θησαυρών</string>
+    <string name="feature_concoctions_title">Παρασκευές</string>
+    <string name="feature_concoctions_desc">Παρασκεύασε μαγικά φίλτρα</string>
+    <string name="feature_skills_title">Δεξιότητες</string>
+    <string name="feature_skills_desc">Ανάπτυξε τις ικανότητές σου</string>
+    <string name="feature_world_map_title">Χάρτης Κόσμου</string>
+    <string name="feature_world_map_desc">Πλοήγηση στο βασίλειο</string>
+    <string name="feature_chronicle_title">Εποχικό Χρονικό</string>
+    <string name="feature_chronicle_desc">Ολοκλήρωσε προκλήσεις</string>
+
+    <string name="feature_coming_soon_title">%1$s - Έρχεται σύντομα!</string>
+    <string name="feature_coming_soon_body">Αυτή η λειτουργία βρίσκεται υπό ανάπτυξη.</string>
+    
+    <!-- Explore screen (full) -->
+    <string name="explore_ready_title">Έτοιμοι για Εξερεύνηση</string>
+    <string name="explore_ready_desc">Ξεκίνα την περιπέτεια σε αυτή την τοποθεσία. Οι συναντήσεις διαφέρουν ανάλογα με το τοπικό βιομά και το περιβάλλον.</string>
+    <string name="explore_searching_area">Αναζήτηση στην περιοχή...</string>
+    <string name="explore_what_will_you_do">Τι θα κάνεις;</string>
+    <string name="explore_choose_your_path">Επέλεξε τη διαδρομή σου:</string>
+    <string name="explore_ai_director_badge">🤖 AI ΔΙΕΥΘΥΝΤΗΣ</string>
+    <string name="explore_you_chose">Επέλεξες: %1$s</string>
+    <string name="explore_rewards_label">Ανταμοιβές:</string>
+
+    <!-- Common misc -->
+    <string name="common_error">Σφάλμα</string>
+    <string name="common_unknown">Άγνωστο</string>
+    <string name="common_unknown_location">Άγνωστη τοποθεσία</string>
+    
+    <!-- World map & travel -->
+    <string name="worldmap_title_world_map">Χάρτης Κόσμου</string>
+    <string name="worldmap_title_locations">Τοποθεσίες</string>
+    <string name="worldmap_title_fast_travel">Γρήγορο ταξίδι</string>
+    <string name="worldmap_current_label">Τρέχον: %1$s</string>
+    <string name="worldmap_explored_progress">Εξερεύνηση: %1$d/%2$d</string>
+    <string name="worldmap_difficulty_safe">Ασφαλές</string>
+    <string name="worldmap_difficulty_moderate">Μέτριο</string>
+    <string name="worldmap_difficulty_dangerous">Επικίνδυνο</string>
+    <string name="worldmap_difficulty_deadly">Θανάσιμο</string>
+    <string name="worldmap_unlock_quest">Ολοκλήρωσε αποστολή για ξεκλείδωμα</string>
+    <string name="worldmap_unlock_level">Φτάσε επίπεδο %1$d</string>
+    <string name="worldmap_unlock_discover_region">Ανακάλυψε πρώτα άλλη περιοχή</string>
+    <string name="worldmap_unlock_multiple">Πολλαπλές απαιτήσεις</string>
+    <string name="worldmap_fast_travel_empty">Δεν έχουν ξεκλειδωθεί ακόμα τοποθεσίες γρήγορου ταξιδιού.\nΕπισκέψου ασφαλείς τοποθεσίες για να ενεργοποιήσεις το γρήγορο ταξίδι.</string>
+    <string name="worldmap_arrived_new_location">Άφιξη σε νέα τοποθεσία</string>
+    <string name="worldmap_arrived_discovered">Άφιξη! Ανακαλύφθηκαν %1$d νέα πράγματα</string>
+    <string name="worldmap_region_locked">Περιοχή κλειδωμένη: δεν πληρούνται οι απαιτήσεις</string>
+    <string name="worldmap_location_locked">Τοποθεσία κλειδωμένη: ολοκλήρωσε την απαιτούμενη αποστολή</string>
+    <string name="worldmap_invalid_location">Άκυρη τοποθεσία</string>
+    <string name="worldmap_not_discovered_location">Δεν έχεις ανακαλύψει ακόμη αυτή την τοποθεσία!</string>
+    <string name="worldmap_not_connected">Δεν μπορείς να ταξιδέψεις απευθείας σε αυτή την τοποθεσία από εδώ.</string>
+    <string name="worldmap_travel_here">Ταξίδεψε εδώ</string>
+    <string name="worldmap_npcs_count">NPCs: %1$d</string>
+    <string name="worldmap_quests_count">Αποστολές: %1$d</string>
+    <string name="worldmap_enemies_count">Εχθροί: %1$d</string>
+    
+    <!-- Shop section -->
+    <string name="shop_your_glimmer_balance">Το υπόλοιπο Glimmer σου</string>
+    <string name="shop_todays_special_offers">Σημερινές ειδικές προσφορές</string>
+    <string name="shop_resets_in_24_hours">Ανανεώνεται σε 24 ώρες</string>
+    <string name="shop_this_weeks_featured_items">Προτεινόμενα είδη εβδομάδας</string>
+    <string name="shop_resets_in_7_days">Ανανεώνεται σε 7 ημέρες</string>
+    <string name="shop_badge_daily_deal">ΗΜΕΡΗΣΙΑ ΠΡΟΣΦΟΡΑ</string>
+    <string name="shop_badge_featured">ΠΡΟΤΕΙΝΟΜΕΝΟ</string>
+    <string name="shop_item_owned">Ιδιόκτητο</string>
+    <string name="shop_result_success">Επιτυχής αγορά %1$s!</string>
+    <string name="shop_result_already_owned">Έχεις ήδη αυτό το αντικείμενο</string>
+    <string name="shop_result_insufficient_glimmer">Ανεπαρκή Θραύσματα Glimmer</string>
+    <string name="shop_result_item_not_found">Το αντικείμενο δεν βρέθηκε</string>
+    <string name="shop_result_not_available">Αυτό το αντικείμενο δεν είναι διαθέσιμο αυτή τη στιγμή</string>
+    <string name="shop_result_wallet_unavailable">Η υπηρεσία πορτοφολιού δεν είναι διαθέσιμη</string>
+    
+    <!-- Nest screen -->
+    <string name="nest_edit_mode_done">Τέλος</string>
+    <string name="nest_edit_mode_edit">Επεξεργασία</string>
+    <string name="nest_bonus_hoard_xp">+%1$d%% XP Θησαυρού</string>
+    <string name="nest_bonus_seed_storage">+%1$d%% Αποθήκευση σπόρων</string>
+    <string name="nest_bonus_thought_slots">+%1$d Θέσεις σκέψης</string>
+    <string name="nest_bonus_companion_xp">+%1$d%% XP συντρόφου</string>
+    <string name="nest_bonus_craft_in_nest">Κατασκευή στη Φωλιά</string>
+    <string name="nest_trophy_display">Προβολή</string>
+    <string name="nest_trophy_remove">Αφαίρεση</string>
+    <string name="nest_glimmer_balance_label">%1$d Glimmer</string>
+    <string name="nest_tab_shop">Κατάστημα</string>
+    <string name="nest_tab_edit_mode">Λειτουργία επεξεργασίας</string>
+    <string name="nest_tab_trophy_room">Αίθουσα τροπαίων</string>
+    <string name="nest_shop_category_themes">Θέματα</string>
+    <string name="nest_shop_category_furniture">Έπιπλα</string>
+    <string name="nest_shop_category_decorations">Διακοσμήσεις</string>
+    <string name="nest_shop_category_functional">Λειτουργικά</string>
+    <string name="nest_shop_all_unlocked_title">Όλα ξεκλειδωμένα!</string>
+    <string name="nest_shop_all_unlocked_body">Έχεις όλα τα διαθέσιμα καλλωπιστικά σε αυτή την κατηγορία.</string>
+    <string name="common_insufficient_glimmer">Ανεπαρκές Glimmer</string>
+    <string name="nest_edit_mode_title">Λειτουργία επεξεργασίας</string>
+    <string name="nest_edit_mode_prompt">Πάτησε «Επεξεργασία» για να προσαρμόσεις τη διάταξη της φωλιάς</string>
+    <string name="nest_items_placed_count">%1$d αντικείμενα τοποθετήθηκαν</string>
+    <string name="nest_grid_editor_placeholder">Επεξεργαστής πλέγματος 10x10 (σύντομα)</string>
+    <string name="nest_unplaced_items_title">Μη τοποθετημένα αντικείμενα</string>
+    <string name="nest_trophy_empty_title">Δεν υπάρχουν τροπαία ακόμη</string>
+    <string name="nest_trophy_empty_body">Ολοκλήρωσε αποστολές για να κερδίσεις τροπαία για τη φωλιά σου!</string>
+        <string name="nest_trophy_displayed_in_room">Εμφανίζεται στο δωμάτιο</string>
+    
+    <!-- Enum Localizations: Rarity Tiers -->
+    <string name="rarity_common">Κοινό</string>
+    <string name="rarity_uncommon">Ασυνήθιστο</string>
+    <string name="rarity_rare">Σπάνιο</string>
+    <string name="rarity_epic">Επικό</string>
+    <string name="rarity_legendary">Θρυλικό</string>
+    <string name="rarity_mythic">Μυθικό</string>
+    
+    <!-- Enum Localizations: Hoard Rank Tiers -->
+    <string name="hoard_tier_scavenger">Αναζητητής</string>
+    <string name="hoard_tier_collector">Συλλέκτης</string>
+    <string name="hoard_tier_curator">Επιμελητής</string>
+    <string name="hoard_tier_magnate">Μεγιστάνας</string>
+    <string name="hoard_tier_legend">Θρύλος</string>
+    <string name="hoard_tier_myth">Μύθος</string>
+
+    <!-- Character Slot Purchase -->
+    <string name="character_slots_title">Θέσεις Χαρακτήρων</string>
+    <string name="character_slots_subtitle">Ξεκλείδωσε επιπλέον θέσεις για να διαχειρίζεσαι πολλούς ήρωες ταυτόχρονα.</string>
+    <string name="character_slots_help_text">Οι αγορασμένες θέσεις είναι μόνιμες και θα επαναφερθούν όταν συνδεθείς σε νέα συσκευή.</string>
+    <string name="character_slot_label">Θέση %1$d</string>
+    <string name="character_slot_free_label">Δωρεάν θέση</string>
+    <string name="character_slot_purchased_label">Αγορασμένη</string>
+    <string name="character_slot_purchase_success_title">Επιτυχής αγορά</string>
+    <string name="character_slot_purchase_failed_title">Αποτυχία αγοράς</string>
+    <string name="character_slot_purchase_success_message">Η θέση %1$d ξεκλειδώθηκε!</string>
+    <string name="character_slot_restore_success_title">Η επαναφορά ολοκληρώθηκε</string>
+    <string name="character_slot_restore_failed_title">Η επαναφορά απέτυχε</string>
+    <string name="character_slot_restore_none_found">Δεν βρέθηκαν αγορές για επαναφορά</string>
+    <string name="character_slot_restore_count">Επαναφέρθηκαν %1$d θέση/θέσεις</string>
+
+    <!-- Cosmetics / Equipment -->
+    <string name="cosmetics_title">Καλλωπιστικός Εξοπλισμός</string>
+    <string name="cosmetics_equipped_section_title">Εξοπλισμένα καλλωπιστικά</string>
+    <string name="cosmetics_slot_crown">Στέμμα</string>
+    <string name="cosmetics_slot_cloak">Μανδύας</string>
+    <string name="cosmetics_slot_mantle">Επενδύτης</string>
+    <string name="cosmetics_slot_necklace">Κολιέ</string>
+    <string name="cosmetics_slot_aura">Αύρα</string>
+    <string name="cosmetics_slot_regalia_full">Εμβλήματα (Πλήρες σύνολο)</string>
+    <string name="cosmetics_equipped_colon">Εξοπλισμένο: %1$s</string>
+    <string name="cosmetics_no_item_equipped">Δεν έχει εξοπλιστεί αντικείμενο</string>
+    <string name="cosmetics_select_slot_title">Επιλογή %1$s</string>
+    <string name="cosmetics_empty_owned_for_slot">Δεν έχεις ακόμη %1$s καλλωπιστικά. Επισκέψου το κατάστημα για αγορές!</string>
+    <string name="cosmetics_result_success">Επιτυχής εξοπλισμός: %1$s!</string>
+    <string name="cosmetics_result_not_owned">Δεν έχεις αυτό το αντικείμενο</string>
+    <string name="cosmetics_result_item_not_found">Το αντικείμενο δεν βρέθηκε</string>
+    <string name="cosmetics_result_not_cosmetic">Αυτό το αντικείμενο δεν είναι καλλωπιστικό</string>
+
+    <!-- Main menu & options -->
+    <string name="mainmenu_begin_journey">Έναρξη ταξιδιού</string>
+    <string name="mainmenu_load_game">Φόρτωση παιχνιδιού</string>
+    <string name="mainmenu_options">Επιλογές</string>
+    <string name="options_title">Επιλογές</string>
+    <string name="options_tts_label">Μετατροπή κειμένου σε ομιλία</string>
+    <string name="options_tts_desc">Ενεργοποίηση αφήγησης φωνής (Προεπιλογή: ΑΝΕΝΕΡΓΟ)</string>
+    <string name="options_no_filter_label">Λειτουργία χωρίς φίλτρο (18+)</string>
+    <string name="options_no_filter_desc">Ενεργοποίηση σκοτεινότερου χιούμορ και πιο τολμηρής αφήγησης</string>
+    <string name="options_no_filter_warning_title">Προειδοποίηση ώριμου περιεχομένου</string>
+    <string name="options_no_filter_warning_body">Ενεργοποίηση ώριμου περιεχομένου (18+); Επιτρέπει σκοτεινότερο
+    <string name="options_no_filter_confirm">Κατανοώ</string>
+    <string name="options_no_filter_cancel">Ακύρωση</string>
+    <string name="options_more_settings_coming_soon">Περισσότερες ρυθμίσεις σύντομα…</string>
+
+    <!-- Placeholder screen descriptions -->
+    <string name="placeholder_explore_desc">Το περιβάλλον πλήρους οθόνης για εξερεύνηση θα υλοποιηθεί εδώ.\n\nΔεν απαιτείται κύλιση — όλο το περιεχόμενο χωρά στην οθόνη.</string>
+    <string name="placeholder_nest_desc">Οθόνη διαχείρισης Φωλιάς με καλλωπιστικά.\n\nΜελλοντικά: 50+ αντικείμενα, λειτουργικές αναβαθμίσεις.</string>
+    <string name="placeholder_skills_desc">Δέντρο δεξιοτήτων και κατασκευές.</string>
+    <string name="placeholder_activities_desc">Διεπαφή δευτερευουσών δραστηριοτήτων.</string>
+    <string name="placeholder_inventory_desc">Πλήρης οθόνη διαχείρισης αποθεμάτων.</string>
+    <string name="placeholder_quest_log_desc">Ενεργές και ολοκληρωμένες αποστολές.</string>
+    <string name="placeholder_shop_desc">Κατάστημα εντός παιχνιδιού με αγορές.</string>
+    <string name="placeholder_world_info_desc">Ιστορία, παρατάξεις και πληροφορίες κόσμου.</string>
+    <string name="placeholder_settings_desc">Ρυθμίσεις παιχνιδιού, ήχος, προσβασιμότητα.</string>
+
+    <!-- Alpha 2.2: AI Director UI (Phase 4G) -->
+    <string name="ai_director_difficulty_very_easy">Πολύ εύκολο</string>
+    <string name="ai_director_difficulty_easy">Εύκολο</string>
+    <string name="ai_director_difficulty_medium">Μεσαίο</string>
+    <string name="ai_director_difficulty_hard">Δύσκολο</string>
+    <string name="ai_director_difficulty_very_hard">Πολύ δύσκολο</string>
+    <string name="ai_director_playstyle_explorer">Εξερευνητής</string>
+    <string name="ai_director_playstyle_completionist">Ολοκληρωτής</string>
+    <string name="ai_director_playstyle_speed_runner">Ταχυδρόμος</string>
+    <string name="ai_director_playstyle_combatant">Μαχητής</string>
+    <string name="ai_director_playstyle_merchant">Έμπορος</string>
+    <string name="ai_director_playstyle_balanced">Ισορροπημένο</string>
+    <string name="ai_director_hud_difficulty">Δυσκολία</string>
+    <string name="ai_director_hud_playstyle">Στυλ παιχνιδιού</string>
+    <string name="ai_director_hud_fatigue">Κόπωση γεγονότων</string>
+    <string name="ai_director_debug_title">Αποσφαλμάτωση AI Director</string>
+    <string name="ai_director_debug_combat_record">Μάχη: %1$d Ν / %2$d Η</string>
+    <string name="ai_director_debug_quest_rate">Επιτυχία αποστολών: %1$d%%</string>
+    <string name="ai_director_debug_deaths">Θάνατοι: %1$d</string>
+    <string name="ai_director_debug_fatigue">Κόπωση: %1$.1f</string>
+    <string name="ai_director_debug_events_today">Γεγονότα σήμερα: %1$d</string>
+    <string name="ai_director_debug_rest_bonus">Μπόνους ανάπαυσης: %1$.1f%%</string>
+    <string name="options_ai_director_debug_label">Πίνακας αποσφαλμάτωσης AI Director</string>
+    <string name="options_ai_director_debug_desc">Εμφάνιση προηγμένων στατιστικών AI Director (για προγραμματιστές)</string>
+
+    <!-- Alpha 2.2: Glimmer Shards IAP (Phase 5B) -->
+    <string name="iap_creator_coffee_name">Ένα φλιτζάνι καφέ δημιουργού</string>
+    <string name="iap_creator_coffee_desc">Υποστηρίξτε τον προγραμματιστή με μια εφάπαξ δωρεά. Ξεκλειδώνει ειδικό διάλογο και θρυλική λάμψη!</string>
+
+    <!-- Alpha 2.2: Golden Coffee Bean Shiny (Phase 5C) -->
+    <string name="shiny_golden_coffee_bean_name">Χρυσός κόκκος καφέ</string>
+    <string name="shiny_golden_coffee_bean_desc">Ένας κόκκος καθαρής μαγείας καφεΐνης, που φημολογείται ότι δίνει έμπνευση και διαλύει τεχνικό χρέος. Ένα ενθύμιο υποστήριξης δημιουργού.</string>
+
+    <!-- Alpha 2.2: Exhausted Coder NPC - Basic translations (Phases 5A/5C) -->
+    <!-- Note: Full dialogue variants use English fallback for Greek locale -->
+    <string name="exhausted_coder_greeting_filtered">Hello! I\'m the Exhausted Coder. I like keyboards and thinking about bugs.</string>
+    <string name="exhausted_coder_first_meeting_filtered">Hi! I\'m the Exhausted Coder. I seem tired, but I\'m mostly harmless. Want to chat?</string>
+    <string name="exhausted_coder_farewell_filtered">Good luck! Remember: save often!</string>
+    <string name="exhausted_coder_gift_received_filtered">For me? Thank you so much!</string>
+    <string name="exhausted_coder_low_affinity_filtered">*yawns* Sorry, I\'m very tired. Long day of debugging.</string>
+    <string name="exhausted_coder_high_affinity_filtered">Talking to you always cheers me up. Thanks for being a friend.</string>
+    <string name="exhausted_coder_random_1_filtered">Did you know button quails can run very fast? Like my compile errors.</string>
+    <string name="exhausted_coder_random_2_filtered">I\'ve been working on a new feature. It\'s going well!</string>
+    <string name="exhausted_coder_random_3_filtered">Sometimes I dream in code. Is that normal?</string>
+    <string name="exhausted_coder_random_4_filtered">The coffee here is terrible, but it keeps me awake.</string>
+    <string name="exhausted_coder_random_5_filtered">I wonder what happens if I change this variable…</string>
+    <string name="exhausted_coder_greeting_unfiltered">*hunched over keyboard* Line 3,847… Oh. A person. I\'m the Exhausted Coder.</string>
+    <string name="exhausted_coder_first_meeting_unfiltered">I\'m the Exhausted Coder. I\'m what happens when a game dev stops sleeping. Still interested?</string>
+    <string name="exhausted_coder_farewell_unfiltered">Go break things. I\'ll be fixing them at 2 AM. It\'s fine. Everything is fine.</string>
+    <string name="exhausted_coder_gift_received_unfiltered">You… remembered I exist? I will cherish this forever.</string>
+    <string name="exhausted_coder_low_affinity_unfiltered">*dead stare* I\'ve been awake for 37 hours. The merge conflicts whisper to me.</string>
+    <string name="exhausted_coder_high_affinity_unfiltered">You\'re one of the good ones. Unlike my unit tests.</string>
+    <string name="exhausted_coder_random_1_unfiltered">My code compiles. My life? Not so much.</string>
+    <string name="exhausted_coder_random_2_unfiltered">Stack Overflow says to \"rewrite from scratch.\" I HAVE DEADLINES.</string>
+    <string name="exhausted_coder_random_3_unfiltered">I shipped a debug log saying \"WHY WON\'T YOU WORK\" to production. Nobody noticed.</string>
+    <string name="exhausted_coder_random_4_unfiltered">This coffee tastes like despair. *takes another sip* Perfect.</string>
+    <string name="exhausted_coder_random_5_unfiltered">I named a variable \"pleaseWork\" once. It didn\'t work.</string>
+    <string name="exhausted_coder_coffee_gratitude_filtered">You bought me coffee? This means more than you know. Thank you!</string>
+    <string name="exhausted_coder_coffee_energized_filtered">I feel ALIVE! The code flows! Is this productivity?!</string>
+    <string name="exhausted_coder_random_coffee_1_filtered">With caffeine, my errors dropped 60%. IT WORKS.</string>
+    <string name="exhausted_coder_random_coffee_2_filtered">Your support means I can work on features I care about!</string>
+    <string name="exhausted_coder_random_coffee_3_filtered">The next update will have 40% more bird chaos. Thanks to you!</string>
+    <string name="exhausted_coder_coffee_gratitude_unfiltered">You bought REAL COFFEE? I can face the merge conflicts now. Thank you!</string>
+    <string name="exhausted_coder_coffee_energized_unfiltered">I\'VE FIXED 47 BUGS IN 3 HOURS. THE BACKLOG TREMBLES.</string>
+    <string name="exhausted_coder_random_coffee_1_unfiltered">The coffee lets me see the Matrix. Every semicolon reveals itself.</string>
+    <string name="exhausted_coder_random_coffee_2_unfiltered">Voluntary creative support. Like Patreon but with bird puns.</string>
+    <string name="exhausted_coder_random_coffee_3_unfiltered">I can build ridiculous features now. Quail mech suits? Sure.</string>
+
+    <!-- Alpha 2.2 Phase 6: Coffee Donation UI Strings (CoffeeDonationSection) -->
+    <!-- Success Dialog -->
+    <string name="coffee_donation_success_title">Ευχαριστώ! ☕</string>
+    <string name="coffee_donation_success_message">Η δωρεά σας έχει παραληφθεί! Ο εξαντλημένος προγραμματιστής είναι καφεϊνωμένος και ευγνώμων. Επισκεφθείτε τον στο Buttonburgh Tavern για να δείτε τον νέο διάλογο και να λάβετε τις ανταμοιβές σας!</string>
+    <string name="coffee_donation_success_button">Τέλεια!</string>
+    
+    <!-- Error Dialog -->
+    <string name="coffee_donation_error_title">Η δωρεά απέτυχε</string>
+    <string name="coffee_donation_error_duplicate">Η δωρεά έχει ήδη επεξεργαστεί</string>
+    <string name="coffee_donation_error_already_owned">Ο καφές έχει ήδη δωρηθεί</string>
+    <string name="coffee_donation_error_network">Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.</string>
+    <string name="coffee_donation_error_unexpected">Απροσδόκητο σφάλμα: %s</string>
+    <string name="coffee_donation_error_button">Εντάξει</string>
+    
+    <!-- Top Bar -->
+    <string name="coffee_donation_topbar_title">Υποστηρίξτε τον προγραμματιστή</string>
+    <string name="coffee_donation_topbar_back">Πίσω</string>
+    
+    <!-- Main Content -->
+    <string name="coffee_donation_icon_description">Καφές</string>
+    <string name="coffee_donation_title">Αγοράστε καφέ στον προγραμματιστή</string>
+    <string name="coffee_donation_subtitle">Υποστηρίξτε την ανάπτυξη του JalmarQuest</string>
+    <string name="coffee_donation_description">Η δωρεά σας $2,99 βοηθά στην τροφοδοσία αργών νυχτών κωδικοποίησης, δοκιμών και δημιουργίας κόσμου. Ο εξαντλημένος προγραμματιστής χρειάζεται (κυριολεκτικά) καφέ για να συνεχίσει!</string>
+    
+    <!-- Rewards Section -->
+    <string name="coffee_donation_rewards_header">Θα λάβετε:</string>
+    <string name="coffee_donation_reward_shiny">Συλλεκτικό χρυσό κόκκο καφέ</string>
+    <string name="coffee_donation_reward_cosmetic">Αποκλειστικό καλλωπιστικό προστάτη (κορώνα/βασιλικό)</string>
+    <string name="coffee_donation_reward_dialogue">Ειδικός διάλογος ευχαριστιών από τον εξαντλημένο προγραμματιστή</string>
+    <string name="coffee_donation_reward_feelgood">Ζεστό, ευχάριστο συναίσθημα για την υποστήριξη ανεξάρτητης ανάπτυξης</string>
+    
+    <!-- Exhausted Coder Quote -->
+    <string name="coffee_donation_quote_attribution">Ο εξαντλημένος προγραμματιστής λέει:</string>
+    <string name="coffee_donation_quote_text">\"Έχω μόνο 3 κόκκους. Τα σφάλματα μεταγλώττισης... μου ψιθυρίζουν τώρα. Παρακαλώ, τα $2,99 σας είναι η διαφορά μεταξύ λειτουργικού κώδικα και πτώσης στην τρέλα. Θα σας δώσω επίσης έναν πολύ λαμπερό κόκκο.\"</string>
+    
+    <!-- Already Donated State -->
+    <string name="coffee_donation_already_donated_title">Έχετε ήδη δωρίσει! ☕</string>
+    <string name="coffee_donation_already_donated_message">Ευχαριστούμε για την υποστήριξη! Επισκεφθείτε τον εξαντλημένο προγραμματιστή στο Buttonburgh Tavern.</string>
+    
+    <!-- Purchase Button -->
+    <string name="coffee_donation_button_donate">Δωρίστε $2,99</string>
+    <string name="coffee_donation_button_disclaimer">Μία φορά αγορά • Χωρίς επαναλαμβανόμενες χρεώσεις</string>
+    
+    <!-- Fine Print -->
+    <string name="coffee_donation_fine_print">Όλες οι δωρεές πηγαίνουν απευθείας στην υποστήριξη της ανάπτυξης του JalmarQuest. Δεν υπάρχει επιστροφή χρημάτων για καταναλωμένο καφέ (αλλά σοβαρά, επικοινωνήστε με την υποστήριξη εάν έχετε προβλήματα).</string>
+</resources>
+

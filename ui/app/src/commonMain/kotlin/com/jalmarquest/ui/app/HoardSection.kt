@@ -15,6 +15,9 @@ import com.jalmarquest.core.model.Shiny
 import com.jalmarquest.core.model.ShinyRarity
 import com.jalmarquest.core.state.hoard.HoardRankManager
 import com.jalmarquest.core.state.hoard.HoardViewState
+import com.jalmarquest.ui.app.utils.toLocalizedString
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 @Composable
 fun HoardSection(manager: HoardRankManager) {
@@ -80,7 +83,7 @@ private fun HoardRankOverview(viewState: HoardViewState) {
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = viewState.rank.tier.name,
+                        text = viewState.rank.tier.toLocalizedString(),
                         style = MaterialTheme.typography.headlineSmall,
                         color = getTierColor(viewState.rank.tier)
                     )
@@ -268,7 +271,7 @@ private fun ShinyCard(
                 ) {
                     Badge {
                         Text(
-                            text = shiny.rarity.name,
+                            text = shiny.rarity.toLocalizedString(),
                             style = MaterialTheme.typography.labelSmall
                         )
                     }
@@ -285,12 +288,12 @@ private fun ShinyCard(
                     onClick = onAcquire,
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Text("Acquire")
+                    Text(stringResource(MR.strings.hoard_acquire))
                 }
             } else if (owned) {
                 Icon(
                     imageVector = Icons.Default.Check,
-                    contentDescription = "Owned",
+                    contentDescription = stringResource(MR.strings.content_desc_owned),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }

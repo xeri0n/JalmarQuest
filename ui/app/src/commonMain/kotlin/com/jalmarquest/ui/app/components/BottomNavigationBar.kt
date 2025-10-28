@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.ui.app.navigation.Screen
 import com.jalmarquest.ui.app.layout.AppSpacing
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Bottom navigation bar for quick access to main screens.
@@ -38,11 +40,11 @@ fun BottomNavigationBar(
             icon = { 
                 Icon(
                     imageVector = Icons.Default.Home,
-                    contentDescription = "Hub",
+                    contentDescription = stringResource(MR.strings.bottom_nav_hub),
                     modifier = Modifier.size(24.dp)
                 ) 
             },
-            label = { Text("Hub") },
+            label = { Text(stringResource(MR.strings.bottom_nav_hub)) },
             selected = currentScreen is Screen.Hub,
             onClick = { onNavigate(Screen.Hub) }
         )
@@ -51,11 +53,11 @@ fun BottomNavigationBar(
             icon = { 
                 Icon(
                     imageVector = Icons.Default.Explore,
-                    contentDescription = "Explore",
+                    contentDescription = stringResource(MR.strings.bottom_nav_explore),
                     modifier = Modifier.size(24.dp)
                 ) 
             },
-            label = { Text("Explore") },
+            label = { Text(stringResource(MR.strings.bottom_nav_explore)) },
             selected = currentScreen is Screen.Explore,
             onClick = { onNavigate(Screen.Explore) }
         )
@@ -64,11 +66,11 @@ fun BottomNavigationBar(
             icon = { 
                 Icon(
                     imageVector = Icons.Default.House,
-                    contentDescription = "Nest",
+                    contentDescription = stringResource(MR.strings.bottom_nav_nest),
                     modifier = Modifier.size(24.dp)
                 ) 
             },
-            label = { Text("Nest") },
+            label = { Text(stringResource(MR.strings.bottom_nav_nest)) },
             selected = currentScreen is Screen.Nest,
             onClick = { onNavigate(Screen.Nest) }
         )
@@ -77,11 +79,11 @@ fun BottomNavigationBar(
             icon = { 
                 Icon(
                     imageVector = Icons.Default.Build,
-                    contentDescription = "Skills",
+                    contentDescription = stringResource(MR.strings.bottom_nav_skills),
                     modifier = Modifier.size(24.dp)
                 ) 
             },
-            label = { Text("Skills") },
+            label = { Text(stringResource(MR.strings.bottom_nav_skills)) },
             selected = currentScreen is Screen.Skills,
             onClick = { onNavigate(Screen.Skills) }
         )
@@ -90,11 +92,11 @@ fun BottomNavigationBar(
             icon = { 
                 Icon(
                     imageVector = Icons.Default.GridView,
-                    contentDescription = "More",
+                    contentDescription = stringResource(MR.strings.bottom_nav_more),
                     modifier = Modifier.size(24.dp)
                 ) 
             },
-            label = { Text("More") },
+            label = { Text(stringResource(MR.strings.bottom_nav_more)) },
             selected = currentScreen is Screen.Activities,
             onClick = { onNavigate(Screen.Activities) }
         )

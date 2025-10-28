@@ -27,7 +27,11 @@ enum class CraftingRecipeType {
     NEST_UPGRADE,   // Improvements to the player's nest
     CONSUMABLE,     // One-time use items (different from concoctions)
     FURNITURE,      // Decorative or functional nest furniture
-    MATERIAL        // Refined materials for further crafting
+    MATERIAL,       // Refined materials for further crafting
+    REFINEMENT,     // Alpha 2.3: Reagent-to-reagent refinement recipes
+    WEAPON,         // Alpha 2.3: Weapons (formerly part of EQUIPMENT)
+    ARMOR,          // Alpha 2.3: Armor (formerly part of EQUIPMENT)
+    TRADE_GOOD      // Alpha 2.3: Items specifically for selling/bartering
 }
 
 /**
@@ -141,7 +145,14 @@ data class CraftedItem(
     val durability: Int? = null,            // Max durability (null = infinite)
     val stackable: Boolean = false,         // Can multiple be owned
     val sellValue: Int = 0,                 // Seeds value when selling
-    val rarity: CraftingRarity = CraftingRarity.COMMON
+    val rarity: CraftingRarity = CraftingRarity.COMMON,
+    
+    // Alpha 2.3: Additional fields for new crafting system
+    val itemType: CraftedItemType? = null,  // More specific item type
+    val maxStackSize: Int = 1,              // Max stack size if stackable
+    val bonuses: ItemBonuses? = null,       // Simplified bonuses for non-equipment items
+    val effect: ConsumableEffect? = null,   // Effect when consumed (for consumables)
+    val effectPower: Int = 0                // Strength of the effect
 )
 
 /**
@@ -285,4 +296,47 @@ data class CraftingKnowledge(
      */
     fun updateCraftTimestamp(timestamp: Long): CraftingKnowledge =
         copy(lastCraftAt = timestamp)
+}
+
+/**
+ * Alpha 2.3: More specific item types for the new crafting system.
+ */
+@Serializable
+enum class CraftedItemType {
+    INGREDIENT,     // Refined ingredient for further crafting
+    WEAPON,         // Offensive equipment
+    ARMOR,          // Defensive equipment
+    TOOL,           // Utility equipment
+    CONSUMABLE,     // One-time use item
+    MATERIAL,       // Crafting component
+    TRADE_GOOD,     // Item for selling/bartering
+    FURNITURE       // Decorative/functional furniture
+}
+
+/**
+ * Alpha 2.3: Simplified item bonuses for non-equipment items.
+ */
+@Serializable
+data class ItemBonuses(
+    val attack: Int = 0,        // Attack damage bonus
+    val defense: Int = 0,       // Defense bonus
+    val foraging: Int = 0,      // Foraging yield bonus
+    val hoarding: Int = 0,      // Hoarding/shiny bonus
+    val alchemy: Int = 0,       // Alchemy success bonus
+    val scholarship: Int = 0    // Scholarship/research bonus
+)
+
+/**
+ * Alpha 2.3: Effects that consumable items can apply.
+ */
+@Serializable
+enum class ConsumableEffect {
+    RESTORE_HEALTH,     // Restores HP
+    RESTORE_STAMINA,    // Restores stamina/energy
+    APPLY_POISON,       // Applies poison damage over time
+    APPLY_BUFF,         // Temporary stat boost
+    APPLY_DEBUFF,       // Temporary stat reduction
+    ENHANCE_SHINY,      // Increases shiny item value
+    REVEAL_SECRETS,     // Reveals hidden information
+    GRANT_VISION        // Temporary enhanced vision/detection
 }

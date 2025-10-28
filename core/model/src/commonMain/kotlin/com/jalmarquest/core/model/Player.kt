@@ -8,13 +8,16 @@ import kotlin.jvm.JvmInline
 data class Player(
     val id: String,
     val name: String,
+    @SerialName("level") val level: Int = 1, // Alpha 2.3: Player progression level
     @SerialName("choice_log") val choiceLog: ChoiceLog = ChoiceLog(emptyList()),
     @SerialName("quest_log") val questLog: QuestLog = QuestLog(),
     @SerialName("status_effects") val statusEffects: StatusEffects = StatusEffects(emptyList()),
     @SerialName("inventory") val inventory: Inventory = Inventory(emptyList()),
     @SerialName("shiny_collection") val shinyCollection: ShinyCollection = ShinyCollection(emptyList()),
     @SerialName("hoard_rank") val hoardRank: HoardRank = HoardRank(),
+    @SerialName("seed_inventory") val seedInventory: SeedInventory = SeedInventory(), // Alpha 2.3: Seed storage
     @SerialName("ingredient_inventory") val ingredientInventory: IngredientInventory = IngredientInventory(),
+    @SerialName("crafting_inventory") val craftingInventory: CraftingInventory = CraftingInventory(), // Alpha 2.3: Crafting reagents
     @SerialName("recipe_book") val recipeBook: RecipeBook = RecipeBook(),
     @SerialName("active_concoctions") val activeConcoctions: ActiveConcoctions = ActiveConcoctions(),
     @SerialName("thought_cabinet") val thoughtCabinet: ThoughtCabinet = ThoughtCabinet(),
@@ -28,7 +31,41 @@ data class Player(
     @SerialName("entitlements") val entitlements: EntitlementState = EntitlementState(),
     @SerialName("nest_customization") val nestCustomization: NestCustomizationState = NestCustomizationState(),
     @SerialName("faction_reputations") val factionReputations: Map<String, Int> = emptyMap(),
-    @SerialName("world_exploration") val worldExploration: WorldExplorationState = WorldExplorationState()
+    @SerialName("world_exploration") val worldExploration: WorldExplorationState = WorldExplorationState(),
+    @SerialName("world_map_state") val worldMapState: WorldMapState? = null,
+    @SerialName("player_settings") val playerSettings: PlayerSettings = PlayerSettings(),
+    @SerialName("ai_director_state") val aiDirectorState: AIDirectorState = AIDirectorState(),
+    @SerialName("harvesting_state") val harvestingState: HarvestingState = HarvestingState(), // Alpha 2.3: Resource nodes
+    @SerialName("companion_assignments") val companionAssignments: CompanionAssignmentState = CompanionAssignmentState() // Alpha 2.3 Part 3.2: Task assignments
+)
+
+/**
+ * Player-specific settings and preferences.
+ * Alpha 2.2 - Advanced Narrative & AI Systems.
+ */
+@Serializable
+data class PlayerSettings(
+    /**
+     * No Filter Mode (18+) - Allows mature narrative tone with darker humor,
+     * more complex dialogue, and edgier content. OFF by default.
+     * Affects DialogueManager, AIDirectorManager, and all narrative systems.
+     */
+    @SerialName("is_no_filter_mode_enabled")
+    val isNoFilterModeEnabled: Boolean = false,
+    
+    /**
+     * Tracks if player has purchased "A Cup of Creator's Coffee" donation item.
+     * Used to trigger permanent NPC_EXHAUSTED_CODER dialogue changes.
+     */
+    @SerialName("has_purchased_creator_coffee")
+    val hasPurchasedCreatorCoffee: Boolean = false,
+    
+    /**
+     * Alpha 2.2: Tracks if creator coffee one-time rewards have been granted.
+     * Prevents duplicate reward grants (Golden Coffee Bean shiny, affinity bonus).
+     */
+    @SerialName("has_received_coffee_rewards")
+    val hasReceivedCoffeeRewards: Boolean = false
 )
 
 @Serializable
@@ -461,4 +498,92 @@ data class StatusEffect(
 @Serializable
 data class StatusEffects(
     val entries: List<StatusEffect>
+)
+
+/**
+ * Alpha 2.2: AI Director State
+ * 
+ * Tracks player performance and playstyle for adaptive difficulty.
+ */
+
+@Serializable
+enum class DifficultyLevel {
+    @SerialName("easy")
+    EASY,
+    @SerialName("normal")
+    NORMAL,
+    @SerialName("hard")
+    HARD,
+    @SerialName("expert")
+    EXPERT
+}
+
+@Serializable
+data class PerformanceMetrics(
+    @SerialName("combat_wins") val combatWins: Int = 0,
+    @SerialName("combat_losses") val combatLosses: Int = 0,
+    @SerialName("quest_completions") val questCompletions: Int = 0,
+    @SerialName("quest_failures") val questFailures: Int = 0,
+    @SerialName("deaths") val deaths: Int = 0,
+    @SerialName("average_health") val averageHealth: Float = 100f,
+    @SerialName("resources_gained") val resourcesGained: Int = 0,
+    @SerialName("resources_lost") val resourcesLost: Int = 0
+)
+
+@Serializable
+data class PlaystyleProfile(
+    @SerialName("cautious_score") val cautiousScore: Int = 0,
+    @SerialName("aggressive_score") val aggressiveScore: Int = 0,
+    @SerialName("explorer_score") val explorerScore: Int = 0,
+    @SerialName("hoarder_score") val hoarderScore: Int = 0,
+    @SerialName("social_score") val socialScore: Int = 0
+) {
+    /**
+     * Get the dominant playstyle based on highest score.
+     * Requires at least 10 actions in dominant category.
+     * If top 2 scores are within 20%, returns BALANCED.
+     */
+    fun getDominantStyle(): Playstyle {
+        val scores = listOf(
+            Playstyle.CAUTIOUS to cautiousScore,
+            Playstyle.AGGRESSIVE to aggressiveScore,
+            Playstyle.EXPLORER to explorerScore,
+            Playstyle.HOARDER to hoarderScore,
+            Playstyle.SOCIAL to socialScore
+        )
+        
+        val maxScore = scores.maxOf { it.second }
+        
+        // Need at least 10 actions to determine playstyle
+        if (maxScore < 10) return Playstyle.BALANCED
+        
+        // If top 2 scores are within 20% of each other, consider balanced
+        val sortedScores = scores.map { it.second }.sortedDescending()
+        if (sortedScores.size >= 2 && sortedScores[1] >= (sortedScores[0] * 0.8)) {
+            return Playstyle.BALANCED
+        }
+        
+        return scores.maxBy { it.second }.first
+    }
+}
+
+/**
+ * Playstyle categories for AI Director analysis.
+ */
+enum class Playstyle {
+    CAUTIOUS,
+    AGGRESSIVE,
+    EXPLORER,
+    HOARDER,
+    SOCIAL,
+    BALANCED
+}
+
+@Serializable
+data class AIDirectorState(
+    @SerialName("performance") val performance: PerformanceMetrics = PerformanceMetrics(),
+    @SerialName("playstyle") val playstyle: PlaystyleProfile = PlaystyleProfile(),
+    @SerialName("last_event_timestamp") val lastEventTimestamp: Long = 0,
+    @SerialName("events_since_rest") val eventsSinceRest: Int = 0,
+    @SerialName("current_difficulty") val currentDifficulty: DifficultyLevel = DifficultyLevel.NORMAL
 )

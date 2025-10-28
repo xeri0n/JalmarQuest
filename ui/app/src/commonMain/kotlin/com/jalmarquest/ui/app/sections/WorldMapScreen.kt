@@ -20,6 +20,8 @@ import com.jalmarquest.core.state.managers.RegionWithStatus
 import com.jalmarquest.feature.worldmap.ViewMode
 import com.jalmarquest.feature.worldmap.WorldMapController
 import com.jalmarquest.ui.app.layout.AppSpacing
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * World Map screen - allows exploration beyond Buttonburgh.
@@ -104,14 +106,14 @@ private fun WorldMapTopBar(
             Column {
                 Text(
                     text = when (viewMode) {
-                        ViewMode.REGIONS -> "World Map"
-                        ViewMode.LOCATIONS -> "Locations"
-                        ViewMode.FAST_TRAVEL -> "Fast Travel"
+                        ViewMode.REGIONS -> stringResource(MR.strings.worldmap_title_world_map)
+                        ViewMode.LOCATIONS -> stringResource(MR.strings.worldmap_title_locations)
+                        ViewMode.FAST_TRAVEL -> stringResource(MR.strings.worldmap_title_fast_travel)
                     },
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
-                    text = "Current: $currentLocationName",
+                    text = stringResource(MR.strings.worldmap_current_label, currentLocationName),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -119,13 +121,13 @@ private fun WorldMapTopBar(
         },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.Default.ArrowBack, contentDescription = stringResource(MR.strings.content_desc_back))
             }
         },
         actions = {
             if (viewMode == ViewMode.REGIONS) {
                 IconButton(onClick = onShowFastTravel) {
-                    Icon(Icons.Default.Navigation, contentDescription = "Fast Travel")
+                    Icon(Icons.Default.Navigation, contentDescription = stringResource(MR.strings.worldmap_title_fast_travel))
                 }
             }
         }
@@ -204,7 +206,7 @@ private fun RegionCard(
                         if (regionStatus.isDiscovered) {
                             Icon(
                                 imageVector = Icons.Default.Visibility,
-                                contentDescription = "Discovered",
+                                contentDescription = stringResource(MR.strings.content_desc_discovered),
                                 modifier = Modifier.size(16.dp),
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -216,7 +218,7 @@ private fun RegionCard(
                 if (!regionStatus.isUnlocked) {
                     Icon(
                         imageVector = Icons.Default.Lock,
-                        contentDescription = "Locked",
+                        contentDescription = stringResource(MR.strings.content_desc_locked),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -245,7 +247,7 @@ private fun RegionCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Explored: ${regionStatus.visitedLocationCount}/${regionStatus.totalLocations}",
+                        text = stringResource(MR.strings.worldmap_explored_progress, regionStatus.visitedLocationCount, regionStatus.totalLocations),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -272,10 +274,10 @@ private fun RegionCard(
 @Composable
 private fun DifficultyBadge(level: Int) {
     val (text, color) = when {
-        level <= 2 -> "Safe" to MaterialTheme.colorScheme.tertiary
-        level <= 4 -> "Moderate" to MaterialTheme.colorScheme.primary
-        level <= 6 -> "Dangerous" to MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
-        else -> "Deadly" to MaterialTheme.colorScheme.error
+        level <= 2 -> stringResource(MR.strings.worldmap_difficulty_safe) to MaterialTheme.colorScheme.tertiary
+        level <= 4 -> stringResource(MR.strings.worldmap_difficulty_moderate) to MaterialTheme.colorScheme.primary
+        level <= 6 -> stringResource(MR.strings.worldmap_difficulty_dangerous) to MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
+        else -> stringResource(MR.strings.worldmap_difficulty_deadly) to MaterialTheme.colorScheme.error
     }
     
     Surface(
@@ -294,10 +296,10 @@ private fun DifficultyBadge(level: Int) {
 @Composable
 private fun UnlockRequirementChip(requirement: RegionUnlockRequirement) {
     val text = when (requirement) {
-        is RegionUnlockRequirement.QuestCompletion -> "Complete quest to unlock"
-        is RegionUnlockRequirement.MinimumLevel -> "Reach level ${requirement.level}"
-        is RegionUnlockRequirement.DiscoverRegion -> "Discover another region first"
-        is RegionUnlockRequirement.AllOf -> "Multiple requirements"
+        is RegionUnlockRequirement.QuestCompletion -> stringResource(MR.strings.worldmap_unlock_quest)
+        is RegionUnlockRequirement.MinimumLevel -> stringResource(MR.strings.worldmap_unlock_level, requirement.level)
+        is RegionUnlockRequirement.DiscoverRegion -> stringResource(MR.strings.worldmap_unlock_discover_region)
+        is RegionUnlockRequirement.AllOf -> stringResource(MR.strings.worldmap_unlock_multiple)
     }
     
     Surface(
@@ -378,7 +380,7 @@ private fun LocationCard(
                     if (isCurrent) {
                         Icon(
                             imageVector = Icons.Default.Place,
-                            contentDescription = "Current location",
+                            contentDescription = stringResource(MR.strings.content_desc_current_location),
                             modifier = Modifier.size(20.dp),
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -386,7 +388,7 @@ private fun LocationCard(
                     } else if (locationStatus.isVisited) {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = "Visited",
+                            contentDescription = stringResource(MR.strings.content_desc_visited),
                             modifier = Modifier.size(16.dp),
                             tint = MaterialTheme.colorScheme.tertiary
                         )
@@ -414,12 +416,12 @@ private fun LocationCard(
                     onClick = onTravel,
                     modifier = Modifier.padding(start = AppSpacing.small)
                 ) {
-                    Text("Travel")
+                    Text(stringResource(MR.strings.common_travel))
                 }
             } else if (!locationStatus.isAccessible) {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    contentDescription = "Locked",
+                    contentDescription = stringResource(MR.strings.content_desc_locked),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -439,7 +441,7 @@ private fun FastTravelView(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No fast travel locations unlocked yet.\nVisit safe locations to enable fast travel.",
+                text = stringResource(MR.strings.worldmap_fast_travel_empty),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -468,21 +470,21 @@ private fun TravelResultNotification(
     modifier: Modifier = Modifier
 ) {
     val (message, isError) = when (result) {
-        is TravelResult.Success -> "Arrived at new location" to false
+        is TravelResult.Success -> stringResource(MR.strings.worldmap_arrived_new_location) to false
         is TravelResult.SuccessWithRewards -> {
             val rewardCount = result.discoveries.size
-            "Arrived! Discovered $rewardCount new things" to false
+            stringResource(MR.strings.worldmap_arrived_discovered, rewardCount) to false
         }
-        is TravelResult.RegionLocked -> "Region locked: requirements not met" to true
-        is TravelResult.LocationLocked -> "Location locked: complete required quest" to true
-        TravelResult.InvalidLocation -> "Invalid location" to true
+        is TravelResult.RegionLocked -> stringResource(MR.strings.worldmap_region_locked) to true
+        is TravelResult.LocationLocked -> stringResource(MR.strings.worldmap_location_locked) to true
+        TravelResult.InvalidLocation -> stringResource(MR.strings.worldmap_invalid_location) to true
     }
     
     Snackbar(
         modifier = modifier,
         action = {
             TextButton(onClick = onDismiss) {
-                Text("OK")
+                Text(stringResource(MR.strings.common_ok))
             }
         },
         containerColor = if (isError) {

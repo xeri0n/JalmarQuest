@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.core.model.*
 import com.jalmarquest.core.state.shop.EquipResult
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Cosmetic Equipment Panel
@@ -30,27 +32,33 @@ fun CosmeticEquipmentPanel(
     val shopState by controller.state.collectAsState()
     val equippedCosmetics = shopState.shopState.equippedCosmetics
     var selectedSlot by remember { mutableStateOf<CosmeticType?>(null) }
-    var equipResultMessage by remember { mutableStateOf<String?>(null) }
+    var equipResult by remember { mutableStateOf<Pair<EquipResult, String>?>(null) }
     
     Column(modifier = modifier.fillMaxSize()) {
         // Header
         Text(
-            text = "Cosmetic Equipment",
+            text = stringResource(MR.strings.cosmetics_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(16.dp)
         )
         
         // Equip result snackbar
-        equipResultMessage?.let { message ->
+        equipResult?.let { (result, slotLabel) ->
             Snackbar(
                 modifier = Modifier.padding(8.dp),
                 action = {
-                    TextButton(onClick = { equipResultMessage = null }) {
-                        Text("Dismiss")
+                    TextButton(onClick = { equipResult = null }) {
+                        Text(stringResource(MR.strings.common_dismiss))
                     }
                 }
             ) {
-                Text(message)
+                val msg = when (result) {
+                    is EquipResult.Success -> stringResource(MR.strings.cosmetics_result_success, slotLabel)
+                    is EquipResult.NotOwned -> stringResource(MR.strings.cosmetics_result_not_owned)
+                    is EquipResult.ItemNotFound -> stringResource(MR.strings.cosmetics_result_item_not_found)
+                    is EquipResult.NotCosmetic -> stringResource(MR.strings.cosmetics_result_not_cosmetic)
+                }
+                Text(msg)
             }
         }
         
@@ -61,86 +69,93 @@ fun CosmeticEquipmentPanel(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                // Pre-resolve localized labels for non-composable callbacks
+                val labelCrown = stringResource(MR.strings.cosmetics_slot_crown)
+                val labelCloak = stringResource(MR.strings.cosmetics_slot_cloak)
+                val labelMantle = stringResource(MR.strings.cosmetics_slot_mantle)
+                val labelNecklace = stringResource(MR.strings.cosmetics_slot_necklace)
+                val labelAura = stringResource(MR.strings.cosmetics_slot_aura)
+                val labelRegalia = stringResource(MR.strings.cosmetics_slot_regalia_full)
                 Text(
-                    text = "Equipped Cosmetics",
+                    text = stringResource(MR.strings.cosmetics_equipped_section_title),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.CROWN,
-                    label = "Crown",
+                    label = labelCrown,
                     icon = Icons.Outlined.WbSunny,
                     equippedItemId = equippedCosmetics.crown,
                     onClick = { selectedSlot = CosmeticType.CROWN },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.CROWN) { result ->
-                            equipResultMessage = formatEquipResult(result, "Crown")
+                            equipResult = result to labelCrown
                         }
                     }
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.CLOAK,
-                    label = "Cloak",
+                    label = labelCloak,
                     icon = Icons.Outlined.Bookmarks,
                     equippedItemId = equippedCosmetics.cloak,
                     onClick = { selectedSlot = CosmeticType.CLOAK },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.CLOAK) { result ->
-                            equipResultMessage = formatEquipResult(result, "Cloak")
+                            equipResult = result to labelCloak
                         }
                     }
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.MANTLE,
-                    label = "Mantle",
+                    label = labelMantle,
                     icon = Icons.Outlined.Shield,
                     equippedItemId = equippedCosmetics.mantle,
                     onClick = { selectedSlot = CosmeticType.MANTLE },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.MANTLE) { result ->
-                            equipResultMessage = formatEquipResult(result, "Mantle")
+                            equipResult = result to labelMantle
                         }
                     }
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.NECKLACE,
-                    label = "Necklace",
+                    label = labelNecklace,
                     icon = Icons.Outlined.FavoriteBorder,
                     equippedItemId = equippedCosmetics.necklace,
                     onClick = { selectedSlot = CosmeticType.NECKLACE },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.NECKLACE) { result ->
-                            equipResultMessage = formatEquipResult(result, "Necklace")
+                            equipResult = result to labelNecklace
                         }
                     }
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.AURA,
-                    label = "Aura",
+                    label = labelAura,
                     icon = Icons.Outlined.AutoAwesome,
                     equippedItemId = equippedCosmetics.aura,
                     onClick = { selectedSlot = CosmeticType.AURA },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.AURA) { result ->
-                            equipResultMessage = formatEquipResult(result, "Aura")
+                            equipResult = result to labelAura
                         }
                     }
                 )
                 
                 EquipmentSlot(
                     type = CosmeticType.REGALIA,
-                    label = "Regalia (Full Outfit)",
+                    label = labelRegalia,
                     icon = Icons.Outlined.Diamond,
                     equippedItemId = equippedCosmetics.regalia,
                     onClick = { selectedSlot = CosmeticType.REGALIA },
                     onUnequip = {
                         controller.unequipCosmetic(CosmeticType.REGALIA) { result ->
-                            equipResultMessage = formatEquipResult(result, "Regalia")
+                            equipResult = result to labelRegalia
                         }
                     }
                 )
@@ -160,9 +175,9 @@ fun CosmeticEquipmentPanel(
                     CosmeticType.AURA -> equippedCosmetics.aura
                     CosmeticType.REGALIA -> equippedCosmetics.regalia
                 },
-                onEquip = { itemId ->
+                onEquip = { itemId, slotLabel ->
                     controller.equipCosmetic(itemId) { result ->
-                        equipResultMessage = formatEquipResult(result, slot.name)
+                        equipResult = result to slotLabel
                         if (result is EquipResult.Success) {
                             selectedSlot = null // Close after successful equip
                         }
@@ -219,13 +234,13 @@ private fun EquipmentSlot(
                     )
                     if (equippedItemId != null) {
                         Text(
-                            text = "Equipped: ${equippedItemId.value}",
+                            text = stringResource(MR.strings.cosmetics_equipped_colon, equippedItemId.value),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     } else {
                         Text(
-                            text = "No item equipped",
+                            text = stringResource(MR.strings.cosmetics_no_item_equipped),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -235,11 +250,11 @@ private fun EquipmentSlot(
             
             if (equippedItemId != null) {
                 TextButton(onClick = onUnequip) {
-                    Text("Unequip")
+                    Text(stringResource(MR.strings.common_unequip))
                 }
             } else {
                 TextButton(onClick = onClick) {
-                    Text("Equip")
+                    Text(stringResource(MR.strings.common_equip))
                 }
             }
         }
@@ -251,7 +266,7 @@ private fun AvailableCosmeticsForSlot(
     controller: ShopController,
     slot: CosmeticType,
     currentlyEquipped: ShopItemId?,
-    onEquip: (ShopItemId) -> Unit,
+    onEquip: (ShopItemId, String) -> Unit,
     onClose: () -> Unit
 ) {
     val shopState by controller.state.collectAsState()
@@ -269,23 +284,32 @@ private fun AvailableCosmeticsForSlot(
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
+            // Resolve label once for reuse below
+            val slotLabel = when (slot) {
+                CosmeticType.CROWN -> stringResource(MR.strings.cosmetics_slot_crown)
+                CosmeticType.CLOAK -> stringResource(MR.strings.cosmetics_slot_cloak)
+                CosmeticType.MANTLE -> stringResource(MR.strings.cosmetics_slot_mantle)
+                CosmeticType.NECKLACE -> stringResource(MR.strings.cosmetics_slot_necklace)
+                CosmeticType.AURA -> stringResource(MR.strings.cosmetics_slot_aura)
+                CosmeticType.REGALIA -> stringResource(MR.strings.cosmetics_slot_regalia_full)
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Select ${slot.name.lowercase().replaceFirstChar { it.uppercase() }}",
+                    text = stringResource(MR.strings.cosmetics_select_slot_title, slotLabel),
                     style = MaterialTheme.typography.titleMedium
                 )
                 IconButton(onClick = onClose) {
-                    Icon(Icons.Outlined.Close, contentDescription = "Close")
+                    Icon(Icons.Outlined.Close, contentDescription = stringResource(MR.strings.content_desc_close))
                 }
             }
             
             if (availableCosmetics.isEmpty()) {
                 Text(
-                    text = "You don't own any ${slot.name.lowercase()} cosmetics yet. Visit the shop to purchase some!",
+                    text = stringResource(MR.strings.cosmetics_empty_owned_for_slot, slotLabel.lowercase()),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
@@ -300,7 +324,7 @@ private fun AvailableCosmeticsForSlot(
                         CosmeticItem(
                             item = item,
                             isEquipped = item.id == currentlyEquipped,
-                            onEquip = { onEquip(item.id) }
+                            onEquip = { onEquip(item.id, slotLabel) }
                         )
                     }
                 }
@@ -359,12 +383,12 @@ private fun CosmeticItem(
             if (isEquipped) {
                 Icon(
                     imageVector = Icons.Filled.CheckCircle,
-                    contentDescription = "Equipped",
+                    contentDescription = stringResource(MR.strings.content_desc_equipped),
                     tint = MaterialTheme.colorScheme.primary
                 )
             } else {
                 Button(onClick = onEquip) {
-                    Text("Equip")
+                    Text(stringResource(MR.strings.common_equip))
                 }
             }
         }
@@ -396,11 +420,4 @@ private fun getRarityColorForItem(tier: Int): androidx.compose.ui.graphics.Color
     }
 }
 
-private fun formatEquipResult(result: EquipResult, slotName: String): String {
-    return when (result) {
-        is EquipResult.Success -> "Successfully equipped $slotName!"
-        is EquipResult.NotOwned -> "You don't own this item"
-        is EquipResult.ItemNotFound -> "Item not found"
-        is EquipResult.NotCosmetic -> "This item is not a cosmetic"
-    }
-}
+// Note: Result messages are localized in-composable where shown; no non-composable formatter needed.

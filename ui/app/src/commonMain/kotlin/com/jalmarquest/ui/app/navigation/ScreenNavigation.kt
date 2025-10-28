@@ -31,6 +31,7 @@ sealed class Screen {
     data object WorldInfo : Screen()
     data object WorldMap : Screen()
     data object Settings : Screen()
+    data object CoffeeDonation : Screen() // Alpha 2.2 Phase 5B
     
     // Unique key for each screen type
     val key: String

@@ -38,6 +38,26 @@ class ConsequencesParser {
 
         val rewardFlags = node.booleanValue("flag_autosave") ?: false
 
+        // Optional: items to grant
+        val itemGrants = node.arrayOf("grant_items")
+            ?.mapNotNull { element ->
+                val obj = element as? JsonObject ?: return@mapNotNull null
+                val itemId = obj.stringValue("item_id") ?: return@mapNotNull null
+                val qty = obj.intValue("quantity") ?: 0
+                if (qty <= 0) return@mapNotNull null
+                ItemGrant(itemId, qty)
+            }?.toList().orEmpty()
+
+        // Optional: faction reputation adjustments
+        val factionRep = node.arrayOf("grant_faction_reputation")
+            ?.mapNotNull { element ->
+                val obj = element as? JsonObject ?: return@mapNotNull null
+                val factionId = obj.stringValue("faction_id") ?: return@mapNotNull null
+                val amount = obj.intValue("amount") ?: 0
+                if (amount == 0) return@mapNotNull null
+                FactionRepChange(factionId, amount)
+            }?.toList().orEmpty()
+
         return ConsequenceBundle(
             completionTag = record.completionTag,
             choiceTags = choiceTags,
@@ -45,7 +65,9 @@ class ConsequencesParser {
             seedDelta = seedDelta,
             narration = narration,
             autosaveRequested = rewardFlags,
-            optionText = optionText
+            optionText = optionText,
+            itemGrants = itemGrants,
+            factionRepChanges = factionRep
         )
     }
 
@@ -69,12 +91,24 @@ data class ConsequenceBundle(
     val seedDelta: Long,
     val narration: String?,
     val autosaveRequested: Boolean,
-    val optionText: String
+    val optionText: String,
+    val itemGrants: List<ItemGrant> = emptyList(),
+    val factionRepChanges: List<FactionRepChange> = emptyList()
 )
 
 data class StatusEffectGrant(
     val key: String,
     val duration: Duration?
+)
+
+data class ItemGrant(
+    val itemId: String,
+    val quantity: Int
+)
+
+data class FactionRepChange(
+    val factionId: String,
+    val amount: Int
 )
 
 private fun JsonArray.elementsAsStrings(): List<String> = buildList {

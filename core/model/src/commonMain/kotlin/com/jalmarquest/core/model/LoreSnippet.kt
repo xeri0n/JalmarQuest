@@ -12,5 +12,6 @@ data class LoreSnippet(
     val consequences: JsonObject,
     val conditions: JsonObject,
     @SerialName("allowed_locations") val allowedLocations: List<String> = emptyList(), // Empty = available everywhere
-    @SerialName("allowed_biomes") val allowedBiomes: List<String> = emptyList() // Empty = available in all biomes
+    @SerialName("allowed_biomes") val allowedBiomes: List<String> = emptyList(), // Empty = available in all biomes
+    @SerialName("event_type") val eventType: String? = null // Alpha 2.2: Event type for AI Director recommendations (COMBAT/EXPLORATION/SOCIAL/RESOURCE/NARRATIVE/CHAOS)
 )

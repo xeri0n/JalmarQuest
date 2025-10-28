@@ -42,6 +42,7 @@ import com.jalmarquest.core.state.npc.NpcRelationshipManager
 import com.jalmarquest.core.state.time.InGameTimeManager
 import com.jalmarquest.core.state.factions.FactionManager
 import com.jalmarquest.core.state.dialogue.DialogueManager
+import com.jalmarquest.core.state.dialogue.ExhaustedCoderDialogue
 import com.jalmarquest.core.state.ai.NpcAiGoalManager
 import com.jalmarquest.core.state.ai.NpcReactionManager
 import com.jalmarquest.core.state.dialogue.DynamicDialogueManager
@@ -111,7 +112,13 @@ fun coreModule(
     single { NpcScheduleManager(npcCatalog = get(), timeManager = get()) }
     single { NpcRelationshipManager(timestampProvider = ::currentTimeProvider) }
     single { FactionManager() }
-    single { DialogueManager() }
+    single { 
+        DialogueManager().apply {
+            // Register default dialogue trees
+            registerDialogueTree(ExhaustedCoderDialogue.createDialogueTree())
+            registerDialogueTree(ExhaustedCoderDialogue.createPostCoffeeDialogueTree())
+        }
+    }
     
     // Phase 3 Advanced AI & Ecosystem
     single { NpcAiGoalManager(npcCatalog = get(), scheduleManager = get(), relationshipManager = get(), timeManager = get(), gameStateManager = get(), timestampProvider = ::currentTimeProvider) }
@@ -139,7 +146,7 @@ fun coreModule(
     single { NestStateMachine(config = get(), gameStateManager = get()) }
     single { LoreSnippetRepository.defaultCatalog() }
     single { ConsequencesParser() }
-    single<SnippetSelector> { DefaultSnippetSelector(get()) }
+    single<SnippetSelector> { DefaultSnippetSelector(get(), get()) }  // Alpha 2.2: AI Director integration
     single { defaultInteractionCatalog() }
     single { SystemicInteractionEngine(catalog = get()) }
     single { HubStateMachine(gameStateManager = get()) }
@@ -172,12 +179,19 @@ fun coreModule(
         questCatalog = get(), 
         gameStateManager = get(), 
         nestCustomizationManager = get(),
+        aiDirectorManager = get(),
         timestampProvider = ::currentTimeProvider
     ) }
     
     // Monetization & Battle Pass
     single { EntitlementManager(gameStateManager = get()) }
-    single { GlimmerWalletManager(gameStateManager = get(), timestampProvider = ::currentTimeProvider, entitlementManager = get()) }
+    single { GlimmerWalletManager(
+        gameStateManager = get(), 
+        timestampProvider = ::currentTimeProvider, 
+        entitlementManager = get(),
+        hoardManager = get(),
+        npcRelationshipManager = get()
+    ) }
     single { SeasonCatalog().apply { registerSeason1(currentTimeProvider()) } }
     single { resolveSeasonalChronicleManager() }
     
@@ -203,13 +217,22 @@ fun coreModule(
         )
     }
     
+    // Alpha 2.0 Node-based World Map Navigation
+    single {
+        com.jalmarquest.core.state.worldmap.WorldMapNavigationManager(
+            gameStateManager = get(),
+            timestampProvider = ::currentTimeProvider
+        )
+    }
+    
     // single { CompanionCatalog() }
     // single { CompanionManager(gameStateManager = get(), companionCatalog = get(), timestampProvider = ::currentTimeProvider) }
     single<EventEngine> {
         InMemoryEventEngine(
             snippetSelector = get(),
             chapterEventOdds = 0.25,
-            chapterEventProvider = get()
+            chapterEventProvider = get(),
+            aiDirectorManager = get()
         )
     }
     single {
@@ -219,7 +242,40 @@ fun coreModule(
             timestampProvider = ::currentTimeProvider
         )
     }
-    single { ExploreStateMachine(eventEngine = get(), snippetRepository = get(), consequencesParser = get(), gameStateManager = get()) }
+    
+    // Alpha 2.2: Content filtering and chaos events
+    single { 
+        com.jalmarquest.core.state.narrative.ContentFilterManager(gameStateManager = get()) 
+    }
+    single {
+        com.jalmarquest.core.state.narrative.DialogueVariantManager(
+            contentFilterManager = get()
+        )
+    }
+    single {
+        com.jalmarquest.core.state.aidirector.AIDirectorManager(
+            gameStateManager = get(),
+            timestampProvider = ::currentTimeProvider
+        )
+    }
+    single { 
+        com.jalmarquest.feature.explore.BorkenEventTrigger(
+            contentFilterManager = get(),
+            aiDirectorManager = get(),
+            triggerChance = 0.10 // 10% base chance (AI Director adjusts this)
+        ) 
+    }
+    
+    single { 
+        ExploreStateMachine(
+            eventEngine = get(), 
+            snippetRepository = get(), 
+            consequencesParser = get(), 
+            gameStateManager = get(),
+            borkenEventTrigger = get(), // Wire in chaos events
+            aiDirectorManager = get() // Alpha 2.2: Fatigue tracking
+        ) 
+    }
     single {
         AuthStateManager(
             tokenStorage = get(),
@@ -343,9 +399,13 @@ fun resolveWorldRegionCatalog(): com.jalmarquest.core.state.catalogs.WorldRegion
 
 fun resolveWorldMapManager(): com.jalmarquest.core.state.managers.WorldMapManager = requireKoin().get()
 
+fun resolveWorldMapNavigationManager(): com.jalmarquest.core.state.worldmap.WorldMapNavigationManager = requireKoin().get()
+
 fun resolveDiscoveryRewardManager(): com.jalmarquest.core.state.managers.DiscoveryRewardManager = requireKoin().get()
 
 fun resolveSeasonCatalog(): SeasonCatalog = requireKoin().get()
+
+fun resolveAIDirectorManager(): com.jalmarquest.core.state.aidirector.AIDirectorManager = requireKoin().get()
 
 fun resolveSeasonalChronicleManager(): SeasonalChronicleManager {
     val koin = requireKoin()

@@ -439,5 +439,17 @@ class ItemCatalog {
             rarity = ItemRarity.LEGENDARY,
             stackable = false
         ))
+        
+        // ===== ALPHA 2.2: SPECIAL ITEMS =====
+        // Borken's Pointy Stick - Companion item for chaos character
+        registerItem(GameItem(
+            id = "item_borkens_pointy_stick",
+            name = "Borken's Pointy Stick",
+            description = "An unremarkable stick that somehow feels... ominous. Borken insists it's 'pointy enough to solve problems.' You're not sure what problems require a stick.",
+            type = ItemType.LORE,
+            rarity = ItemRarity.UNCOMMON,
+            stackable = false,
+            maxStackSize = 1
+        ))
     }
 }

@@ -27,6 +27,7 @@ import com.jalmarquest.core.model.*
 import com.jalmarquest.core.state.GameStateManager
 import com.jalmarquest.core.state.managers.NestCustomizationManager
 import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 import kotlinx.coroutines.launch
 
 /**
@@ -249,7 +250,7 @@ private fun NestHeader(
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(4.dp))
-            Text(text = if (editMode) "Done" else "Edit")
+            Text(text = if (editMode) stringResource(MR.strings.nest_edit_mode_done) else stringResource(MR.strings.nest_edit_mode_edit))
         }
     }
 }
@@ -497,20 +498,20 @@ private fun NestStatsPanel(
         val companionBonus = customizationManager.getCompanionXpBonus()
         
         if (hoardBonus > 0) {
-            BonusChip(icon = "💎", text = "+${(hoardBonus * 100).toInt()}% Hoard XP")
+            BonusChip(icon = "💎", text = stringResource(MR.strings.nest_bonus_hoard_xp, (hoardBonus * 100).toInt()))
         }
         if (seedBonus > 0) {
-            BonusChip(icon = "🌱", text = "+${(seedBonus * 100).toInt()}% Seed Storage")
+            BonusChip(icon = "🌱", text = stringResource(MR.strings.nest_bonus_seed_storage, (seedBonus * 100).toInt()))
         }
         if (thoughtSlots > 0) {
-            BonusChip(icon = "🧠", text = "+$thoughtSlots Thought Slots")
+            BonusChip(icon = "🧠", text = stringResource(MR.strings.nest_bonus_thought_slots, thoughtSlots))
         }
         if (companionBonus > 0) {
-            BonusChip(icon = "🐾", text = "+${(companionBonus * 100).toInt()}% Companion XP")
+            BonusChip(icon = "🐾", text = stringResource(MR.strings.nest_bonus_companion_xp, (companionBonus * 100).toInt()))
         }
         
         if (nestState.canCraftInNest()) {
-            BonusChip(icon = "🔨", text = "Craft in Nest")
+            BonusChip(icon = "🔨", text = stringResource(MR.strings.nest_bonus_craft_in_nest))
         }
         
         if (hoardBonus == 0f && seedBonus == 0f && thoughtSlots == 0 && 
@@ -555,7 +556,7 @@ private fun PurchaseDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Purchase ${cosmetic.name}?") },
+        title = { Text(stringResource(MR.strings.nest_purchase_title, cosmetic.name)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(cosmetic.description)
@@ -564,14 +565,14 @@ private fun PurchaseDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Cost:")
+                    Text(stringResource(MR.strings.common_cost_label))
                     Text("${cosmetic.glimmerCost} ✨", color = MaterialTheme.colorScheme.primary)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Your Glimmer:")
+                    Text(stringResource(MR.strings.common_your_glimmer_label))
                     Text(
                         "$currentGlimmer ✨",
                         color = if (currentGlimmer >= cosmetic.glimmerCost) 
@@ -586,12 +587,12 @@ private fun PurchaseDialog(
                 onClick = onConfirm,
                 enabled = currentGlimmer >= cosmetic.glimmerCost
             ) {
-                Text("Purchase")
+                Text(stringResource(MR.strings.common_purchase))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MR.strings.common_cancel))
             }
         }
     )
@@ -722,7 +723,7 @@ fun TrophyCard(
                 onClick = onTogglePlacement,
                 modifier = Modifier.padding(start = 8.dp)
             ) {
-                Text(if (trophy.placedInRoom) "Remove" else "Display")
+                Text(if (trophy.placedInRoom) stringResource(MR.strings.nest_trophy_remove) else stringResource(MR.strings.nest_trophy_display))
             }
         }
     }

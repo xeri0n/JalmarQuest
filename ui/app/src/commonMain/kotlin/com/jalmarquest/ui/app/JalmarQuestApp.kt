@@ -32,6 +32,7 @@ import com.jalmarquest.core.di.resolveExploreController
 import com.jalmarquest.core.di.resolveSystemicInteractionController
 import com.jalmarquest.core.di.resolveHubController
 import com.jalmarquest.core.di.resolveHoardRankManager
+import com.jalmarquest.core.di.resolveWorldMapNavigationManager
 import com.jalmarquest.core.di.resolveConcoctionCrafter
 import com.jalmarquest.core.di.resolveThoughtCabinetManager
 import com.jalmarquest.core.di.resolveQuestManager
@@ -56,6 +57,7 @@ fun JalmarQuestApp() {
     val hubController = remember(scope) { resolveHubController(scope) }
     val activitiesController = remember(scope) { resolveActivitiesController(scope) }
     val hoardManager = remember { resolveHoardRankManager() }
+    val worldMapNavigationManager = remember { resolveWorldMapNavigationManager() }
     val concoctionCrafter = remember { resolveConcoctionCrafter() }
     val thoughtCabinetManager = remember { resolveThoughtCabinetManager() }
     
@@ -73,6 +75,8 @@ fun JalmarQuestApp() {
 
     LaunchedEffect(Unit) { 
         authController.bootstrap()
+        // Initialize world map for new players
+        worldMapNavigationManager.initializeForNewPlayer()
     }
 
     MaterialTheme {
@@ -89,7 +93,8 @@ fun JalmarQuestApp() {
                             // TODO: Implement load game functionality
                             authController.continueAsGuest()
                             showMainMenu = false
-                        }
+                        },
+                        gameStateManager = gameStateManager
                     )
                 }
                 else -> {
@@ -99,6 +104,7 @@ fun JalmarQuestApp() {
                         authController = authController,
                         hubController = hubController,
                         hoardManager = hoardManager,
+                        worldMapNavigationManager = worldMapNavigationManager,
                         concoctionCrafter = concoctionCrafter,
                         questController = questController,
                         nestCustomizationManager = nestCustomizationManager,
@@ -116,68 +122,42 @@ private fun SimpleGameContent(
     authController: com.jalmarquest.core.state.auth.AuthController,
     hubController: com.jalmarquest.feature.hub.HubController,
     hoardManager: com.jalmarquest.core.state.hoard.HoardRankManager,
+    worldMapNavigationManager: com.jalmarquest.core.state.worldmap.WorldMapNavigationManager,
     concoctionCrafter: com.jalmarquest.core.state.concoctions.ConcoctionCrafter,
     questController: QuestController,
     nestCustomizationManager: com.jalmarquest.core.state.managers.NestCustomizationManager,
     gameStateManager: com.jalmarquest.core.state.GameStateManager
 ) {
-    val title = stringResource(MR.strings.app_title)
-    val subtitle = stringResource(MR.strings.app_subtitle)
     val guestHint = stringResource(MR.strings.auth_signed_out_hint)
     val guestCta = stringResource(MR.strings.auth_continue_guest)
-    val signOut = stringResource(MR.strings.auth_sign_out)
     
-    Scaffold { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Text(text = title, style = MaterialTheme.typography.headlineMedium)
-            Text(text = subtitle, style = MaterialTheme.typography.bodyLarge)
-            Spacer(modifier = Modifier.height(8.dp))
-            when (val state = authState) {
-                AuthState.SignedOut -> {
+    when (val state = authState) {
+        AuthState.SignedOut -> {
+            Scaffold { padding ->
+                Column(
+                    modifier = Modifier
+                        .padding(padding)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     Text(text = guestHint)
                     Button(onClick = { authController.continueAsGuest() }) {
                         Text(text = guestCta)
                     }
                 }
-                is AuthState.Guest -> {
-                    Text(text = stringResource(MR.strings.auth_welcome_guest, state.profile.displayName))
-                    Text(
-                        text = "📍 Current Location: Centre of Buttonburgh",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                    Button(onClick = { authController.signOut() }) {
-                        Text(text = signOut)
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HubSection(
-                        controller = hubController,
-                        actionContent = { actionType ->
-                            when (actionType) {
-                                HubActionType.HOARD -> HoardSection(manager = hoardManager)
-                                HubActionType.CONCOCTIONS -> ConcoctionsSection(manager = concoctionCrafter)
-                                HubActionType.QUESTS -> QuestSection(controller = questController)
-                                HubActionType.NEST -> NestScreen(
-                                    customizationManager = nestCustomizationManager,
-                                    gameStateManager = gameStateManager
-                                )
-                                else -> {
-                                    Text(
-                                        text = "This feature is not yet implemented.",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                                    )
-                                }
-                            }
-                        }
-                    )
-                }
             }
+        }
+        is AuthState.Guest -> {
+            MainHubScreen(
+                playerName = state.profile.displayName,
+                authController = authController,
+                hoardManager = hoardManager,
+                worldMapNavigationManager = worldMapNavigationManager,
+                concoctionCrafter = concoctionCrafter,
+                questController = questController,
+                nestCustomizationManager = nestCustomizationManager,
+                gameStateManager = gameStateManager
+            )
         }
     }
 }

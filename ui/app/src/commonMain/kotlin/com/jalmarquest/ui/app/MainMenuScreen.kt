@@ -15,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 enum class MenuScreen {
     MAIN,
@@ -31,7 +33,8 @@ object AppSettings {
 fun MainMenuScreen(
     onBeginJourney: () -> Unit,
     onLoadGame: () -> Unit,
-    onBackToMenu: (() -> Unit)? = null
+    onBackToMenu: (() -> Unit)? = null,
+    gameStateManager: com.jalmarquest.core.state.GameStateManager? = null
 ) {
     var currentScreen by remember { mutableStateOf(MenuScreen.MAIN) }
 
@@ -53,6 +56,7 @@ fun MainMenuScreen(
             OptionsScreen(
                 ttsEnabled = AppSettings.ttsEnabled,
                 onTtsToggle = { AppSettings.ttsEnabled = it },
+                gameStateManager = gameStateManager,
                 onBack = { currentScreen = MenuScreen.MAIN }
             )
         }
@@ -76,7 +80,7 @@ private fun MainMenuContent(
         // For multiplatform, you might need platform-specific implementations
         Image(
             painter = painterResource("mainmenu.png"),
-            contentDescription = "Main menu background",
+            contentDescription = stringResource(MR.strings.content_desc_main_menu_background),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
@@ -93,7 +97,7 @@ private fun MainMenuContent(
 
             // Title (optional - can be removed if it's in the background image)
             Text(
-                text = "Jalmar Quest",
+                text = stringResource(MR.strings.app_title),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -103,7 +107,7 @@ private fun MainMenuContent(
 
             // Begin Journey Button
             MenuButton(
-                text = "Begin Journey",
+                text = stringResource(MR.strings.mainmenu_begin_journey),
                 onClick = onBeginJourney,
                 modifier = Modifier.fillMaxWidth(0.6f)
             )
@@ -112,7 +116,7 @@ private fun MainMenuContent(
 
             // Load Game Button
             MenuButton(
-                text = "Load Game",
+                text = stringResource(MR.strings.mainmenu_load_game),
                 onClick = onLoadGame,
                 modifier = Modifier.fillMaxWidth(0.6f)
             )
@@ -121,7 +125,7 @@ private fun MainMenuContent(
 
             // Options Button
             MenuButton(
-                text = "Options",
+                text = stringResource(MR.strings.mainmenu_options),
                 onClick = onOptions,
                 modifier = Modifier.fillMaxWidth(0.6f)
             )
@@ -163,15 +167,23 @@ private fun MenuButton(
 private fun OptionsScreen(
     ttsEnabled: Boolean,
     onTtsToggle: (Boolean) -> Unit,
+    gameStateManager: com.jalmarquest.core.state.GameStateManager?,
     onBack: () -> Unit
 ) {
+    // Observe player settings from GameStateManager
+    val playerState = gameStateManager?.playerState?.collectAsState()
+    val noFilterEnabled = playerState?.value?.playerSettings?.isNoFilterModeEnabled ?: false
+    
+    // State for warning dialog
+    var showWarningDialog by remember { mutableStateOf(false) }
+    
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         // Background
         Image(
             painter = painterResource("mainmenu.png"),
-            contentDescription = "Options background",
+            contentDescription = stringResource(MR.strings.content_desc_options_background),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
@@ -201,7 +213,7 @@ private fun OptionsScreen(
                         IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back to main menu",
+                                contentDescription = stringResource(MR.strings.content_desc_back_to_main_menu),
                                 tint = Color.White
                             )
                         }
@@ -211,7 +223,7 @@ private fun OptionsScreen(
 
                     // Title
                     Text(
-                        text = "Options",
+                        text = stringResource(MR.strings.options_title),
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -236,13 +248,13 @@ private fun OptionsScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "Text-to-Speech",
+                                    text = stringResource(MR.strings.options_tts_label),
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Medium,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = "Enable voice narration (Default: OFF)",
+                                    text = stringResource(MR.strings.options_tts_desc),
                                     fontSize = 14.sp,
                                     color = Color.White.copy(alpha = 0.7f)
                                 )
@@ -258,10 +270,62 @@ private fun OptionsScreen(
                         }
                     }
 
+                    // No Filter Mode Toggle (Alpha 2.2)
+                    if (gameStateManager != null) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFF34495E)
+                            )
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(MR.strings.options_no_filter_label),
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = Color.White
+                                    )
+                                    Text(
+                                        text = stringResource(MR.strings.options_no_filter_desc),
+                                        fontSize = 14.sp,
+                                        color = Color.White.copy(alpha = 0.7f)
+                                    )
+                                }
+                                Switch(
+                                    checked = noFilterEnabled,
+                                    onCheckedChange = { enabled ->
+                                        if (enabled) {
+                                            // Show warning dialog when enabling
+                                            showWarningDialog = true
+                                        } else {
+                                            // Disable immediately (no confirmation needed)
+                                            gameStateManager.updatePlayerSettings { settings ->
+                                                settings.copy(isNoFilterModeEnabled = false)
+                                            }
+                                        }
+                                    },
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = Color(0xFFE74C3C),
+                                        checkedTrackColor = Color(0xFFE74C3C).copy(alpha = 0.5f)
+                                    )
+                                )
+                            }
+                        }
+                    }
+
                     Spacer(modifier = Modifier.weight(1f))
 
                     Text(
-                        text = "More settings coming soon...",
+                        text = stringResource(MR.strings.options_more_settings_coming_soon),
                         fontSize = 12.sp,
                         color = Color.Gray,
                         textAlign = TextAlign.Center
@@ -271,6 +335,43 @@ private fun OptionsScreen(
                 }
             }
         }
+    }
+    
+    // Warning Dialog (Alpha 2.2)
+    if (showWarningDialog && gameStateManager != null) {
+        AlertDialog(
+            onDismissRequest = { showWarningDialog = false },
+            title = {
+                Text(
+                    text = stringResource(MR.strings.options_no_filter_warning_title),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(MR.strings.options_no_filter_warning_body)
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        gameStateManager.updatePlayerSettings { settings ->
+                            settings.copy(isNoFilterModeEnabled = true)
+                        }
+                        showWarningDialog = false
+                    }
+                ) {
+                    Text(stringResource(MR.strings.options_no_filter_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showWarningDialog = false }
+                ) {
+                    Text(stringResource(MR.strings.options_no_filter_cancel))
+                }
+            }
+        )
     }
 }
 

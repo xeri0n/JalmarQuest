@@ -1,0 +1,540 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Type-safe project accessors is an incubating feature.
+
+> Configure project :core:di
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :core:model
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :core:state
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:activities
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:eventengine
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:explore
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:hub
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:nest
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:systemic
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:worldinfo
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :feature:worldmap
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Configure project :ui:app
+w: The following Kotlin/Native targets cannot be built on this machine and are disabled:
+iosArm64, iosSimulatorArm64, iosX64
+To hide this message, add 'kotlin.native.ignoreDisabledTargets=true' to the Gradle properties.
+
+
+> Task :core:di:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:model:compileKotlinDesktop UP-TO-DATE
+> Task :core:model:desktopProcessResources NO-SOURCE
+> Task :core:model:desktopMainClasses UP-TO-DATE
+> Task :core:model:desktopJar UP-TO-DATE
+> Task :core:state:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:state:compileKotlinDesktop UP-TO-DATE
+> Task :core:state:desktopProcessResources NO-SOURCE
+> Task :core:state:desktopMainClasses UP-TO-DATE
+> Task :core:state:desktopJar UP-TO-DATE
+> Task :feature:activities:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:activities:desktopProcessResources NO-SOURCE
+> Task :feature:eventengine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:eventengine:compileKotlinDesktop
+> Task :feature:eventengine:desktopProcessResources NO-SOURCE
+> Task :feature:eventengine:desktopMainClasses
+> Task :feature:eventengine:desktopJar UP-TO-DATE
+> Task :feature:explore:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:activities:compileKotlinDesktop
+> Task :feature:activities:desktopMainClasses
+> Task :feature:activities:desktopJar UP-TO-DATE
+> Task :feature:explore:desktopProcessResources NO-SOURCE
+> Task :feature:hub:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:hub:compileKotlinDesktop
+> Task :feature:hub:desktopProcessResources NO-SOURCE
+> Task :feature:hub:desktopMainClasses
+> Task :feature:hub:desktopJar UP-TO-DATE
+> Task :feature:nest:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:nest:compileKotlinDesktop
+> Task :feature:nest:desktopProcessResources NO-SOURCE
+> Task :feature:nest:desktopMainClasses
+> Task :feature:nest:desktopJar UP-TO-DATE
+> Task :feature:systemic:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:explore:compileKotlinDesktop
+> Task :feature:explore:desktopMainClasses
+> Task :feature:explore:desktopJar UP-TO-DATE
+> Task :feature:systemic:desktopProcessResources NO-SOURCE
+> Task :feature:worldmap:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :feature:worldmap:compileKotlinDesktop
+> Task :feature:worldmap:desktopProcessResources NO-SOURCE
+> Task :feature:worldmap:desktopMainClasses
+> Task :feature:worldmap:desktopJar UP-TO-DATE
+> Task :core:di:desktopProcessResources NO-SOURCE
+> Task :core:di:desktopTestProcessResources NO-SOURCE
+> Task :core:di:compileKotlinIosSimulatorArm64 SKIPPED
+> Task :core:di:iosSimulatorArm64ProcessResources NO-SOURCE
+> Task :core:di:iosSimulatorArm64MainKlibrary UP-TO-DATE
+> Task :core:di:compileTestKotlinIosSimulatorArm64 SKIPPED
+> Task :core:di:xcodeVersion SKIPPED
+> Task :core:di:linkDebugTestIosSimulatorArm64 SKIPPED
+> Task :core:di:iosSimulatorArm64Test SKIPPED
+> Task :core:di:compileKotlinIosX64 SKIPPED
+> Task :core:di:iosX64ProcessResources NO-SOURCE
+> Task :core:di:iosX64MainKlibrary UP-TO-DATE
+> Task :core:di:compileTestKotlinIosX64 SKIPPED
+> Task :core:di:linkDebugTestIosX64 SKIPPED
+> Task :core:di:iosX64Test SKIPPED
+> Task :core:di:preBuild UP-TO-DATE
+> Task :core:di:preDebugBuild UP-TO-DATE
+> Task :core:di:generateDebugResValues UP-TO-DATE
+> Task :core:di:generateDebugResources UP-TO-DATE
+> Task :core:di:packageDebugResources UP-TO-DATE
+> Task :core:di:parseDebugLocalResources UP-TO-DATE
+> Task :core:di:generateDebugRFile UP-TO-DATE
+> Task :core:model:preBuild UP-TO-DATE
+> Task :core:model:preDebugBuild UP-TO-DATE
+> Task :core:model:generateDebugResValues UP-TO-DATE
+> Task :core:model:generateDebugResources UP-TO-DATE
+> Task :core:model:packageDebugResources UP-TO-DATE
+> Task :core:model:parseDebugLocalResources UP-TO-DATE
+> Task :core:model:generateDebugRFile UP-TO-DATE
+> Task :core:model:compileDebugKotlinAndroid UP-TO-DATE
+> Task :core:model:javaPreCompileDebug UP-TO-DATE
+> Task :core:model:compileDebugJavaWithJavac NO-SOURCE
+> Task :core:model:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:state:preBuild UP-TO-DATE
+> Task :core:state:preDebugBuild UP-TO-DATE
+> Task :core:state:generateDebugResValues UP-TO-DATE
+> Task :core:state:generateDebugResources UP-TO-DATE
+> Task :core:state:packageDebugResources UP-TO-DATE
+> Task :core:state:parseDebugLocalResources UP-TO-DATE
+> Task :core:state:generateDebugRFile UP-TO-DATE
+> Task :core:state:compileDebugKotlinAndroid UP-TO-DATE
+> Task :core:state:javaPreCompileDebug UP-TO-DATE
+> Task :core:state:compileDebugJavaWithJavac NO-SOURCE
+> Task :core:state:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:activities:preBuild UP-TO-DATE
+> Task :feature:activities:preDebugBuild UP-TO-DATE
+> Task :feature:activities:generateDebugResValues UP-TO-DATE
+> Task :feature:activities:generateDebugResources UP-TO-DATE
+> Task :feature:activities:packageDebugResources UP-TO-DATE
+> Task :feature:activities:parseDebugLocalResources UP-TO-DATE
+> Task :feature:activities:generateDebugRFile UP-TO-DATE
+> Task :feature:activities:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:activities:javaPreCompileDebug UP-TO-DATE
+> Task :feature:activities:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:activities:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:eventengine:preBuild UP-TO-DATE
+> Task :feature:eventengine:preDebugBuild UP-TO-DATE
+> Task :feature:eventengine:generateDebugResValues UP-TO-DATE
+> Task :feature:eventengine:generateDebugResources UP-TO-DATE
+> Task :feature:eventengine:packageDebugResources UP-TO-DATE
+> Task :feature:eventengine:parseDebugLocalResources UP-TO-DATE
+> Task :feature:eventengine:generateDebugRFile UP-TO-DATE
+> Task :feature:eventengine:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:eventengine:javaPreCompileDebug UP-TO-DATE
+> Task :feature:eventengine:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:eventengine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:explore:preBuild UP-TO-DATE
+> Task :feature:explore:preDebugBuild UP-TO-DATE
+> Task :feature:explore:generateDebugResValues UP-TO-DATE
+> Task :feature:explore:generateDebugResources UP-TO-DATE
+> Task :feature:explore:packageDebugResources UP-TO-DATE
+> Task :feature:explore:parseDebugLocalResources UP-TO-DATE
+> Task :feature:explore:generateDebugRFile UP-TO-DATE
+> Task :feature:explore:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:explore:javaPreCompileDebug UP-TO-DATE
+> Task :feature:explore:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:explore:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:hub:preBuild UP-TO-DATE
+> Task :feature:hub:preDebugBuild UP-TO-DATE
+> Task :feature:hub:generateDebugResValues UP-TO-DATE
+> Task :feature:hub:generateDebugResources UP-TO-DATE
+> Task :feature:hub:packageDebugResources UP-TO-DATE
+> Task :feature:hub:parseDebugLocalResources UP-TO-DATE
+> Task :feature:hub:generateDebugRFile UP-TO-DATE
+> Task :feature:hub:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:hub:javaPreCompileDebug UP-TO-DATE
+> Task :feature:hub:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:hub:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:nest:preBuild UP-TO-DATE
+> Task :feature:nest:preDebugBuild UP-TO-DATE
+> Task :feature:nest:generateDebugResValues UP-TO-DATE
+> Task :feature:nest:generateDebugResources UP-TO-DATE
+> Task :feature:nest:packageDebugResources UP-TO-DATE
+> Task :feature:nest:parseDebugLocalResources UP-TO-DATE
+> Task :feature:nest:generateDebugRFile UP-TO-DATE
+> Task :feature:nest:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:nest:javaPreCompileDebug UP-TO-DATE
+> Task :feature:nest:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:nest:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:systemic:preBuild UP-TO-DATE
+> Task :feature:systemic:preDebugBuild UP-TO-DATE
+> Task :feature:systemic:generateDebugResValues UP-TO-DATE
+> Task :feature:systemic:generateDebugResources UP-TO-DATE
+> Task :feature:systemic:packageDebugResources UP-TO-DATE
+> Task :feature:systemic:parseDebugLocalResources UP-TO-DATE
+> Task :feature:systemic:generateDebugRFile UP-TO-DATE
+> Task :feature:systemic:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:systemic:javaPreCompileDebug UP-TO-DATE
+> Task :feature:systemic:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:systemic:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:worldmap:preBuild UP-TO-DATE
+> Task :feature:worldmap:preDebugBuild UP-TO-DATE
+> Task :feature:worldmap:generateDebugResValues UP-TO-DATE
+> Task :feature:worldmap:generateDebugResources UP-TO-DATE
+> Task :feature:worldmap:packageDebugResources UP-TO-DATE
+> Task :feature:worldmap:parseDebugLocalResources UP-TO-DATE
+> Task :feature:worldmap:generateDebugRFile UP-TO-DATE
+> Task :feature:worldmap:compileDebugKotlinAndroid UP-TO-DATE
+> Task :feature:worldmap:javaPreCompileDebug UP-TO-DATE
+> Task :feature:worldmap:compileDebugJavaWithJavac NO-SOURCE
+> Task :feature:worldmap:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:di:compileDebugKotlinAndroid UP-TO-DATE
+> Task :core:di:javaPreCompileDebug UP-TO-DATE
+> Task :core:di:compileDebugJavaWithJavac NO-SOURCE
+> Task :core:di:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:di:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:di:preDebugUnitTestBuild UP-TO-DATE
+> Task :core:di:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :feature:systemic:compileKotlinDesktop
+> Task :feature:systemic:desktopMainClasses
+> Task :feature:systemic:desktopJar UP-TO-DATE
+> Task :core:di:compileDebugUnitTestKotlinAndroid
+> Task :core:di:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :core:di:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :core:di:processDebugJavaRes UP-TO-DATE
+> Task :core:di:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:model:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:model:processDebugJavaRes UP-TO-DATE
+> Task :core:state:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:state:processDebugJavaRes UP-TO-DATE
+> Task :feature:activities:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:activities:processDebugJavaRes UP-TO-DATE
+> Task :feature:eventengine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:eventengine:processDebugJavaRes UP-TO-DATE
+> Task :feature:explore:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:explore:processDebugJavaRes UP-TO-DATE
+> Task :feature:hub:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:hub:processDebugJavaRes UP-TO-DATE
+> Task :feature:nest:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:nest:processDebugJavaRes UP-TO-DATE
+> Task :feature:systemic:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:systemic:processDebugJavaRes UP-TO-DATE
+> Task :feature:worldmap:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:worldmap:processDebugJavaRes UP-TO-DATE
+> Task :core:di:compileKotlinDesktop
+> Task :core:di:testDebugUnitTest
+> Task :core:di:desktopMainClasses
+> Task :core:di:preReleaseBuild UP-TO-DATE
+> Task :core:di:generateReleaseResValues UP-TO-DATE
+> Task :core:di:generateReleaseResources UP-TO-DATE
+> Task :core:di:packageReleaseResources UP-TO-DATE
+> Task :core:di:parseReleaseLocalResources UP-TO-DATE
+> Task :core:di:generateReleaseRFile UP-TO-DATE
+> Task :core:model:preReleaseBuild UP-TO-DATE
+> Task :core:model:generateReleaseResValues UP-TO-DATE
+> Task :core:model:generateReleaseResources UP-TO-DATE
+> Task :core:model:packageReleaseResources UP-TO-DATE
+> Task :core:model:parseReleaseLocalResources UP-TO-DATE
+> Task :core:model:generateReleaseRFile UP-TO-DATE
+> Task :core:model:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :core:model:javaPreCompileRelease UP-TO-DATE
+> Task :core:model:compileReleaseJavaWithJavac NO-SOURCE
+> Task :core:model:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :core:state:preReleaseBuild UP-TO-DATE
+> Task :core:state:generateReleaseResValues UP-TO-DATE
+> Task :core:state:generateReleaseResources UP-TO-DATE
+> Task :core:state:packageReleaseResources UP-TO-DATE
+> Task :core:state:parseReleaseLocalResources UP-TO-DATE
+> Task :core:state:generateReleaseRFile UP-TO-DATE
+> Task :core:state:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :core:state:javaPreCompileRelease UP-TO-DATE
+> Task :core:state:compileReleaseJavaWithJavac NO-SOURCE
+> Task :core:state:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:activities:preReleaseBuild UP-TO-DATE
+> Task :feature:activities:generateReleaseResValues UP-TO-DATE
+> Task :feature:activities:generateReleaseResources UP-TO-DATE
+> Task :feature:activities:packageReleaseResources UP-TO-DATE
+> Task :feature:activities:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:activities:generateReleaseRFile UP-TO-DATE
+> Task :feature:activities:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:activities:javaPreCompileRelease UP-TO-DATE
+> Task :feature:activities:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:activities:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:eventengine:preReleaseBuild UP-TO-DATE
+> Task :feature:eventengine:generateReleaseResValues UP-TO-DATE
+> Task :feature:eventengine:generateReleaseResources UP-TO-DATE
+> Task :feature:eventengine:packageReleaseResources UP-TO-DATE
+> Task :feature:eventengine:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:eventengine:generateReleaseRFile UP-TO-DATE
+> Task :feature:eventengine:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:eventengine:javaPreCompileRelease UP-TO-DATE
+> Task :feature:eventengine:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:eventengine:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:explore:preReleaseBuild UP-TO-DATE
+> Task :feature:explore:generateReleaseResValues UP-TO-DATE
+> Task :feature:explore:generateReleaseResources UP-TO-DATE
+> Task :feature:explore:packageReleaseResources UP-TO-DATE
+> Task :feature:explore:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:explore:generateReleaseRFile UP-TO-DATE
+> Task :feature:explore:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:explore:javaPreCompileRelease UP-TO-DATE
+> Task :feature:explore:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:explore:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:hub:preReleaseBuild UP-TO-DATE
+> Task :feature:hub:generateReleaseResValues UP-TO-DATE
+> Task :feature:hub:generateReleaseResources UP-TO-DATE
+> Task :feature:hub:packageReleaseResources UP-TO-DATE
+> Task :feature:hub:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:hub:generateReleaseRFile UP-TO-DATE
+> Task :feature:hub:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:hub:javaPreCompileRelease UP-TO-DATE
+> Task :feature:hub:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:hub:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:nest:preReleaseBuild UP-TO-DATE
+> Task :feature:nest:generateReleaseResValues UP-TO-DATE
+> Task :feature:nest:generateReleaseResources UP-TO-DATE
+> Task :feature:nest:packageReleaseResources UP-TO-DATE
+> Task :feature:nest:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:nest:generateReleaseRFile UP-TO-DATE
+> Task :feature:nest:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:nest:javaPreCompileRelease UP-TO-DATE
+> Task :feature:nest:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:nest:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:systemic:preReleaseBuild UP-TO-DATE
+> Task :feature:systemic:generateReleaseResValues UP-TO-DATE
+> Task :feature:systemic:generateReleaseResources UP-TO-DATE
+> Task :feature:systemic:packageReleaseResources UP-TO-DATE
+> Task :core:di:compileTestKotlinDesktop
+> Task :feature:systemic:parseReleaseLocalResources UP-TO-DATE
+> Task :core:di:desktopTestClasses
+> Task :core:di:desktopTest
+> Task :feature:systemic:generateReleaseRFile UP-TO-DATE
+> Task :feature:systemic:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:systemic:javaPreCompileRelease UP-TO-DATE
+> Task :feature:systemic:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:systemic:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :feature:worldmap:preReleaseBuild UP-TO-DATE
+> Task :feature:worldmap:generateReleaseResValues UP-TO-DATE
+> Task :feature:worldmap:generateReleaseResources UP-TO-DATE
+> Task :feature:worldmap:packageReleaseResources UP-TO-DATE
+> Task :feature:worldmap:parseReleaseLocalResources UP-TO-DATE
+> Task :feature:worldmap:generateReleaseRFile UP-TO-DATE
+> Task :feature:worldmap:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :feature:worldmap:javaPreCompileRelease UP-TO-DATE
+> Task :feature:worldmap:compileReleaseJavaWithJavac NO-SOURCE
+> Task :feature:worldmap:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :core:di:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :core:di:javaPreCompileRelease UP-TO-DATE
+> Task :core:di:compileReleaseJavaWithJavac NO-SOURCE
+> Task :core:di:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :core:di:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :core:di:preReleaseUnitTestBuild UP-TO-DATE
+> Task :core:di:generateReleaseUnitTestStubRFile UP-TO-DATE
+> Task :core:di:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :core:di:processReleaseJavaRes UP-TO-DATE
+> Task :core:model:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :core:model:processReleaseJavaRes UP-TO-DATE
+> Task :core:state:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :core:state:processReleaseJavaRes UP-TO-DATE
+> Task :feature:activities:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:activities:processReleaseJavaRes UP-TO-DATE
+> Task :feature:eventengine:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:eventengine:processReleaseJavaRes UP-TO-DATE
+> Task :feature:explore:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:explore:processReleaseJavaRes UP-TO-DATE
+> Task :feature:hub:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:hub:processReleaseJavaRes UP-TO-DATE
+> Task :feature:nest:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:nest:processReleaseJavaRes UP-TO-DATE
+> Task :feature:systemic:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:systemic:processReleaseJavaRes UP-TO-DATE
+> Task :feature:worldmap:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :feature:worldmap:processReleaseJavaRes UP-TO-DATE
+> Task :core:model:compileTestKotlinDesktop UP-TO-DATE
+> Task :core:model:desktopTestProcessResources NO-SOURCE
+> Task :core:model:desktopTestClasses UP-TO-DATE
+> Task :core:model:desktopTest UP-TO-DATE
+> Task :core:model:compileKotlinIosSimulatorArm64 SKIPPED
+> Task :core:model:iosSimulatorArm64ProcessResources NO-SOURCE
+> Task :core:model:iosSimulatorArm64MainKlibrary UP-TO-DATE
+> Task :core:model:compileTestKotlinIosSimulatorArm64 SKIPPED
+> Task :core:model:xcodeVersion SKIPPED
+> Task :core:model:linkDebugTestIosSimulatorArm64 SKIPPED
+> Task :core:model:iosSimulatorArm64Test SKIPPED
+> Task :core:model:compileKotlinIosX64 SKIPPED
+> Task :core:model:iosX64ProcessResources NO-SOURCE
+> Task :core:model:iosX64MainKlibrary UP-TO-DATE
+> Task :core:model:compileTestKotlinIosX64 SKIPPED
+> Task :core:model:linkDebugTestIosX64 SKIPPED
+> Task :core:model:iosX64Test SKIPPED
+> Task :core:model:preDebugUnitTestBuild UP-TO-DATE
+> Task :core:model:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :core:model:compileDebugUnitTestKotlinAndroid UP-TO-DATE
+> Task :core:model:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :core:model:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :core:model:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:model:testDebugUnitTest UP-TO-DATE
+> Task :core:model:preReleaseUnitTestBuild UP-TO-DATE
+> Task :core:model:generateReleaseUnitTestStubRFile UP-TO-DATE
+> Task :core:model:compileReleaseUnitTestKotlinAndroid UP-TO-DATE
+> Task :core:model:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :core:model:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :core:model:processReleaseUnitTestJavaRes UP-TO-DATE
+> Task :core:model:testReleaseUnitTest UP-TO-DATE
+> Task :core:model:allTests UP-TO-DATE
+> Task :core:di:compileReleaseUnitTestKotlinAndroid
+> Task :core:di:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :core:di:processReleaseUnitTestJavaRes UP-TO-DATE
+> Task :core:di:testReleaseUnitTest
+> Task :core:di:allTests
+> Task :core:state:desktopTestProcessResources NO-SOURCE
+> Task :core:state:compileKotlinIosSimulatorArm64 SKIPPED
+> Task :core:state:iosSimulatorArm64ProcessResources NO-SOURCE
+> Task :core:state:iosSimulatorArm64MainKlibrary UP-TO-DATE
+> Task :core:state:compileTestKotlinIosSimulatorArm64 SKIPPED
+> Task :core:state:xcodeVersion SKIPPED
+> Task :core:state:linkDebugTestIosSimulatorArm64 SKIPPED
+> Task :core:state:iosSimulatorArm64Test SKIPPED
+> Task :core:state:compileKotlinIosX64 SKIPPED
+> Task :core:state:iosX64ProcessResources NO-SOURCE
+> Task :core:state:iosX64MainKlibrary UP-TO-DATE
+> Task :core:state:compileTestKotlinIosX64 SKIPPED
+> Task :core:state:linkDebugTestIosX64 SKIPPED
+> Task :core:state:iosX64Test SKIPPED
+> Task :core:state:preDebugUnitTestBuild UP-TO-DATE
+> Task :core:state:generateDebugUnitTestStubRFile UP-TO-DATE
+
+> Task :core:state:compileTestKotlinDesktop
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:113:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:113:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:129:52 Unresolved reference 'ownedShinies'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:131:27 Unresolved reference 'it'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:151:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:151:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:174:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:174:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/narrative/DialogueVariantManagerTest.kt:165:13 Unresolved reference 'assertFalse'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/npc/NpcRelationshipManagerTest.kt:3:35 Unresolved reference 'npc'.
+
+> Task :core:state:compileTestKotlinDesktop FAILED
+
+> Task :core:state:compileDebugUnitTestKotlinAndroid FAILED
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:113:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:113:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:114:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:129:52 Unresolved reference 'ownedShinies'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:131:27 Unresolved reference 'it'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:151:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:151:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:152:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:174:13 No parameter with name 'initialHoardState' found.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:174:60 Unresolved reference 'HoardState'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'gameStateManager'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'valuationService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/GameStateManagerTest.kt:175:13 No value passed for parameter 'leaderboardService'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/narrative/DialogueVariantManagerTest.kt:165:13 Unresolved reference 'assertFalse'.
+e: file:///workspaces/JalmarQuest/core/state/src/commonTest/kotlin/com/jalmarquest/core/state/npc/NpcRelationshipManagerTest.kt:3:35 Unresolved reference 'npc'.
+
+[Incubating] Problems report is available at: file:///workspaces/JalmarQuest/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':core:state:compileTestKotlinDesktop'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':core:state:compileDebugUnitTestKotlinAndroid'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 19s
+248 actionable tasks: 17 executed, 231 up-to-date

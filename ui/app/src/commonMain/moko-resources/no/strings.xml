@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <!-- ...existing translations... -->
+    
+    <!-- FIX: Add missing Norwegian translations -->
+    <string name="nest_upgrade_t3_library">Bibliotek Nivå 3</string>
+    <string name="nest_upgrade_t3_library_desc">-15% tanketid, +2 tanker samtidig</string>
+    <string name="companion_assignment_board">Følgesvenn Oppdragstavle</string>
+    <string name="companion_idle">Ledig</string>
+    <string name="companion_assigned_to">Tildelt til: %s</string>
+    <string name="passive_income_generated">Passiv inntekt: +%d %s</string>
+    <string name="borken_event_chaos">Borken skaper kaos!</string>
+    <string name="ai_director_hint">Spillmesterens hint</string>
+    <string name="no_filter_mode_warning">Advarsel: Ufiltrert modus aktivert</string>
+    
+    <!-- Quest translations -->
+    <string name="quest_stone_stuck_seed_title">Frøet Under Steinen</string>
+    <string name="quest_stone_stuck_seed_desc">Et frø er fanget under en tung stein</string>
+    
+    <!-- ...existing translations... -->
+</resources>

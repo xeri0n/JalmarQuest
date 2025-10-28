@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlin.system.currentTimeMillis
 
 /**
  * Centralized manager for player-facing state changes; guarantees every mutation is recorded.
@@ -24,15 +27,29 @@ import kotlin.time.Duration
 class GameStateManager(
     initialPlayer: Player,
     private val accountManager: AccountManager? = null,
-    private val timestampProvider: () -> Long
+    private val timestampProvider: () -> Long = { currentTimeMillis() }
 ) {
+    private val mutex = Mutex()
     private val _playerState = MutableStateFlow(initialPlayer)
-    val playerState: StateFlow<Player> = _playerState
+    val playerState: StateFlow<Player> = _playerState.asStateFlow()
+    
+    // FIX: Add thread-safe batch update method for complex operations
+    suspend fun batchUpdate(block: (Player) -> Player) = mutex.withLock {
+        val startTime = timestampProvider()
+        val updatedPlayer = block(_playerState.value)
+        _playerState.value = updatedPlayer
+        
+        // Log performance for large updates
+        val duration = timestampProvider() - startTime
+        if (duration > 100) {
+            PerformanceLogger.logSlowMutation("batchUpdate", duration)
+        }
+    }
     
     // Track when the current play session started for playtime calculation
     private var sessionStartTime: Long = timestampProvider()
 
-    fun appendChoice(tagValue: String) {
+    suspend fun appendChoice(tagValue: String) {
         require(tagValue.isNotBlank()) { "Choice tag cannot be blank" }
         PerformanceLogger.logStateMutation("Player", "appendChoice", mapOf("tag" to tagValue))
         val newEntry = ChoiceLogEntry(tag = ChoiceTag(tagValue), timestampMillis = timestampProvider())
@@ -96,6 +113,24 @@ class GameStateManager(
         }
     }
     
+    /**
+     * Alpha 2.3: Update seed inventory.
+     */
+    fun updateSeedInventory(transform: (com.jalmarquest.core.model.SeedInventory) -> com.jalmarquest.core.model.SeedInventory) {
+        _playerState.update { player ->
+            player.copy(seedInventory = transform(player.seedInventory))
+        }
+    }
+    
+    /**
+     * Alpha 2.3: Update crafting inventory (reagents and known recipes).
+     */
+    fun updateCraftingInventory(transform: (com.jalmarquest.core.model.CraftingInventory) -> com.jalmarquest.core.model.CraftingInventory) {
+        _playerState.update { player ->
+            player.copy(craftingInventory = transform(player.craftingInventory))
+        }
+    }
+    
     fun updateGlimmerWallet(transform: (com.jalmarquest.core.model.GlimmerWallet) -> com.jalmarquest.core.model.GlimmerWallet) {
         _playerState.update { player ->
             player.copy(glimmerWallet = transform(player.glimmerWallet))
@@ -126,6 +161,30 @@ class GameStateManager(
         }
     }
 
+    fun updateWorldMapState(transform: (com.jalmarquest.core.model.WorldMapState?) -> com.jalmarquest.core.model.WorldMapState) {
+        _playerState.update { player ->
+            player.copy(worldMapState = transform(player.worldMapState))
+        }
+    }
+    
+    /**
+     * Alpha 2.3 Part 3.1: Update companion state (traits, affinity, etc.)
+     */
+    fun updateCompanionState(transform: (com.jalmarquest.core.model.CompanionState) -> com.jalmarquest.core.model.CompanionState) {
+        _playerState.update { player ->
+            player.copy(companionState = transform(player.companionState))
+        }
+    }
+
+    /**
+     * Alpha 2.3 Part 3.2: Update companion assignment state.
+     */
+    fun updateCompanionAssignments(transform: (com.jalmarquest.core.model.CompanionAssignmentState) -> com.jalmarquest.core.model.CompanionAssignmentState) {
+        _playerState.update { player ->
+            player.copy(companionAssignments = transform(player.companionAssignments))
+        }
+    }
+
     fun updateFactionReputation(factionId: String, amount: Int) {
         require(factionId.isNotBlank()) { "Faction id cannot be blank" }
         PerformanceLogger.logStateMutation("Player", "updateFactionReputation", mapOf("faction" to factionId, "amount" to amount))
@@ -146,6 +205,86 @@ class GameStateManager(
 
     fun updatePlayer(transform: (Player) -> Player) {
         _playerState.update(transform)
+    }
+    
+    /**
+     * Update player settings (No Filter Mode, donation flags, etc.)
+     * Alpha 2.2 - Advanced Narrative & AI Systems
+     */
+    fun updatePlayerSettings(transform: (com.jalmarquest.core.model.PlayerSettings) -> com.jalmarquest.core.model.PlayerSettings) {
+        _playerState.update { player ->
+            player.copy(playerSettings = transform(player.playerSettings))
+        }
+    }
+    
+    /**
+     * Update AI Director state for adaptive difficulty tracking.
+     * Alpha 2.2 - AI Director Core Manager.
+     */
+    fun updateAIDirectorState(newState: com.jalmarquest.core.model.AIDirectorState) {
+        _playerState.update { player ->
+            player.copy(aiDirectorState = newState)
+        }
+    }
+    
+    /**
+     * Alpha 2.2 Phase 5C: Grants one-time Creator Coffee donation rewards.
+     * Called when interacting with npc_exhausted_coder after purchasing coffee.
+     * 
+     * Rewards:
+     * - Golden Coffee Bean shiny (LEGENDARY, 5000 Seeds value)
+     * - Patron's Crown cosmetic (exclusive, cannot be purchased)
+     * - +50 affinity with npc_exhausted_coder
+     * - Choice tag logged: "coffee_rewards_granted"
+     * 
+     * @param hoardManager HoardRankManager to grant shiny
+     * @param npcRelationshipManager NpcRelationshipManager to add affinity (optional)
+     * @return true if rewards were granted, false if already claimed
+     */
+    suspend fun grantCreatorCoffeeRewards(
+        hoardManager: com.jalmarquest.core.state.hoard.HoardRankManager?,
+        npcRelationshipManager: com.jalmarquest.core.state.npc.NpcRelationshipManager? = null
+    ): Boolean {
+        val player = _playerState.value
+        
+        // Check if player purchased coffee and hasn't received rewards yet
+        if (!player.playerSettings.hasPurchasedCreatorCoffee || 
+            player.playerSettings.hasReceivedCoffeeRewards) {
+            return false
+        }
+        
+        // Grant Golden Coffee Bean shiny
+        hoardManager?.acquireShiny(com.jalmarquest.core.model.ShinyId("golden_coffee_bean"))
+        
+        // Grant Patron's Crown cosmetic (add to owned items without purchase)
+        val patronCrownId = com.jalmarquest.core.model.ShopItemId("cosmetic_crown_patron")
+        updateShopState { shopState ->
+            shopState.addPurchase(patronCrownId)
+        }
+        
+        // Add affinity with Exhausted Coder
+        npcRelationshipManager?.addAffinity("npc_exhausted_coder", 50)
+        
+        // Mark rewards as claimed
+        updatePlayerSettings { settings ->
+            settings.copy(hasReceivedCoffeeRewards = true)
+        }
+        
+        // Log analytics
+        appendChoice("coffee_rewards_granted")
+        
+        PerformanceLogger.logStateMutation(
+            "GameStateManager",
+            "grantCreatorCoffeeRewards",
+            mapOf(
+                "shiny" to "golden_coffee_bean",
+                "cosmetic" to "cosmetic_crown_patron",
+                "affinity_bonus" to 50,
+                "npc" to "npc_exhausted_coder"
+            )
+        )
+        
+        return true
     }
     
     /**

@@ -7,6 +7,7 @@ import com.jalmarquest.core.model.ChoiceTag
 import com.jalmarquest.core.model.Player
 import com.jalmarquest.core.model.QuestLog
 import com.jalmarquest.core.model.StatusEffects
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -30,14 +31,14 @@ class InMemoryEventEngineTest {
     )
 
     @Test
-    fun returnsEncounterWhenSnippetAvailable() {
+    fun returnsEncounterWhenSnippetAvailable() = runTest {
         val engine = InMemoryEventEngine(FixedSelector(snippetId = "snippet-1"), chapterEventOdds = 0.0)
         val result = engine.evaluateNextEncounter(basePlayer)
         assertEquals(EventResolution.Encounter("snippet-1"), result)
     }
 
     @Test
-    fun returnsChapterEventWhenForced() {
+    fun returnsChapterEventWhenForced() = runTest {
         val engine = InMemoryEventEngine(
             snippetSelector = FixedSelector(forceChapterEvent = true),
             chapterEventOdds = 1.0,

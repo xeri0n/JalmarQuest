@@ -565,4 +565,42 @@ class PlayerSerializationTest {
         assertEquals(1, deserialized.archetypeProgress.talentTree?.unlockedTalentIds?.size)
         assertTrue("scholar_quick_study" in (deserialized.archetypeProgress.talentTree?.unlockedTalentIds ?: emptySet()))
     }
+    
+    @Test
+    fun testPlayerSettingsSerialization() {
+        val player = Player(
+            id = "test-settings",
+            name = "Settings Test Player",
+            playerSettings = PlayerSettings(
+                isNoFilterModeEnabled = true,
+                hasPurchasedCreatorCoffee = true
+            )
+        )
+        
+        val serialized = json.encodeToString(player)
+        val deserialized = json.decodeFromString<Player>(serialized)
+        
+        assertTrue(deserialized.playerSettings.isNoFilterModeEnabled)
+        assertTrue(deserialized.playerSettings.hasPurchasedCreatorCoffee)
+        
+        // Verify field names in JSON
+        assertTrue(serialized.contains("\"player_settings\""))
+        assertTrue(serialized.contains("\"is_no_filter_mode_enabled\""))
+        assertTrue(serialized.contains("\"has_purchased_creator_coffee\""))
+    }
+    
+    @Test
+    fun testPlayerSettingsDefaultValues() {
+        val player = Player(
+            id = "test-defaults",
+            name = "Default Settings Player"
+            // playerSettings not specified, should use defaults
+        )
+        
+        val serialized = json.encodeToString(player)
+        val deserialized = json.decodeFromString<Player>(serialized)
+        
+        assertFalse(deserialized.playerSettings.isNoFilterModeEnabled) // Default: OFF
+        assertFalse(deserialized.playerSettings.hasPurchasedCreatorCoffee) // Default: false
+    }
 }

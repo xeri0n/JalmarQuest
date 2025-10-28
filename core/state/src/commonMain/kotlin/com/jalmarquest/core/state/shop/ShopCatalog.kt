@@ -132,7 +132,22 @@ fun ShopCatalog.registerDefaultItems() {
         rarityTier = 5
     ))
     
-    // ===== CLOAK COSMETICS (Back Slot) =====
+        // === EXCLUSIVE COSMETICS (Rewards & Special Unlocks) ===
+        
+        // Alpha 2.2 Phase 5C: Patron's Crown - Exclusive reward for Creator Coffee donation
+        addItem(ShopItem(
+            id = ShopItemId("cosmetic_crown_patron"),
+            name = "Patron's Crown",
+            description = "Exclusive golden crown awarded to supporters of JalmarQuest development. A mark of honor for those who fuel the creator's coffee addiction. Not available for purchase - granted only to those who buy the creator a coffee.",
+            glimmerCost = 0, // Not purchasable with Glimmer - reward-only
+            category = ShopCategory.COSMETICS,
+            rotationFrequency = RotationFrequency.PERMANENT,
+            cosmeticType = CosmeticType.CROWN,
+            stock = 1, // One-time grant
+            rarityTier = 5 // Legendary tier (highest available)
+        ))
+        
+        // === CLOAK COSMETICS ===    // ===== CLOAK COSMETICS (Back Slot) =====
     
     addItem(ShopItem(
         id = ShopItemId("cosmetic_cloak_harvest"),

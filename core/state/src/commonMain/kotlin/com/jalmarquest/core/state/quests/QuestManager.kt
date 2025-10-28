@@ -2,6 +2,7 @@ package com.jalmarquest.core.state.quests
 
 import com.jalmarquest.core.model.*
 import com.jalmarquest.core.state.GameStateManager
+import com.jalmarquest.core.state.aidirector.AIDirectorManager
 import com.jalmarquest.core.state.managers.NestCustomizationManager
 import com.jalmarquest.core.state.perf.PerformanceLogger
 import com.jalmarquest.core.state.perf.currentTimeMillis
@@ -10,15 +11,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.math.roundToInt
 
 /**
  * Manages quest lifecycle, progress tracking, and reward delivery.
  * Provides quest availability checking based on prerequisites, faction, level, and choice tags.
+ * 
+ * **Alpha 2.2 Integration**: AI Director adaptive difficulty scaling.
+ * - Quest rewards (Seeds, XP) are scaled by AI Director difficulty multiplier (0.7x-1.6x)
+ * - Quest objectives can be adjusted based on difficulty level
+ * - Performance tracking feeds into AI Director's difficulty calculation
  */
 class QuestManager(
     private val questCatalog: QuestCatalog,
     private val gameStateManager: GameStateManager? = null,
     private val nestCustomizationManager: NestCustomizationManager? = null,
+    private val aiDirectorManager: AIDirectorManager? = null,
     private val timestampProvider: () -> Long = { currentTimeMillis() }
 ) {
     private val mutex = Mutex()
@@ -118,6 +126,9 @@ class QuestManager(
             )
             
             _questLog.value = _questLog.value.addActiveQuest(progress)
+            // Log quest acceptance as a choice tag for narrative system
+            gameStateManager?.appendChoice("${questId.value}_accepted")
+            
             
             PerformanceLogger.logStateMutation("QuestManager", "acceptQuest", mapOf(
                 "questId" to questId.value,
@@ -155,6 +166,8 @@ class QuestManager(
     /**
      * Complete a quest and deliver rewards.
      * Returns the rewards granted, or null if quest cannot be completed.
+     * 
+     * **Alpha 2.2**: Reports quest completion to AI Director for difficulty tracking.
      */
     suspend fun completeQuest(questId: QuestId): List<QuestReward>? {
         val quest = questCatalog.getQuestById(questId) ?: return null
@@ -172,9 +185,14 @@ class QuestManager(
             
             _questLog.value = _questLog.value.completeQuest(questId)
             
+            // Report quest success to AI Director
+            aiDirectorManager?.recordQuestCompletion()
+            
             // Apply rewards if GameStateManager is available
             if (gameStateManager != null) {
                 applyQuestRewards(quest.rewards)
+                // Log quest completion as a choice tag for narrative system
+                gameStateManager.appendChoice("${questId.value}_complete")
             }
             
             // Grant trophy to nest if NestCustomizationManager is available
@@ -188,7 +206,8 @@ class QuestManager(
                 "questId" to questId.value,
                 "rewardCount" to quest.rewards.size,
                 "isRepeatable" to quest.isRepeatable,
-                "trophyGranted" to (nestCustomizationManager != null)
+                "trophyGranted" to (nestCustomizationManager != null),
+                "aiDirectorNotified" to (aiDirectorManager != null)
             ))
             
             return quest.rewards
@@ -197,22 +216,44 @@ class QuestManager(
     
     /**
      * Apply quest rewards to the player via GameStateManager.
+     * Rewards are scaled by AI Director difficulty multiplier (0.7x-1.6x).
      */
     private fun applyQuestRewards(rewards: List<QuestReward>) {
         val gsm = gameStateManager ?: return
+        val multiplier = aiDirectorManager?.getDifficultyMultiplier() ?: 1.0f
         
         for (reward in rewards) {
             when (reward.type) {
+                QuestRewardType.SEEDS -> {
+                    val scaledSeeds = (reward.quantity * multiplier).roundToInt()
+                    gsm.grantItem("seeds", scaledSeeds)
+                    PerformanceLogger.logStateMutation("QuestManager", "applyReward_seeds", mapOf(
+                        "baseAmount" to reward.quantity,
+                        "scaledAmount" to scaledSeeds,
+                        "difficultyMultiplier" to multiplier.toDouble()
+                    ))
+                }
+                QuestRewardType.EXPERIENCE -> {
+                    val scaledXP = (reward.quantity * multiplier).roundToInt()
+                    // XP reward would be applied via ArchetypeManager when that integration is built
+                    // For now, just log the scaled amount
+                    PerformanceLogger.logStateMutation("QuestManager", "applyReward_experience", mapOf(
+                        "baseAmount" to reward.quantity,
+                        "scaledAmount" to scaledXP,
+                        "difficultyMultiplier" to multiplier.toDouble()
+                    ))
+                }
                 QuestRewardType.FACTION_REPUTATION -> {
                     val factionId = reward.targetId ?: continue
+                    // Faction reputation doesn't scale with difficulty (narrative consistency)
                     gsm.updateFactionReputation(factionId, reward.quantity)
                     PerformanceLogger.logStateMutation("QuestManager", "applyReward_faction", mapOf(
                         "factionId" to factionId,
                         "amount" to reward.quantity
                     ))
                 }
-                // Other reward types would be handled here (SEEDS, ITEMS, etc.)
-                // For now, just handle faction reputation as that's the task requirement
+                // Other reward types would be handled here (ITEMS, SHINIES, etc.)
+                // For now, focus on scalable rewards (Seeds, XP)
                 else -> {
                     // Other reward types are handled elsewhere (e.g., in UI controllers)
                 }
@@ -239,6 +280,8 @@ class QuestManager(
     
     /**
      * Fail a quest (e.g., time limit expired, incompatible choice made).
+     * 
+     * **Alpha 2.2**: Reports quest failure to AI Director for difficulty tracking.
      */
     suspend fun failQuest(questId: QuestId): Boolean {
         mutex.withLock {
@@ -246,8 +289,12 @@ class QuestManager(
             
             _questLog.value = _questLog.value.failQuest(questId)
             
+            // Report quest failure to AI Director
+            aiDirectorManager?.recordQuestFailure()
+            
             PerformanceLogger.logStateMutation("QuestManager", "failQuest", mapOf(
-                "questId" to questId.value
+                "questId" to questId.value,
+                "aiDirectorNotified" to (aiDirectorManager != null)
             ))
         }
         

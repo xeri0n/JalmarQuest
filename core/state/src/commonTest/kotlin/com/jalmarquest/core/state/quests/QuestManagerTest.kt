@@ -1,6 +1,7 @@
 package com.jalmarquest.core.state.quests
 
 import com.jalmarquest.core.model.*
+import com.jalmarquest.core.state.GameStateManager
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,15 +46,19 @@ class QuestManagerTest {
     
     @Test
     fun testAcceptQuestSuccess() = runTest {
-        val catalog = QuestCatalog()
-        val manager = QuestManager(catalog, null)
-        val player = createTestPlayer()
+    val catalog = QuestCatalog()
+    val gsm = GameStateManager(initialPlayer = createTestPlayer(), timestampProvider = { 0L })
+        val manager = QuestManager(catalog, gsm)
+        val player = gsm.playerState.value
         
         val accepted = manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
         
         assertTrue(accepted, "Should accept quest")
         assertTrue(manager.questLog.value.isQuestActive(QuestId("tutorial_first_exploration")))
         assertEquals(1, manager.getActiveQuests().size)
+        // Choice tag should be appended when GameStateManager is present
+        val tags = gsm.playerState.value.choiceLog.entries.map { it.tag.value }
+        assertTrue(tags.contains("tutorial_first_exploration_accepted"))
     }
     
     @Test
@@ -175,9 +180,10 @@ class QuestManagerTest {
     
     @Test
     fun testCompleteQuestSuccess() = runTest {
-        val catalog = QuestCatalog()
-        val manager = QuestManager(catalog, null)
-        val player = createTestPlayer()
+    val catalog = QuestCatalog()
+    val gsm = GameStateManager(initialPlayer = createTestPlayer(), timestampProvider = { 0L })
+        val manager = QuestManager(catalog, gsm)
+        val player = gsm.playerState.value
         
         manager.acceptQuest(QuestId("tutorial_first_exploration"), player)
         manager.updateObjective(QuestId("tutorial_first_exploration"), "explore_area", 1)
@@ -189,6 +195,9 @@ class QuestManagerTest {
         assertTrue(rewards.any { it.type == QuestRewardType.SEEDS && it.quantity == 50 })
         assertTrue(manager.hasCompletedQuest(QuestId("tutorial_first_exploration")))
         assertFalse(manager.questLog.value.isQuestActive(QuestId("tutorial_first_exploration")))
+        // Choice tag should be appended when GameStateManager is present
+        val tags = gsm.playerState.value.choiceLog.entries.map { it.tag.value }
+        assertTrue(tags.contains("tutorial_first_exploration_complete"))
     }
     
     @Test

@@ -44,12 +44,16 @@ enum class TransactionType {
     BATTLE_PASS_PURCHASE,
     /** Spent on character slot */
     CHARACTER_SLOT_PURCHASE,
+    /** Spent on nest upgrade (Alpha 2.3) */
+    NEST_UPGRADE,
     /** Refund for cancelled IAP */
     REFUND,
     /** Promotional grant */
     PROMOTIONAL_GRANT,
     /** Compensation for bugs/downtime */
-    COMPENSATION
+    COMPENSATION,
+    /** Debug grant for testing */
+    DEBUG_GRANT
 }
 
 /**
@@ -339,6 +343,20 @@ object IapProductCatalog {
         metadata = mapOf("entitlement_type" to "battle_pass_premium")
     )
     
+    // Alpha 2.2: Creator Coffee Donation
+    val CREATOR_COFFEE = IapProduct(
+        id = ProductId("creator_coffee_donation"),
+        name = "A Cup of Creator's Coffee",
+        description = "Support the developer with a coffee! Unlocks special thank-you rewards from the Exhausted Coder.",
+        glimmerAmount = 0, // Pure donation, no currency
+        priceUsd = 2.99,
+        metadata = mapOf(
+            "is_donation" to "true",
+            "unlocks_exhausted_coder_rewards" to "true",
+            "one_time_purchase" to "true"
+        )
+    )
+    
     /**
      * Get all purchasable products.
      */
@@ -353,7 +371,8 @@ object IapProductCatalog {
         CHARACTER_SLOT_3,
         CHARACTER_SLOT_4,
         CHARACTER_SLOT_5,
-        BATTLE_PASS_PREMIUM
+        BATTLE_PASS_PREMIUM,
+        CREATOR_COFFEE
     )
     
     /**

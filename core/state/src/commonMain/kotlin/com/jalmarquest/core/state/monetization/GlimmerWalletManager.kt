@@ -16,7 +16,9 @@ import kotlinx.coroutines.sync.withLock
 class GlimmerWalletManager(
     private val gameStateManager: GameStateManager,
     private val timestampProvider: () -> Long,
-    private val entitlementManager: EntitlementManager? = null
+    private val entitlementManager: EntitlementManager? = null,
+    private val hoardManager: com.jalmarquest.core.state.hoard.HoardRankManager? = null,
+    private val npcRelationshipManager: com.jalmarquest.core.state.npc.NpcRelationshipManager? = null
 ) {
     private val mutex = Mutex()
     
@@ -36,14 +38,48 @@ class GlimmerWalletManager(
         transactionId: String
     ): PurchaseResult = mutex.withLock {
         val startTime = timestampProvider()
+        val player = gameStateManager.playerState.value
         
         // Validate product (entitlement-only products like character slots have 0 Glimmer)
         if (product.glimmerAmount < 0) {
             return PurchaseResult.InvalidProduct("Product has negative Glimmer amount")
         }
         
-        // Handle entitlement-only products (character slots)
+        // Handle entitlement-only products (character slots, creator coffee, etc.)
         if (product.glimmerAmount == 0) {
+            // Alpha 2.2: Creator Coffee donation
+            if (product.id.value == "creator_coffee_donation") {
+                // Check if already purchased (one-time only)
+                if (player.playerSettings.hasPurchasedCreatorCoffee) {
+                    return PurchaseResult.InvalidProduct("Creator Coffee already purchased")
+                }
+                
+                // Set flag in player settings
+                gameStateManager.updatePlayerSettings { settings ->
+                    settings.copy(hasPurchasedCreatorCoffee = true)
+                }
+                
+                // Log analytics and unlock post-coffee dialogue
+                gameStateManager.appendChoice("creator_coffee_purchased")
+                gameStateManager.appendChoice("coffee_donation_completed") // Unlocks post-coffee dialogue tree
+                
+                // Alpha 2.2 Phase 5C: Grant donation rewards immediately
+                // This grants: Golden Coffee Bean shiny, Patron's Crown cosmetic, +50 affinity with npc_exhausted_coder
+                val hoardManager = hoardManager
+                val npcRelationshipManager = npcRelationshipManager
+                if (hoardManager != null) {
+                    gameStateManager.grantCreatorCoffeeRewards(
+                        hoardManager = hoardManager,
+                        npcRelationshipManager = npcRelationshipManager
+                    )
+                }
+                
+                return PurchaseResult.Success(
+                    amountAdded = 0,
+                    newBalance = player.glimmerWallet.balance
+                )
+            }
+            
             // Extract entitlement from metadata
             val entitlementName = product.metadata["entitlement"] as? String
             if (entitlementName != null) {
@@ -68,7 +104,6 @@ class GlimmerWalletManager(
         }
         
         // Check for duplicate transaction
-        val player = gameStateManager.playerState.value
         val existingTransaction = player.glimmerWallet.transactions.find { 
             it.receiptData == receiptData 
         }

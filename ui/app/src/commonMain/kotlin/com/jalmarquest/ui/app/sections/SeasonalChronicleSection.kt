@@ -11,6 +11,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jalmarquest.core.model.*
 import com.jalmarquest.core.state.battlepass.*
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Controller for Seasonal Chronicle battle pass UI.
@@ -155,7 +157,7 @@ private fun ProgressTab(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             ) {
-                Text("Unlock Premium Track - ${season.premiumCostGlimmer} Glimmer")
+                Text(stringResource(MR.strings.seasonal_unlock_premium_track, season.premiumCostGlimmer))
             }
             
             if (purchasing) {
@@ -355,7 +357,7 @@ private fun RewardDisplay(
                 onClick = onClaim,
                 modifier = Modifier.padding(top = 4.dp)
             ) {
-                Text("Claim")
+                Text(stringResource(MR.strings.seasonal_claim_button))
             }
         }
     }

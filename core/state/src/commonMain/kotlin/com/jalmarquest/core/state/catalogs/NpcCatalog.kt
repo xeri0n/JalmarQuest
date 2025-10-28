@@ -520,5 +520,26 @@ class NpcCatalog {
             locationId = "ruins_treasury_vault",
             dialogueStart = "There's gold in these ruins, I know it! Just need to find the right door..."
         ))
+        
+        // ===== ALPHA 2.2: SPECIAL CHARACTERS =====
+        // Borken - Chaotic button quail with dark humor (filtered dialogue when No Filter Mode OFF)
+        registerNpc(Npc(
+            id = "npc_borken",
+            name = "Borken",
+            locationId = "buttonburgh_tavern",
+            dialogueStart = "*brandishes stick* Oh look, another perfectly normal quail who hasn't lost their mind yet. Give it time.",
+            dialogueHint = "Borken seems... different. Unpredictable. Maybe talking to them again will reveal more chaos.",
+            questIds = emptyList() // Borken is not a quest-giver, just a chaotic presence
+        ))
+        
+        // Alpha 2.2: Exhausted Coder - Meta-humor dev insert, coffee-dependent
+        registerNpc(Npc(
+            id = "npc_exhausted_coder",
+            name = "The Exhausted Coder",
+            locationId = "buttonburgh_tavern",
+            dialogueStart = "*hunched over keyboard* Line 3,847... or was it 3,874? *rubs eyes* Oh, a player. I mean... a fellow quail. Welcome to the simulation—I mean, the tavern.",
+            dialogueHint = "They seem to be muttering something about 'merge conflicts' and 'production bugs'. Maybe they need coffee?",
+            questIds = emptyList() // Becomes interactive after coffee donation
+        ))
     }
 }

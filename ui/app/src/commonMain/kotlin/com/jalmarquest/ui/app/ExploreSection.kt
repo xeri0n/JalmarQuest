@@ -49,6 +49,7 @@ fun ExploreSection(controller: ExploreController) {
                 append(phase.summary.rewardSummaries.joinToString(", "))
             }
             is ExplorePhase.Error -> phase.message
+            is ExplorePhase.RestNeeded -> "You need to rest. You've experienced ${phase.eventsSinceRest} events."
         }
         synthesizer.safeSpeak(narration)
     }
@@ -112,6 +113,14 @@ fun ExploreSection(controller: ExploreController) {
                     Text(text = phase.message)
                     Button(onClick = { controller.beginExploration() }) {
                         Text(text = beginLabel)
+                    }
+                }
+                is ExplorePhase.RestNeeded -> {
+                    Text(text = "You need to rest")
+                    Text(text = "You've experienced ${phase.eventsSinceRest} events without rest. Take a moment to recover.")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(onClick = { controller.rest() }) {
+                        Text(text = "Rest")
                     }
                 }
             }

@@ -196,6 +196,17 @@ class NpcRelationshipManager(
         return _relationships.value.getRelationship(npcId).canRomance()
     }
     
+    /**
+     * Alpha 2.2 Phase 5C: Directly add affinity points to an NPC.
+     * Used for special events like Creator Coffee donation rewards.
+     * 
+     * @param npcId The NPC ID to add affinity to
+     * @param amount The amount of affinity to add (can be negative)
+     */
+    suspend fun addAffinity(npcId: String, amount: Int) = mutex.withLock {
+        modifyAffinity(npcId, amount)
+    }
+    
     private fun determineGiftReaction(
         preference: GiftPreference?,
         itemId: String,

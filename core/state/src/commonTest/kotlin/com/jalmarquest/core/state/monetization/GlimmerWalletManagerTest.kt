@@ -421,7 +421,8 @@ class GlimmerWalletManagerTest {
     @Test
     fun testProductCatalog() {
         val allProducts = IapProductCatalog.getAllProducts()
-        assertEquals(11, allProducts.size) // 6 glimmer + 4 character slots + 1 battle pass
+        // Alpha 2.2 Phase 5B: Added Creator Coffee donation product
+        assertEquals(12, allProducts.size) // 6 glimmer + 4 character slots + 1 battle pass + 1 coffee
         
         val glimmerPacks = IapProductCatalog.getGlimmerPacks()
         assertEquals(6, glimmerPacks.size)

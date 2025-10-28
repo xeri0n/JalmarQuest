@@ -2,6 +2,7 @@ package com.jalmarquest.core.state.managers
 
 import com.jalmarquest.core.model.*
 import com.jalmarquest.core.state.GameStateManager
+import com.jalmarquest.core.state.catalogs.NestUpgradeTierCatalog
 import com.jalmarquest.core.state.monetization.GlimmerWalletManager
 import com.jalmarquest.core.state.monetization.SpendResult
 import kotlinx.coroutines.sync.Mutex
@@ -17,7 +18,8 @@ class NestCustomizationManager(
     private val gameStateManager: GameStateManager,
     private val glimmerWalletManager: GlimmerWalletManager,
     private val timestampProvider: () -> Long,
-    private val cosmeticCatalog: List<CosmeticItem>
+    private val cosmeticCatalog: List<CosmeticItem>,
+    private val upgradeTierCatalog: NestUpgradeTierCatalog = NestUpgradeTierCatalog()
 ) {
     private val mutex = Mutex()
     
@@ -407,6 +409,174 @@ class NestCustomizationManager(
      */
     fun getCompanionXpBonus(): Float {
         return gameStateManager.playerState.value.nestCustomization.getCompanionXpBonus()
+    }
+    
+    /**
+     * Alpha 2.3: Upgrade a functional upgrade to the next tier.
+     * 
+     * Requirements:
+     * - Upgrade must be active
+     * - Player must have prerequisite tier (can't skip tiers)
+     * - Player must have required seeds, Glimmer, and ingredients
+     * - Player must meet level requirement
+     */
+    suspend fun upgradeFunctionalTier(type: FunctionalUpgradeType): UpgradeTierResult = mutex.withLock {
+        val player = gameStateManager.playerState.value
+        val currentUpgrade = player.nestCustomization.functionalUpgrades[type]
+            ?: return UpgradeTierResult.NotOwned
+        
+        // Check if upgrade is active
+        if (!currentUpgrade.isActive) {
+            return UpgradeTierResult.NotActivated
+        }
+        
+        // Determine next tier
+        val currentTier = currentUpgrade.currentTier
+        val nextTier = when (currentTier) {
+            UpgradeTier.TIER_1 -> UpgradeTier.TIER_2
+            UpgradeTier.TIER_2 -> UpgradeTier.TIER_3
+            UpgradeTier.TIER_3 -> return UpgradeTierResult.AlreadyMaxTier
+        }
+        
+        // Get tier definition
+        val tierDef = upgradeTierCatalog.getTierDefinition(type, nextTier)
+            ?: return UpgradeTierResult.TierNotFound
+        
+        // Check player level requirement
+        if (player.level < tierDef.requiredPlayerLevel) {
+            return UpgradeTierResult.LevelTooLow(tierDef.requiredPlayerLevel)
+        }
+        
+        // Check prerequisite tier
+        if (tierDef.prerequisiteTier != null && currentTier != tierDef.prerequisiteTier) {
+            return UpgradeTierResult.PrerequisiteNotMet(tierDef.prerequisiteTier)
+        }
+        
+        // Check seed cost
+        if (player.seedInventory.storedSeeds < tierDef.seedCost) {
+            return UpgradeTierResult.InsufficientSeeds(tierDef.seedCost, player.seedInventory.storedSeeds)
+        }
+        
+        // Check Glimmer cost
+        if (player.glimmerWallet.balance < tierDef.glimmerCost) {
+            return UpgradeTierResult.InsufficientGlimmer(tierDef.glimmerCost, player.glimmerWallet.balance)
+        }
+        
+        // Check ingredient requirements
+        for ((ingredientId, requiredCount) in tierDef.requiredIngredients) {
+            val available = player.craftingInventory.ingredients[ingredientId] ?: 0
+            if (available < requiredCount) {
+                return UpgradeTierResult.InsufficientIngredients(ingredientId, requiredCount, available)
+            }
+        }
+        
+        // All checks passed - perform upgrade
+        
+        // Deduct seeds
+        gameStateManager.updateSeedInventory { seeds ->
+            seeds.copy(storedSeeds = seeds.storedSeeds - tierDef.seedCost)
+        }
+        
+        // Deduct Glimmer
+        glimmerWalletManager.spendGlimmer(
+            amount = tierDef.glimmerCost,
+            type = TransactionType.NEST_UPGRADE,
+            itemId = "${type.name}_${nextTier.name}"
+        )
+        
+        // Deduct ingredients
+        gameStateManager.updateCraftingInventory { inventory ->
+            val updatedIngredients = inventory.ingredients.toMutableMap()
+            for ((ingredientId, requiredCount) in tierDef.requiredIngredients) {
+                val current = updatedIngredients[ingredientId] ?: 0
+                updatedIngredients[ingredientId] = current - requiredCount
+                if (updatedIngredients[ingredientId]!! <= 0) {
+                    updatedIngredients.remove(ingredientId)
+                }
+            }
+            inventory.copy(ingredients = updatedIngredients)
+        }
+        
+        // Upgrade tier
+        val upgraded = currentUpgrade.copy(currentTier = nextTier)
+        gameStateManager.updateNestCustomization { state ->
+            state.copy(
+                functionalUpgrades = state.functionalUpgrades + (type to upgraded)
+            )
+        }
+        
+        // Log upgrade
+        gameStateManager.appendChoice("nest_upgrade_tier_${type.name}_${nextTier.name}")
+        
+        return UpgradeTierResult.Success(nextTier, tierDef.bonusDescription)
+    }
+    
+    /**
+     * Get the current tier of a functional upgrade.
+     */
+    fun getUpgradeTier(type: FunctionalUpgradeType): UpgradeTier? {
+        return gameStateManager.playerState.value.nestCustomization
+            .functionalUpgrades[type]?.currentTier
+    }
+    
+    /**
+     * Check if player can afford a tier upgrade without actually purchasing.
+     */
+    fun canAffordUpgradeTier(type: FunctionalUpgradeType): UpgradeTierAffordability {
+        val player = gameStateManager.playerState.value
+        val currentUpgrade = player.nestCustomization.functionalUpgrades[type]
+            ?: return UpgradeTierAffordability(
+                canAfford = false,
+                missingSeeds = 0,
+                missingGlimmer = 0,
+                missingIngredients = emptyMap(),
+                levelRequired = 0
+            )
+        
+        val currentTier = currentUpgrade.currentTier
+        val nextTier = when (currentTier) {
+            UpgradeTier.TIER_1 -> UpgradeTier.TIER_2
+            UpgradeTier.TIER_2 -> UpgradeTier.TIER_3
+            UpgradeTier.TIER_3 -> return UpgradeTierAffordability(
+                canAfford = false,
+                missingSeeds = 0,
+                missingGlimmer = 0,
+                missingIngredients = emptyMap(),
+                levelRequired = 0
+            )
+        }
+        
+        val tierDef = upgradeTierCatalog.getTierDefinition(type, nextTier)
+            ?: return UpgradeTierAffordability(
+                canAfford = false,
+                missingSeeds = 0,
+                missingGlimmer = 0,
+                missingIngredients = emptyMap(),
+                levelRequired = 0
+            )
+        
+        val seedShortage = maxOf(0, tierDef.seedCost - player.seedInventory.storedSeeds)
+        val glimmerShortage = maxOf(0, tierDef.glimmerCost - player.glimmerWallet.balance)
+        val ingredientShortages = mutableMapOf<IngredientId, Int>()
+        
+        for ((ingredientId, required) in tierDef.requiredIngredients) {
+            val available = player.craftingInventory.ingredients[ingredientId] ?: 0
+            val shortage = required - available
+            if (shortage > 0) {
+                ingredientShortages[ingredientId] = shortage
+            }
+        }
+        
+        val levelTooLow = player.level < tierDef.requiredPlayerLevel
+        
+        return UpgradeTierAffordability(
+            canAfford = seedShortage == 0 && glimmerShortage == 0 && 
+                       ingredientShortages.isEmpty() && !levelTooLow,
+            missingSeeds = seedShortage,
+            missingGlimmer = glimmerShortage,
+            missingIngredients = ingredientShortages,
+            levelRequired = tierDef.requiredPlayerLevel
+        )
     }
     
     // Private helper methods

@@ -79,7 +79,8 @@ class EnemyCatalog {
             habitat = listOf("buttonburgh_garden_terraces", "forest", "forest_mushroom_grove"),
             behavior = EnemyBehavior.PASSIVE,
             lootTable = listOf(
-                LootDrop("item_beetle_shell_fragment", 0.3f)
+                LootDrop("item_beetle_shell_fragment", 0.3f),
+                LootDrop("ingredient_insect_carapace", 0.5f, 1, 2)
             ),
             experienceReward = 5,
             isAggressive = false
@@ -97,7 +98,8 @@ class EnemyCatalog {
             habitat = listOf("forest", "forest_fallen_oak", "swamp"),
             behavior = EnemyBehavior.DEFENSIVE,
             lootTable = listOf(
-                LootDrop("item_chitin_plate", 0.4f)
+                LootDrop("item_chitin_plate", 0.4f),
+                LootDrop("ingredient_hardened_shell", 0.6f, 1, 2)
             ),
             experienceReward = 5,
             isAggressive = false
@@ -115,7 +117,8 @@ class EnemyCatalog {
             habitat = listOf("buttonburgh_garden_terraces", "forest", "forest_fern_tunnel"),
             behavior = EnemyBehavior.FLEE,
             lootTable = listOf(
-                LootDrop("item_worm_protein", 0.8f)
+                LootDrop("item_worm_protein", 0.8f),
+                LootDrop("ingredient_rich_soil", 0.7f, 1, 3)
             ),
             experienceReward = 3,
             isAggressive = false
@@ -135,7 +138,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_ant_mandible", 0.5f),
-                LootDrop("item_formic_acid", 0.3f)
+                LootDrop("item_formic_acid", 0.3f),
+                LootDrop("ingredient_formic_essence", 0.4f, 1, 2)
             ),
             experienceReward = 15
         ))
@@ -153,7 +157,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_stag_horn", 0.6f),
-                LootDrop("item_beetle_carapace", 0.4f)
+                LootDrop("item_beetle_carapace", 0.4f),
+                LootDrop("ingredient_sturdy_chitin", 0.5f, 1, 2)
             ),
             experienceReward = 25
         ))
@@ -171,7 +176,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AMBUSH,
             lootTable = listOf(
                 LootDrop("item_spider_silk", 0.7f),
-                LootDrop("item_spider_fang", 0.3f)
+                LootDrop("item_spider_fang", 0.3f),
+                LootDrop("ingredient_spider_silk", 0.8f, 2, 4)
             ),
             experienceReward = 30
         ))
@@ -189,7 +195,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_poison_gland", 0.6f),
-                LootDrop("item_bright_skin", 0.4f)
+                LootDrop("item_bright_skin", 0.4f),
+                LootDrop("ingredient_toxic_secretion", 0.7f, 1, 2)
             ),
             experienceReward = 40
         ))
@@ -208,7 +215,8 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_crow_feather", 0.8f),
                 LootDrop("item_berry_seeds", 0.5f),
-                LootDrop("item_shiny_trinket", 0.2f)
+                LootDrop("item_shiny_trinket", 0.2f),
+                LootDrop("ingredient_black_feather", 0.9f, 2, 5)
             ),
             experienceReward = 50
         ))
@@ -227,7 +235,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.DEFENSIVE,
             lootTable = listOf(
                 LootDrop("item_crab_claw", 0.5f),
-                LootDrop("item_seashell", 0.7f)
+                LootDrop("item_seashell", 0.7f),
+                LootDrop("ingredient_sea_salt", 0.6f, 1, 3)
             ),
             experienceReward = 25
         ))
@@ -245,7 +254,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AGGRESSIVE,
             lootTable = listOf(
                 LootDrop("item_gull_feather", 0.8f),
-                LootDrop("item_fish_scrap", 0.4f)
+                LootDrop("item_fish_scrap", 0.4f),
+                LootDrop("ingredient_white_feather", 0.7f, 2, 4)
             ),
             experienceReward = 45
         ))
@@ -263,7 +273,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.FLEE,
             lootTable = listOf(
                 LootDrop("item_crab_claw", 0.6f),
-                LootDrop("item_sand_pearl", 0.1f)
+                LootDrop("item_sand_pearl", 0.1f),
+                LootDrop("ingredient_fine_sand", 0.8f, 2, 5)
             ),
             experienceReward = 35
         ))
@@ -280,7 +291,8 @@ class EnemyCatalog {
             habitat = listOf("beach_tide_pools", "beach_kelp_forest"),
             behavior = EnemyBehavior.PASSIVE,
             lootTable = listOf(
-                LootDrop("item_starfish_arm", 0.9f)
+                LootDrop("item_starfish_arm", 0.9f),
+                LootDrop("ingredient_regenerative_tissue", 0.4f, 1, 1)
             ),
             experienceReward = 20,
             isAggressive = false
@@ -299,7 +311,8 @@ class EnemyCatalog {
             habitat = listOf("swamp", "swamp_murky_pools", "swamp_mangrove_roots"),
             behavior = EnemyBehavior.AGGRESSIVE,
             lootTable = listOf(
-                LootDrop("item_mosquito_proboscis", 0.4f)
+                LootDrop("item_mosquito_proboscis", 0.4f),
+                LootDrop("ingredient_insect_wing", 0.6f, 3, 7)
             ),
             experienceReward = 30
         ))
@@ -317,7 +330,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AMBUSH,
             lootTable = listOf(
                 LootDrop("item_flytrap_nectar", 0.5f),
-                LootDrop("item_plant_pod", 0.3f)
+                LootDrop("item_plant_pod", 0.3f),
+                LootDrop("ingredient_carnivorous_sap", 0.6f, 1, 2)
             ),
             experienceReward = 50
         ))
@@ -336,7 +350,8 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_snake_fang", 0.6f),
                 LootDrop("item_snake_skin", 0.5f),
-                LootDrop("item_venom_sac", 0.3f)
+                LootDrop("item_venom_sac", 0.3f),
+                LootDrop("ingredient_serpent_scale", 0.7f, 2, 4)
             ),
             experienceReward = 60
         ))
@@ -354,7 +369,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_turtle_shell", 0.7f),
-                LootDrop("item_turtle_egg", 0.2f)
+                LootDrop("item_turtle_egg", 0.2f),
+                LootDrop("ingredient_tough_shell_fragment", 0.6f, 1, 2)
             ),
             experienceReward = 70
         ))
@@ -372,7 +388,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AMBUSH,
             lootTable = listOf(
                 LootDrop("item_spectral_essence", 0.8f),
-                LootDrop("item_ghost_light", 0.4f)
+                LootDrop("item_ghost_light", 0.4f),
+                LootDrop("ingredient_ethereal_wisp", 0.5f, 1, 1)
             ),
             experienceReward = 65
         ))
@@ -391,7 +408,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_goat_horn", 0.5f),
-                LootDrop("item_mountain_wool", 0.6f)
+                LootDrop("item_mountain_wool", 0.6f),
+                LootDrop("ingredient_coarse_wool", 0.7f, 2, 4)
             ),
             experienceReward = 50
         ))
@@ -409,7 +427,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AGGRESSIVE,
             lootTable = listOf(
                 LootDrop("item_bat_wing", 0.7f),
-                LootDrop("item_frost_essence", 0.4f)
+                LootDrop("item_frost_essence", 0.4f),
+                LootDrop("ingredient_frost_crystal", 0.5f, 1, 2)
             ),
             experienceReward = 60
         ))
@@ -427,7 +446,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AMBUSH,
             lootTable = listOf(
                 LootDrop("item_lizard_tail", 0.5f),
-                LootDrop("item_camouflage_skin", 0.3f)
+                LootDrop("item_camouflage_skin", 0.3f),
+                LootDrop("ingredient_stone_scale", 0.6f, 1, 3)
             ),
             experienceReward = 70
         ))
@@ -445,7 +465,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.PATROL,
             lootTable = listOf(
                 LootDrop("item_elemental_core", 0.6f),
-                LootDrop("item_pure_ice", 0.5f)
+                LootDrop("item_pure_ice", 0.5f),
+                LootDrop("ingredient_elemental_essence", 0.4f, 1, 1)
             ),
             experienceReward = 85
         ))
@@ -464,7 +485,8 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_hawk_feather", 0.8f),
                 LootDrop("item_hawk_talon", 0.4f),
-                LootDrop("item_keen_eye", 0.2f)
+                LootDrop("item_keen_eye", 0.2f),
+                LootDrop("ingredient_raptor_plume", 0.7f, 2, 3)
             ),
             experienceReward = 90
         ))
@@ -484,7 +506,8 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_ancient_gear", 0.7f),
                 LootDrop("item_rusted_metal", 0.8f),
-                LootDrop("item_power_crystal", 0.3f)
+                LootDrop("item_power_crystal", 0.3f),
+                LootDrop("ingredient_scrap_metal", 0.9f, 3, 6)
             ),
             experienceReward = 75
         ))
@@ -502,7 +525,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.AMBUSH,
             lootTable = listOf(
                 LootDrop("item_ectoplasm", 0.8f),
-                LootDrop("item_soul_fragment", 0.4f)
+                LootDrop("item_soul_fragment", 0.4f),
+                LootDrop("ingredient_shadow_essence", 0.6f, 1, 2)
             ),
             experienceReward = 85
         ))
@@ -520,7 +544,8 @@ class EnemyCatalog {
             behavior = EnemyBehavior.TERRITORIAL,
             lootTable = listOf(
                 LootDrop("item_cursed_stone", 0.6f),
-                LootDrop("item_ancient_rune", 0.5f)
+                LootDrop("item_ancient_rune", 0.5f),
+                LootDrop("ingredient_cursed_dust", 0.7f, 2, 4)
             ),
             experienceReward = 95
         ))
@@ -539,7 +564,8 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_scorpion_stinger", 0.7f),
                 LootDrop("item_scorpion_venom", 0.6f),
-                LootDrop("item_chitin_armor", 0.4f)
+                LootDrop("item_chitin_armor", 0.4f),
+                LootDrop("ingredient_venom_sac", 0.5f, 1, 2)
             ),
             experienceReward = 100
         ))
@@ -559,7 +585,12 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_magpie_crown", 1.0f),
                 LootDrop("item_shiny_hoard", 1.0f),
-                LootDrop("item_rare_trinket", 0.8f)
+                LootDrop("item_rare_trinket", 0.8f),
+                LootDrop("ingredient_royal_plumage", 1.0f, 3, 5),
+                LootDrop("ingredient_precious_gem_dust", 0.9f, 2, 4),
+                // Alpha 2.3: Recipe Scrolls
+                LootDrop("item_recipe_scroll_precious_feather_down", 0.7f, 1, 1),
+                LootDrop("item_recipe_scroll_silk_thread", 0.5f, 1, 1)
             ),
             experienceReward = 200,
             isBoss = true
@@ -579,7 +610,12 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_gator_hide", 1.0f),
                 LootDrop("item_gator_tooth", 1.0f),
-                LootDrop("item_swamp_treasure", 0.9f)
+                LootDrop("item_swamp_treasure", 0.9f),
+                LootDrop("ingredient_ancient_scales", 1.0f, 4, 7),
+                LootDrop("ingredient_primal_essence", 0.8f, 2, 3),
+                // Alpha 2.3: Recipe Scrolls
+                LootDrop("item_recipe_scroll_life_crystal", 0.6f, 1, 1),
+                LootDrop("item_recipe_scroll_shadow_core", 0.4f, 1, 1)
             ),
             experienceReward = 300,
             isBoss = true
@@ -599,7 +635,12 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_eagle_crown_feather", 1.0f),
                 LootDrop("item_legendary_talon", 1.0f),
-                LootDrop("item_sky_gem", 0.7f)
+                LootDrop("item_sky_gem", 0.7f),
+                LootDrop("ingredient_sky_essence", 1.0f, 2, 3),
+                LootDrop("ingredient_legendary_feather", 0.9f, 3, 5),
+                // Alpha 2.3: Recipe Scrolls
+                LootDrop("item_recipe_scroll_elemental_shard", 0.8f, 1, 1),
+                LootDrop("item_recipe_scroll_silver_bar", 0.6f, 1, 1)
             ),
             experienceReward = 350,
             isBoss = true
@@ -619,7 +660,13 @@ class EnemyCatalog {
             lootTable = listOf(
                 LootDrop("item_guardian_core", 1.0f),
                 LootDrop("item_ancient_artifact", 1.0f),
-                LootDrop("item_legendary_weapon", 0.5f)
+                LootDrop("item_legendary_weapon", 0.5f),
+                LootDrop("ingredient_arcane_core_fragment", 1.0f, 3, 5),
+                LootDrop("ingredient_refined_mythril", 0.8f, 2, 4),
+                LootDrop("ingredient_ancient_magic_essence", 0.9f, 2, 3),
+                // Alpha 2.3: Recipe Scrolls (final boss - best recipes)
+                LootDrop("item_recipe_scroll_arcane_catalyst", 0.9f, 1, 1),
+                LootDrop("item_recipe_scroll_mythril_alloy", 0.7f, 1, 1)
             ),
             experienceReward = 500,
             isBoss = true

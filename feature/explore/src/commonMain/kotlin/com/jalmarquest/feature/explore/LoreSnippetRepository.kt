@@ -8,6 +8,7 @@ import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.add
 import kotlinx.serialization.json.put
+import kotlin.random.Random
 
 class LoreSnippetRepository(
     records: List<SnippetRecord>
@@ -64,6 +65,79 @@ class LoreSnippetRepository(
         return availableRecords.firstOrNull { record ->
             record.snippet.allowedLocations.isEmpty() && record.snippet.allowedBiomes.isEmpty()
         }?.snippet?.id
+    }
+    
+    /**
+     * Alpha 2.2: AI Director adaptive snippet selection with weighted preferences.
+     * 
+     * Selects snippets based on player playstyle recommendations with 60% weight to recommended
+     * event type and 40% to variety. Falls back to standard location-based selection if no
+     * event type tags are available.
+     * 
+     * @param choiceLog Player's choice history for prerequisite checking
+     * @param locationId Current location ID for location-specific snippets
+     * @param biomeType Current biome type for biome-specific snippets
+     * @param recommendedEventType AI Director's recommended event type (COMBAT/EXPLORATION/SOCIAL/RESOURCE/NARRATIVE/CHAOS)
+     * @return Snippet ID selected based on weighted preferences, or null if none available
+     */
+    fun nextAvailableSnippetWithRecommendation(
+        choiceLog: ChoiceLog,
+        locationId: String?,
+        biomeType: String?,
+        recommendedEventType: String?
+    ): String? {
+        if (recommendedEventType == null) {
+            // No recommendation available, use standard selection
+            return nextAvailableSnippetForLocation(choiceLog, locationId, biomeType)
+        }
+        
+        val acquired = choiceLog.entries.map { it.tag.value }.toSet()
+        
+        // Filter records by prerequisites and completion
+        val availableRecords = recordsInOrder.filter { record ->
+            record.prerequisites.all(acquired::contains) &&
+                (record.completionTag == null || record.completionTag !in acquired)
+        }
+        
+        if (availableRecords.isEmpty()) return null
+        
+        // Separate snippets by event type matching
+        val recommendedTypeSnippets = availableRecords.filter { record ->
+            record.snippet.eventType?.equals(recommendedEventType, ignoreCase = true) == true
+        }
+        
+        val otherTypeSnippets = availableRecords.filter { record ->
+            record.snippet.eventType != null && 
+            !record.snippet.eventType.equals(recommendedEventType, ignoreCase = true)
+        }
+        
+        val untypedSnippets = availableRecords.filter { record ->
+            record.snippet.eventType == null
+        }
+        
+        // Weighted selection: 60% recommended type, 40% variety (other types + untyped)
+        val roll = Random.nextFloat()
+        
+        val selectedRecord = when {
+            roll < 0.6f && recommendedTypeSnippets.isNotEmpty() -> {
+                // 60% chance: Select from recommended type
+                recommendedTypeSnippets.random()
+            }
+            roll < 0.9f && otherTypeSnippets.isNotEmpty() -> {
+                // 30% chance: Select from other types for variety
+                otherTypeSnippets.random()
+            }
+            untypedSnippets.isNotEmpty() -> {
+                // 10% chance or fallback: Select from untyped snippets
+                untypedSnippets.random()
+            }
+            else -> {
+                // Fallback to any available snippet
+                availableRecords.random()
+            }
+        }
+        
+        return selectedRecord.snippet.id
     }
 
     companion object {
@@ -162,7 +236,7 @@ class LoreSnippetRepository(
                         title = "Clover Copse Watch",
                         historySummary = "Mapped the clover clearing and its towering guardian."
                     )
-                ) + AdditionalLoreSnippets.getAllSnippets() + BiomeSpecificSnippets.getAllSnippets()
+                ) + AdditionalLoreSnippets.getAllSnippets() + BiomeSpecificSnippets.getAllSnippets() + IgnatiusLoreSnippets.getAllSnippets()
             )
         }
 

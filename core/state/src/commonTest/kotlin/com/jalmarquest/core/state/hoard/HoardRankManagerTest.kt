@@ -160,7 +160,8 @@ class HoardRankManagerTest {
         
         val viewState = hoardManager.viewState.value
         assertEquals(HoardRankTier.LEGEND, viewState.rank.tier)
-        assertEquals(104225, viewState.rank.totalValue)
+        // Alpha 2.2 Phase 5C: Added Golden Coffee Bean shiny (5000 Seeds)
+        assertEquals(109225, viewState.rank.totalValue) // Was 104225, +5000 for new shiny
         
         // LEGEND tier still has progress to MYTH (150,000)
         val progress = valuationService.calculateTierProgress(viewState.rank)

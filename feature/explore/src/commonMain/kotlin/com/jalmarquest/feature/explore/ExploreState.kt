@@ -18,6 +18,8 @@ sealed class ExplorePhase {
     data class Chapter(val response: ChapterEventResponse) : ExplorePhase()
     data class Resolution(val summary: ResolutionSummary) : ExplorePhase()
     data class Error(val message: String) : ExplorePhase()
+    /** Alpha 2.2: Player needs rest due to event fatigue */
+    data class RestNeeded(val eventsSinceRest: Int) : ExplorePhase()
 }
 
 data class ResolutionSummary(

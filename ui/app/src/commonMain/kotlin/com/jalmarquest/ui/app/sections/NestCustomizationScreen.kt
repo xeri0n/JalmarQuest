@@ -13,6 +13,9 @@ import com.jalmarquest.feature.nest.NestCustomizationController
 import com.jalmarquest.feature.nest.NestTab
 import com.jalmarquest.core.model.CosmeticCategory
 import com.jalmarquest.ui.app.layout.AppSpacing
+import com.jalmarquest.ui.app.utils.toLocalizedString
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Main screen for Nest Customization (Housing System).
@@ -52,7 +55,7 @@ fun NestCustomizationScreen(
                     .padding(AppSpacing.medium)
             ) {
                 Text(
-                    text = "Jalmar's Nest",
+                    text = stringResource(MR.strings.hub_nest_title),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -69,12 +72,12 @@ fun NestCustomizationScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Star,
-                            contentDescription = "Glimmer",
+                            contentDescription = stringResource(MR.strings.content_desc_glimmer),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
-                            text = "${playerState.glimmerWallet.balance} Glimmer",
+                            text = stringResource(MR.strings.nest_glimmer_balance_label, playerState.glimmerWallet.balance),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -87,11 +90,11 @@ fun NestCustomizationScreen(
                         ) {
                             Icon(
                                 imageVector = if (nestState.editModeActive) Icons.Default.CheckCircle else Icons.Default.Edit,
-                                contentDescription = if (nestState.editModeActive) "Done" else "Edit",
+                                contentDescription = if (nestState.editModeActive) stringResource(MR.strings.nest_edit_mode_done) else stringResource(MR.strings.nest_edit_mode_edit),
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(AppSpacing.tiny))
-                            Text(if (nestState.editModeActive) "Done" else "Edit")
+                            Text(if (nestState.editModeActive) stringResource(MR.strings.nest_edit_mode_done) else stringResource(MR.strings.nest_edit_mode_edit))
                         }
                     }
                 }
@@ -110,9 +113,9 @@ fun NestCustomizationScreen(
                     text = {
                         Text(
                             text = when (tab) {
-                                NestTab.SHOP -> "Shop"
-                                NestTab.EDIT_MODE -> "Edit Mode"
-                                NestTab.TROPHY_ROOM -> "Trophy Room"
+                                NestTab.SHOP -> stringResource(MR.strings.nest_tab_shop)
+                                NestTab.EDIT_MODE -> stringResource(MR.strings.nest_tab_edit_mode)
+                                NestTab.TROPHY_ROOM -> stringResource(MR.strings.nest_tab_trophy_room)
                             },
                             style = MaterialTheme.typography.labelLarge
                         )
@@ -172,10 +175,10 @@ private fun CosmeticShopTab(controller: NestCustomizationController) {
                     text = {
                         Text(
                             text = when (category) {
-                                CosmeticCategory.THEME -> "Themes"
-                                CosmeticCategory.FURNITURE -> "Furniture"
-                                CosmeticCategory.DECORATION -> "Decorations"
-                                CosmeticCategory.FUNCTIONAL -> "Functional"
+                                CosmeticCategory.THEME -> stringResource(MR.strings.nest_shop_category_themes)
+                                CosmeticCategory.FURNITURE -> stringResource(MR.strings.nest_shop_category_furniture)
+                                CosmeticCategory.DECORATION -> stringResource(MR.strings.nest_shop_category_decorations)
+                                CosmeticCategory.FUNCTIONAL -> stringResource(MR.strings.nest_shop_category_functional)
                             },
                             style = MaterialTheme.typography.labelMedium
                         )
@@ -203,12 +206,12 @@ private fun CosmeticShopTab(controller: NestCustomizationController) {
                         tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                     )
                     Text(
-                        text = "All unlocked!",
+                        text = stringResource(MR.strings.nest_shop_all_unlocked_title),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
                     Text(
-                        text = "You own all available cosmetics in this category.",
+                        text = stringResource(MR.strings.nest_shop_all_unlocked_body),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
@@ -273,7 +276,7 @@ private fun CosmeticCard(
                     shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = cosmetic.rarity.name,
+                        text = cosmetic.rarity.toLocalizedString(),
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
@@ -304,7 +307,7 @@ private fun CosmeticCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = "Glimmer",
+                        contentDescription = stringResource(MR.strings.content_desc_glimmer),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(16.dp)
                     )
@@ -328,7 +331,7 @@ private fun CosmeticCard(
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(AppSpacing.tiny))
-                    Text(if (canAfford) "Purchase" else "Insufficient Glimmer")
+                    Text(if (canAfford) stringResource(MR.strings.common_purchase) else stringResource(MR.strings.common_insufficient_glimmer))
                 }
             }
         }
@@ -360,12 +363,12 @@ private fun EditModeTab(controller: NestCustomizationController) {
                     tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 )
                 Text(
-                    text = "Edit Mode",
+                    text = stringResource(MR.strings.nest_edit_mode_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Tap 'Edit' to customize your nest layout",
+                    text = stringResource(MR.strings.nest_edit_mode_prompt),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -374,7 +377,7 @@ private fun EditModeTab(controller: NestCustomizationController) {
                 
                 // Show placed cosmetics count
                 Text(
-                    text = "${nestState.placedCosmetics.size} items placed",
+                    text = stringResource(MR.strings.nest_items_placed_count, nestState.placedCosmetics.size),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -395,7 +398,7 @@ private fun EditModeTab(controller: NestCustomizationController) {
                 contentAlignment = androidx.compose.ui.Alignment.Center
             ) {
                 Text(
-                    text = "10x10 Grid Editor (Coming Soon)",
+                    text = stringResource(MR.strings.nest_grid_editor_placeholder),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
@@ -411,7 +414,7 @@ private fun EditModeTab(controller: NestCustomizationController) {
                         modifier = Modifier.padding(AppSpacing.medium)
                     ) {
                         Text(
-                            text = "Unplaced Items",
+                            text = stringResource(MR.strings.nest_unplaced_items_title),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold
                         )
@@ -476,12 +479,12 @@ private fun TrophyRoomTab(controller: NestCustomizationController) {
                     tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 )
                 Text(
-                    text = "No Trophies Yet",
+                    text = stringResource(MR.strings.nest_trophy_empty_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Complete quests to earn trophies for your nest!",
+                    text = stringResource(MR.strings.nest_trophy_empty_body),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -538,7 +541,7 @@ private fun TrophyCard(trophy: com.jalmarquest.core.model.TrophyDisplay) {
                 )
                 if (trophy.placedInRoom) {
                     Text(
-                        text = "Displayed in room",
+                        text = stringResource(MR.strings.nest_trophy_displayed_in_room),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary
                     )

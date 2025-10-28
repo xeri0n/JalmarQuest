@@ -21,6 +21,8 @@ import com.jalmarquest.core.state.concoctions.ExperimentResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
+import dev.icerock.moko.resources.compose.stringResource
+import com.jalmarquest.ui.app.MR
 
 /**
  * Main Concoctions section with tabbed interface.
@@ -569,7 +571,7 @@ private fun HarvestLocationCard(
                 }
                 
                 Button(onClick = onHarvest) {
-                    Text("Harvest")
+                    Text(stringResource(MR.strings.harvest_button))
                 }
             }
             

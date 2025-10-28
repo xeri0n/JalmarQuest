@@ -120,6 +120,6 @@ class ExploreStateMachineTest {
     )
 
     private class FakeEventEngine(private val resolution: EventResolution) : EventEngine {
-        override fun evaluateNextEncounter(player: Player): EventResolution = resolution
+        override suspend fun evaluateNextEncounter(player: Player): EventResolution = resolution
     }
 }

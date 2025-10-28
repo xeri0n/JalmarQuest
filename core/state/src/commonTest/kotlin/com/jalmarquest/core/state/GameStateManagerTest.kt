@@ -100,4 +100,103 @@ class GameStateManagerTest {
 
         assertTrue(manager.playerState.value.statusEffects.entries.isEmpty())
     }
+    
+    // Alpha 2.2 Phase 7: Creator Coffee Rewards Tests
+    
+    @Test
+    fun grantCreatorCoffeeRewards_grantsShinyAndAffinity() = kotlinx.coroutines.test.runTest {
+        val playerWithCoffee = basePlayer.copy(
+            playerSettings = com.jalmarquest.core.model.PlayerSettings(hasPurchasedCreatorCoffee = true)
+        )
+        val manager = GameStateManager(playerWithCoffee) { 0L }
+        val valuationService = com.jalmarquest.core.state.hoard.ShinyValuationService()
+        val leaderboardService = com.jalmarquest.core.state.hoard.LeaderboardService()
+        val hoardManager = com.jalmarquest.core.state.hoard.HoardRankManager(
+            gameStateManager = manager,
+            valuationService = valuationService,
+            leaderboardService = leaderboardService,
+            timestampProvider = { 0L }
+        )
+        val npcManager = com.jalmarquest.core.state.npc.NpcRelationshipManager(
+            timestampProvider = { 0L }
+        )
+        
+        val result = manager.grantCreatorCoffeeRewards(hoardManager, npcManager)
+        
+        assertTrue(result, "Should return true when rewards granted")
+        assertTrue(
+            manager.playerState.value.playerSettings.hasReceivedCoffeeRewards,
+            "hasReceivedCoffeeRewards flag should be set"
+        )
+        
+        // Verify shiny was granted
+        val shinies = hoardManager.viewState.value.collection.ownedShinies
+        assertTrue(
+            shinies.any { it.id.value == "golden_coffee_bean" },
+            "Golden Coffee Bean shiny should be granted"
+        )
+        
+        // Verify affinity was added
+        val affinity = npcManager.getAffinity("npc_exhausted_coder")
+        assertEquals(50, affinity, "Should have +50 affinity with Exhausted Coder")
+        
+        // Verify choice tag was logged
+        val choiceTags = manager.playerState.value.choiceLog.entries.map { it.tag.value }
+        assertTrue(
+            choiceTags.contains("coffee_rewards_granted"),
+            "Should log coffee_rewards_granted choice tag"
+        )
+    }
+    
+    @Test
+    fun grantCreatorCoffeeRewards_failsIfNotPurchased() = kotlinx.coroutines.test.runTest {
+        val manager = GameStateManager(basePlayer) { 0L }
+        val valuationService = com.jalmarquest.core.state.hoard.ShinyValuationService()
+        val leaderboardService = com.jalmarquest.core.state.hoard.LeaderboardService()
+        val hoardManager = com.jalmarquest.core.state.hoard.HoardRankManager(
+            gameStateManager = manager,
+            valuationService = valuationService,
+            leaderboardService = leaderboardService,
+            timestampProvider = { 0L }
+        )
+        
+        val result = manager.grantCreatorCoffeeRewards(hoardManager)
+        
+        assertFalse(result, "Should return false when coffee not purchased")
+        assertFalse(
+            manager.playerState.value.playerSettings.hasReceivedCoffeeRewards,
+            "hasReceivedCoffeeRewards flag should remain false"
+        )
+    }
+    
+    @Test
+    fun grantCreatorCoffeeRewards_preventsMultipleGrants() = kotlinx.coroutines.test.runTest {
+        val playerWithRewards = basePlayer.copy(
+            playerSettings = com.jalmarquest.core.model.PlayerSettings(
+                hasPurchasedCreatorCoffee = true,
+                hasReceivedCoffeeRewards = true
+            )
+        )
+        val manager = GameStateManager(playerWithRewards) { 0L }
+        val valuationService = com.jalmarquest.core.state.hoard.ShinyValuationService()
+        val leaderboardService = com.jalmarquest.core.state.hoard.LeaderboardService()
+        val hoardManager = com.jalmarquest.core.state.hoard.HoardRankManager(
+            gameStateManager = manager,
+            valuationService = valuationService,
+            leaderboardService = leaderboardService,
+            timestampProvider = { 0L }
+        )
+        val npcManager = com.jalmarquest.core.state.npc.NpcRelationshipManager(
+            timestampProvider = { 0L }
+        )
+        
+        val initialAffinity = npcManager.getAffinity("npc_exhausted_coder")
+        val result = manager.grantCreatorCoffeeRewards(hoardManager, npcManager)
+        
+        assertFalse(result, "Should return false when rewards already granted")
+        
+        // Verify no duplicate affinity
+        val finalAffinity = npcManager.getAffinity("npc_exhausted_coder")
+        assertEquals(initialAffinity, finalAffinity, "Affinity should not change on duplicate grant")
+    }
 }

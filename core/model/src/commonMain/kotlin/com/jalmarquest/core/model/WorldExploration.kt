@@ -17,7 +17,8 @@ data class WorldRegion(
     val difficultyLevel: Int, // 1-10, recommended player level
     val isDiscovered: Boolean = false,
     val unlockRequirement: RegionUnlockRequirement? = null,
-    val primaryLocationIds: List<String> = emptyList()
+    val primaryLocationIds: List<String> = emptyList(),
+    val availableResourceNodes: List<ResourceNodeId> = emptyList() // Alpha 2.3: Harvesting nodes
 )
 
 @Serializable
